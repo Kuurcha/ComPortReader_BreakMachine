@@ -62,7 +62,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(636, 31);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
-            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // resetB
             // 
@@ -72,7 +71,7 @@
             this.resetB.Name = "resetB";
             this.resetB.Size = new System.Drawing.Size(62, 28);
             this.resetB.Text = "Свойства";
-            this.resetB.Click += new System.EventHandler(this.testB_Click);
+            this.resetB.MouseDown += new System.Windows.Forms.MouseEventHandler(this.resetB_MouseDown);
             // 
             // startingRecordMenuB
             // 
@@ -86,19 +85,19 @@
             this.startingRecordMenuB.Name = "startingRecordMenuB";
             this.startingRecordMenuB.Size = new System.Drawing.Size(136, 28);
             this.startingRecordMenuB.Text = "Построение графика";
-            this.startingRecordMenuB.Click += new System.EventHandler(this.toolStripDropDownButton1_Click);
+            this.startingRecordMenuB.Click += new System.EventHandler(this.startingRecordMenuB_Click);
             // 
             // startBuilding
             // 
             this.startBuilding.Name = "startBuilding";
-            this.startBuilding.Size = new System.Drawing.Size(116, 22);
+            this.startBuilding.Size = new System.Drawing.Size(180, 22);
             this.startBuilding.Text = "Начало";
             this.startBuilding.Click += new System.EventHandler(this.startBuilding_Click);
             // 
             // stopBuilding
             // 
             this.stopBuilding.Name = "stopBuilding";
-            this.stopBuilding.Size = new System.Drawing.Size(116, 22);
+            this.stopBuilding.Size = new System.Drawing.Size(180, 22);
             this.stopBuilding.Text = "Стоп";
             this.stopBuilding.Click += new System.EventHandler(this.stopBuilding_Click);
             // 
@@ -110,7 +109,7 @@
             this.setCOMB.Name = "setCOMB";
             this.setCOMB.Size = new System.Drawing.Size(103, 28);
             this.setCOMB.Text = "установить COM";
-            this.setCOMB.Click += new System.EventHandler(this.toolStripButton4_Click);
+            this.setCOMB.Click += new System.EventHandler(this.SetupCOMport_Click);
             // 
             // comPortStatusB
             // 
@@ -118,7 +117,6 @@
             this.comPortStatusB.Size = new System.Drawing.Size(82, 31);
             this.comPortStatusB.DropDownClosed += new System.EventHandler(this.ComPortStatus_DropDownClosed);
             this.comPortStatusB.SelectedIndexChanged += new System.EventHandler(this.portList_SelectedIndexChanged);
-            this.comPortStatusB.Click += new System.EventHandler(this.Mode_Click);
             // 
             // aboutB
             // 
@@ -128,7 +126,7 @@
             this.aboutB.Name = "aboutB";
             this.aboutB.Size = new System.Drawing.Size(86, 28);
             this.aboutB.Text = "О программе";
-            this.aboutB.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.aboutB.Click += new System.EventHandler(this.aboutWindow_Click);
             // 
             // toolStripButton1
             // 
@@ -138,7 +136,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(28, 28);
             this.toolStripButton1.Text = "Печать";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButton1.Click += new System.EventHandler(this.PrintButton_Click);
             // 
             // coord
             // 
@@ -148,7 +146,8 @@
             // planeGraph
             // 
             this.planeGraph.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.planeGraph.Location = new System.Drawing.Point(0, 24);
+            this.planeGraph.IsEnableSelection = true;
+            this.planeGraph.Location = new System.Drawing.Point(0, 25);
             this.planeGraph.Name = "planeGraph";
             this.planeGraph.ScrollGrace = 0D;
             this.planeGraph.ScrollMaxX = 900D;
@@ -161,9 +160,7 @@
             this.planeGraph.Size = new System.Drawing.Size(636, 335);
             this.planeGraph.TabIndex = 13;
             this.planeGraph.UseExtendedPrintDialog = true;
-            this.planeGraph.Load += new System.EventHandler(this.planeGraph_Load_1);
-            this.planeGraph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.planeGraph_MouseClick);
-            this.planeGraph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.planeGraph_MouseMove);
+            this.planeGraph.Load += new System.EventHandler(this.planeGraph_Load);
             // 
             // textBox2
             // 
@@ -185,9 +182,6 @@
             this.Name = "MainProgram";
             this.Text = "Построение графиков";
             this.Load += new System.EventHandler(this.MainMenu_Load);
-            this.ResizeBegin += new System.EventHandler(this.MainProgram_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.MainProgram_ResizeEnd);
-            this.MouseHover += new System.EventHandler(this.MainProgram_MouseHover);
             this.Resize += new System.EventHandler(this.MainProgram_Resize);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

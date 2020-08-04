@@ -102,7 +102,7 @@
             // xAxisNameTB
             // 
             this.xAxisNameTB.Location = new System.Drawing.Point(122, 77);
-            this.xAxisNameTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.xAxisNameTB.Margin = new System.Windows.Forms.Padding(2);
             this.xAxisNameTB.MaxLength = 30;
             this.xAxisNameTB.Name = "xAxisNameTB";
             this.xAxisNameTB.Size = new System.Drawing.Size(132, 20);
@@ -112,7 +112,7 @@
             // yAxisNameTB
             // 
             this.yAxisNameTB.Location = new System.Drawing.Point(122, 53);
-            this.yAxisNameTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.yAxisNameTB.Margin = new System.Windows.Forms.Padding(2);
             this.yAxisNameTB.MaxLength = 30;
             this.yAxisNameTB.Name = "yAxisNameTB";
             this.yAxisNameTB.Size = new System.Drawing.Size(132, 20);
@@ -123,7 +123,7 @@
             // graphNameLabelTB
             // 
             this.graphNameLabelTB.Location = new System.Drawing.Point(122, 30);
-            this.graphNameLabelTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.graphNameLabelTB.Margin = new System.Windows.Forms.Padding(2);
             this.graphNameLabelTB.MaxLength = 30;
             this.graphNameLabelTB.Name = "graphNameLabelTB";
             this.graphNameLabelTB.Size = new System.Drawing.Size(132, 20);
@@ -143,7 +143,7 @@
             // xMinValueTb
             // 
             this.xMinValueTb.Location = new System.Drawing.Point(159, 120);
-            this.xMinValueTb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.xMinValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.xMinValueTb.MaxLength = 300;
             this.xMinValueTb.Name = "xMinValueTb";
             this.xMinValueTb.Size = new System.Drawing.Size(51, 20);
@@ -153,7 +153,7 @@
             // xMaxValueTb
             // 
             this.xMaxValueTb.Location = new System.Drawing.Point(230, 120);
-            this.xMaxValueTb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.xMaxValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.xMaxValueTb.MaxLength = 300;
             this.xMaxValueTb.Name = "xMaxValueTb";
             this.xMaxValueTb.Size = new System.Drawing.Size(51, 20);
@@ -162,7 +162,7 @@
             // yMinValueTb
             // 
             this.yMinValueTb.Location = new System.Drawing.Point(159, 146);
-            this.yMinValueTb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.yMinValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.yMinValueTb.MaxLength = 300;
             this.yMinValueTb.Name = "yMinValueTb";
             this.yMinValueTb.Size = new System.Drawing.Size(51, 20);
@@ -171,7 +171,7 @@
             // yMaxValueTb
             // 
             this.yMaxValueTb.Location = new System.Drawing.Point(230, 148);
-            this.yMaxValueTb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.yMaxValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.yMaxValueTb.MaxLength = 300;
             this.yMaxValueTb.Name = "yMaxValueTb";
             this.yMaxValueTb.Size = new System.Drawing.Size(51, 20);
@@ -210,7 +210,7 @@
             // autosavePathTB
             // 
             this.autosavePathTB.Location = new System.Drawing.Point(122, 6);
-            this.autosavePathTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.autosavePathTB.Margin = new System.Windows.Forms.Padding(2);
             this.autosavePathTB.MaxLength = 100;
             this.autosavePathTB.Name = "autosavePathTB";
             this.autosavePathTB.Size = new System.Drawing.Size(133, 20);
@@ -220,7 +220,7 @@
             // 
             this.applyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.applyChanges.Location = new System.Drawing.Point(291, 173);
-            this.applyChanges.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.applyChanges.Margin = new System.Windows.Forms.Padding(2);
             this.applyChanges.Name = "applyChanges";
             this.applyChanges.Size = new System.Drawing.Size(133, 23);
             this.applyChanges.TabIndex = 49;
@@ -232,7 +232,7 @@
             // 
             this.drawGraphB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.drawGraphB.Location = new System.Drawing.Point(302, 60);
-            this.drawGraphB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.drawGraphB.Margin = new System.Windows.Forms.Padding(2);
             this.drawGraphB.Name = "drawGraphB";
             this.drawGraphB.Size = new System.Drawing.Size(116, 21);
             this.drawGraphB.TabIndex = 50;
@@ -244,7 +244,7 @@
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Location = new System.Drawing.Point(302, 86);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 21);
             this.button1.TabIndex = 51;
@@ -255,7 +255,7 @@
             // coefficientTB
             // 
             this.coefficientTB.Location = new System.Drawing.Point(104, 170);
-            this.coefficientTB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.coefficientTB.Margin = new System.Windows.Forms.Padding(2);
             this.coefficientTB.MaxLength = 8;
             this.coefficientTB.Name = "coefficientTB";
             this.coefficientTB.Size = new System.Drawing.Size(51, 20);
@@ -317,7 +317,7 @@
             imageComboBoxItem3,
             imageComboBoxItem4});
             this.symbolCB.Location = new System.Drawing.Point(365, 19);
-            this.symbolCB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.symbolCB.Margin = new System.Windows.Forms.Padding(2);
             this.symbolCB.Name = "symbolCB";
             this.symbolCB.Size = new System.Drawing.Size(59, 21);
             this.symbolCB.TabIndex = 54;
@@ -350,7 +350,7 @@
             "5",
             "6"});
             this.sizeCB.Location = new System.Drawing.Point(302, 19);
-            this.sizeCB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sizeCB.Margin = new System.Windows.Forms.Padding(2);
             this.sizeCB.Name = "sizeCB";
             this.sizeCB.Size = new System.Drawing.Size(29, 21);
             this.sizeCB.TabIndex = 57;
@@ -385,10 +385,11 @@
             this.Controls.Add(this.graphNameLabel);
             this.Controls.Add(this.xAxisNameLabel);
             this.Controls.Add(this.xAxisRangeLabel);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Settings";
             this.ShowInTaskbar = false;
             this.Text = "Настройки ";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Settings_FormClosed);
             this.Load += new System.EventHandler(this.settings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.afterSelectEventHandlerBindingSource)).EndInit();
             this.ResumeLayout(false);

@@ -16,8 +16,6 @@ namespace ComPortReader
     {
         MainProgram mainForm;
         GraphPane graph;
-        int counter = 0;
-
 
         public Settings()
         {
@@ -28,6 +26,7 @@ namespace ComPortReader
         {
             InitializeComponent();
             mainForm = form;
+            this.BringToFront();
         }
         public bool SetGetCoefficentTBEnabled
         {
@@ -37,8 +36,8 @@ namespace ComPortReader
         private void settings_Load(object sender, EventArgs e)
         {
             sizeCB.Text = mainForm.getCurve.Symbol.Size.ToString();
-            graph = mainForm.Graph;
-            coefficientTB.Text = mainForm.GetCoefficent.ToString();
+            graph = mainForm.GraphPaneInstance;
+            coefficientTB.Text = mainForm.Coefficent.ToString();
             autosavePathTB.Text = mainForm.GetPath;
             xAxisNameTB.Text = mainForm.XAxisData;
             yAxisNameTB.Text = mainForm.YAxisData;
@@ -47,14 +46,7 @@ namespace ComPortReader
             xMinValueTb.Text = mainForm.MinXValue.ToString();
             yMaxValueTb.Text = mainForm.MaxYValue.ToString();
             yMinValueTb.Text = mainForm.MinYValue.ToString();
-
-
-
-
         }
-
-
-
         private SymbolType checkForSymbol()
         {
             SymbolType outPut = SymbolType.Circle;
@@ -75,7 +67,6 @@ namespace ComPortReader
                 mainForm.MaxXValue = xMax;
                 mainForm.MinYValue = yMin;
                 mainForm.MaxYValue = yMax;
-             
             }
             else
             {
@@ -95,11 +86,11 @@ namespace ComPortReader
             }
             if (double.TryParse(coefficientTB.Text, out coefficient) && coefficient > 0 && coefficient < 100000)
             {
-                mainForm.GetCoefficent = coefficient;
-                mainForm.Graph.XAxis.Scale.Min *= coefficient;
-                mainForm.Graph.XAxis.Scale.Max *= coefficient;
-                mainForm.Graph.YAxis.Scale.Min *= coefficient;
-                mainForm.Graph.YAxis.Scale.Max *= coefficient;
+                mainForm.Coefficent = coefficient;
+                mainForm.GraphPaneInstance.XAxis.Scale.Min *= coefficient;
+                mainForm.GraphPaneInstance.XAxis.Scale.Max *= coefficient;
+                mainForm.GraphPaneInstance.YAxis.Scale.Min *= coefficient;
+                mainForm.GraphPaneInstance.YAxis.Scale.Max *= coefficient;
 
             }
             else
@@ -110,9 +101,9 @@ namespace ComPortReader
             }
             if (!throwError)
             {
-                mainForm.Graph = graph;
-                mainForm.GraphInstanse.Refresh();
-                mainForm.GraphInstanse.AxisChange();
+                mainForm.GraphPaneInstance = graph;
+                mainForm.ZGCInstance.Refresh();
+                mainForm.ZGCInstance.AxisChange();
                 graph.XAxis.Title.Text = yAxisNameTB.Text;
                 graph.YAxis.Title.Text = yAxisNameTB.Text;
                 graph.Title.Text = graphNameLabelTB.Text;
@@ -124,9 +115,16 @@ namespace ComPortReader
             }
             mainForm.getCurve.Symbol.Type = checkForSymbol();
             mainForm.getCurve.Symbol.Size = int.Parse(sizeCB.Text);
-            mainForm.GraphInstanse.Refresh();
-            mainForm.GraphInstanse.AxisChange();
+            mainForm.ZGCInstance.Refresh();
+            mainForm.ZGCInstance.AxisChange();
 
+            // Установим масштаб по умолчанию для оси X
+            mainForm.GraphPaneInstance.XAxis.Scale.MinAuto = true;
+            mainForm.GraphPaneInstance.XAxis.Scale.MaxAuto = true;
+
+            // Установим масштаб по умолчанию для оси Y
+            mainForm.GraphPaneInstance.YAxis.Scale.MinAuto = true;
+            mainForm.GraphPaneInstance.YAxis.Scale.MaxAuto = true;
         }   
 
         private void graphNameLabelTB_TextChanged(object sender, EventArgs e)
@@ -147,21 +145,29 @@ namespace ComPortReader
         private void drawGraphB_Click(object sender, EventArgs e)
         {
             RestoreBackToDefault();
-            mainForm.getTestDrawingMethod();
+            mainForm.getTestDrawingMethod(mainForm);
         }
         public void RestoreBackToDefault()
         {
             PointPairList list = new PointPairList();
-            mainForm.GraphInstanse.GraphPane.CurveList.Clear();
-            mainForm.GraphInstanse.AxisChange();
-            mainForm.GraphInstanse.Invalidate();
-            mainForm.getCurve = mainForm.Graph.AddCurve(" ", list, Color.Red
+            mainForm.ZGCInstance.GraphPane.CurveList.Clear();
+            mainForm.ZGCInstance.AxisChange();
+            mainForm.ZGCInstance.Invalidate();
+            mainForm.getCurve = mainForm.GraphPaneInstance.AddCurve(" ", list, Color.Red
                   );
             int size = (int)mainForm.getCurve.Symbol.Size;
             mainForm.getCurve.Symbol.Size = size;
             mainForm.getCurve.Symbol.Type = checkForSymbol();
 
             mainForm.getCurve.Symbol.Fill = new Fill(Color.White);
+
+            // Установим масштаб по умолчанию для оси X
+            mainForm.GraphPaneInstance.XAxis.Scale.MinAuto = true;
+            mainForm.GraphPaneInstance.XAxis.Scale.MaxAuto = true;
+
+            // Установим масштаб по умолчанию для оси Y
+            mainForm.GraphPaneInstance.YAxis.Scale.MinAuto = true;
+            mainForm.GraphPaneInstance.YAxis.Scale.MaxAuto = true;
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -229,6 +235,11 @@ namespace ComPortReader
         private void yAxisRangeLabel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Settings_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            mainForm.settingsForm = new Settings(mainForm);
         }
     }
 }
