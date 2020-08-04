@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.IO.Ports;
+using System.Runtime.Remoting.Messaging;
 
 namespace ComPortReader
 {
@@ -74,6 +75,18 @@ namespace ComPortReader
             }
             return s;
         }
+      
+        internal static int GetLengthOfOneReading(string s)
+        {
+            int length = 0;
+            int nCount = 0;
+            while (length < s.Length-1 && nCount < 2)
+            {
+                if (s[length] == 'N') nCount++;
+                length++;
+            }
+            return length-1;
+        }
         /// <summary>
         /// Метод обратаывающий данные типа N= 000XX F= 000XX, получает число или 0, если значением является 0000
         /// </summary>
@@ -105,6 +118,37 @@ namespace ComPortReader
                             if ((pivot == '0') && zero) { zeroesCounter++; }
                         }
                         if (zeroesCounter == maxZeroes && onlyZeroes) { sOutput[counter] = "0"; }
+                    }
+                }
+                int xValue; int yValue;
+                if (sOutput != null && int.TryParse(sOutput[0], out xValue) && int.TryParse(sOutput[1], out yValue)) { output = new TwoCordLinkedList.Node(xValue * coefficient, yValue * coefficient); }
+
+            }
+            return output;
+        }
+        /// <summary>
+        /// Метод обратаывающий данные типа N= 000XX F= 000XX, получает число или 0, если значением является 0000
+        /// </summary>
+        /// <param name="s">Строка для обработки</param>
+        /// <returns> Элемент списка содержащий две координаты: x и у.</returns>
+        [STAThread]
+        internal static TwoCordLinkedList.Node ProcessDataMK2(string s, double coefficient)
+        {
+            TwoCordLinkedList.Node output = null;
+            if (s != null)
+            {
+                int counter = 0;
+                string[] sOutput = new string[2];
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s.Length != 0 && s[0] == 'N')
+                    {
+                        char pivot = s[i];
+                        if (pivot == 'F') {  counter++; }
+                        if (Char.IsNumber(pivot))
+                        {
+                            sOutput[counter] += pivot;
+                        }
                     }
                 }
                 int xValue; int yValue;

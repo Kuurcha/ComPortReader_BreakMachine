@@ -90,14 +90,14 @@
             // startBuilding
             // 
             this.startBuilding.Name = "startBuilding";
-            this.startBuilding.Size = new System.Drawing.Size(180, 22);
+            this.startBuilding.Size = new System.Drawing.Size(116, 22);
             this.startBuilding.Text = "Начало";
             this.startBuilding.Click += new System.EventHandler(this.startBuilding_Click);
             // 
             // stopBuilding
             // 
             this.stopBuilding.Name = "stopBuilding";
-            this.stopBuilding.Size = new System.Drawing.Size(180, 22);
+            this.stopBuilding.Size = new System.Drawing.Size(116, 22);
             this.stopBuilding.Text = "Стоп";
             this.stopBuilding.Click += new System.EventHandler(this.stopBuilding_Click);
             // 
@@ -146,7 +146,7 @@
             // planeGraph
             // 
             this.planeGraph.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.planeGraph.IsEnableSelection = true;
+            this.planeGraph.IsShowPointValues = true;
             this.planeGraph.Location = new System.Drawing.Point(0, 25);
             this.planeGraph.Name = "planeGraph";
             this.planeGraph.ScrollGrace = 0D;
@@ -160,7 +160,10 @@
             this.planeGraph.Size = new System.Drawing.Size(636, 335);
             this.planeGraph.TabIndex = 13;
             this.planeGraph.UseExtendedPrintDialog = true;
-            this.planeGraph.Load += new System.EventHandler(this.planeGraph_Load);
+            this.planeGraph.MouseMoveEvent += new ZedGraph.ZedGraphControl.ZedMouseEventHandler(this.planeGraph_MouseMoveEvent);
+            this.planeGraph.Load += new System.EventHandler(this.planeGraph_Load_1);
+            this.planeGraph.KeyDown += new System.Windows.Forms.KeyEventHandler(this.planeGraph_KeyDown);
+            this.planeGraph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.planeGraph_MouseClick);
             // 
             // textBox2
             // 

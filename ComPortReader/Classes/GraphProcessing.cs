@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ZedGraph;
 using System.Drawing;
 using System.Timers;
+using System.Windows.Forms;
 
 namespace ComPortReader
 {
@@ -51,7 +52,7 @@ namespace ComPortReader
         /// Стартовые настройки графика, имя
         /// </summary>
         /// <param name="zgc"></param>
-        internal static void CreateGraph(ZedGraphControl zgc, LineItem curve, GraphPane pane )
+        internal static LineItem CreateGraph(ZedGraphControl zgc, ref LineItem curve, ref GraphPane pane )
         {
             PointPairList list = new PointPairList();
             pane = zgc.GraphPane;
@@ -70,7 +71,9 @@ namespace ComPortReader
             pane.YAxis.MajorGrid.IsVisible = true;
             pane.YAxis.MajorGrid.DashOff = 0;
             pane.YAxis.Scale.MajorStep = 100;
+            
             UpdateGraph(zgc);
+            return curve;
         }
 
     }

@@ -160,13 +160,12 @@ namespace ComPortReader
         }
         /// <summary>
         /// Event that reacts when port received any data. Reads it, divides into individual reading based on 
-        /// LEGNTH_OF_ONE_READING, fetches it to ProcessData, ads to the list and draws the point on the graph.
+        /// lengthOfOneReading, fetches it to ProcessData, ads to the list and draws the point on the graph.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        const int LENGTH_OF_ONE_READING = 10;
+
         private void port_DataReceived(object sender, SerialDataReceivedEventArgs e) 
-        
         {
             if (everySecond == null) СreateTimer(); // Логика за этим? Зачем таймер.
             drawGraphMethod print = new drawGraphMethod(GraphProcessing.AddInRealTime); //Инициализация переменных для ком-порта
@@ -174,13 +173,13 @@ namespace ComPortReader
             string comPortData = ((SerialPort)sender).ReadExisting().ToString();//Чтение данных из текущего ком порта.
             comPortData = comPortData.Replace("\r \n \0N", " "); //Удаление символов перехода строки
             comPortData = comPortData.Replace("\t", " ");
-            while (comPortData.Length > LENGTH_OF_ONE_READING - 1) //Перебираем все пары усилий и поворотов в полученной строке
+            int lengthOfOneReading = Parsing.GetLengthOfOneReading(comPortData);
+            while (lengthOfOneReading > 0 && comPortData.Length > lengthOfOneReading ) //Перебираем все пары усилий и поворотов в полученной строке
             {
-               
-
-                string tempStr = comPortData.Substring(0, LENGTH_OF_ONE_READING); //Если в полученной строке несколько показаний, отделяем одно
-                comPortData = comPortData.Substring(LENGTH_OF_ONE_READING); // Вся остальная строка
-                TwoCordLinkedList.Node temp = Parsing.ProcessData(tempStr, coefficient);
+                lengthOfOneReading = Parsing.GetLengthOfOneReading(comPortData);
+                string tempStr = comPortData.Substring(0, lengthOfOneReading); //Если в полученной строке несколько показаний, отделяем одно
+                comPortData = comPortData.Substring(lengthOfOneReading); // Вся остальная строка
+                TwoCordLinkedList.Node temp = Parsing.ProcessDataMK2(tempStr, coefficient);
                 listOfPoints.addLast(temp);
                 if (temp != null) // Отрисовка добавленной в список точки
                 {
@@ -198,7 +197,7 @@ namespace ComPortReader
         /// <param name="e"></param>
         private void MainMenu_Load(object sender, EventArgs e)
         {
-            GraphProcessing.CreateGraph(planeGraph, curve, pane);  //Создать график
+            GraphProcessing.CreateGraph(planeGraph, ref curve, ref pane);  //Создать график
             string[] test = SerialPort.GetPortNames(); // Получить список доступных имен ком-портов
             for (int i = 0; i < test.Length; i++) comPortStatusB.Items.Add(test[i]);
         }
@@ -370,25 +369,7 @@ namespace ComPortReader
   
         private void planeGraph_MouseMove(object sender, MouseEventArgs e)
         {
-            var pos = planeGraph.PointToClient(Cursor.Position);
-            // Сюда будут записаны координаты в системе координат графика
-            double x, y;
-
-            // Пересчитываем пиксели в координаты на графике
-            // У ZedGraph есть несколько перегруженных методов ReverseTransform.
-            planeGraph.GraphPane.ReverseTransform(pos, out x, out y);
-            double xmin = planeGraph.GraphPane.XAxis.Scale.Min;
-            double ymin = planeGraph.GraphPane.YAxis.Scale.Min;
-            double xmax = planeGraph.GraphPane.XAxis.Scale.Max;
-            double ymax = planeGraph.GraphPane.YAxis.Scale.Max;
                 
-            x = Math.Round(x);
-            y = Math.Round(y);
-            if ((x > xmin) && (y > ymin) && (y < ymax) && (x < xmax))
-            {
-                string text = string.Format("X: {0};    Y: {1}", x, y);
-                coord.Text = text;
-            }
             // Выводим результат
         }
 
@@ -414,7 +395,65 @@ namespace ComPortReader
 
         }
 
+        LineItem selectionCurve;
+        private void planeGraph_MouseClick(object sender, MouseEventArgs e)
+        {
+            int pos = pane.CurveList.IndexOf("Selection");
+            if (pos >= 0) pane.CurveList.RemoveAt(pos);
+            selectionCurve = null;
+            object nearestObject;
+            int index;
+            this.planeGraph.GraphPane.FindNearestObject(new PointF(e.X, e.Y), this.CreateGraphics(), out nearestObject, out index);
+            if (nearestObject != null && nearestObject.GetType() == typeof(LineItem))
+            {
+                PointPairList pointList = new PointPairList();
+                selectionCurve = pane.AddCurve("Selection", pointList, Color.Blue
+  );
+                selectionCurve.Symbol.Size = curve.Symbol.Size * 1.5f;
+                selectionCurve.Symbol.Type = SymbolType.Square;
+                selectionCurve.Symbol.Fill = curve.Symbol.Fill;
+                LineItem nearestLineItemObject = (LineItem)nearestObject;
+                PointPair clickedPoint = nearestLineItemObject.Points[index];
+                selectionCurve.AddPoint(clickedPoint);
+                
+            }
+            GraphProcessing.UpdateGraph(planeGraph);
+        }
 
+        private bool planeGraph_MouseMoveEvent(ZedGraphControl sender, MouseEventArgs e)
+        {
+            var pos = planeGraph.PointToClient(Cursor.Position);
+            // Сюда будут записаны координаты в системе координат графика
+            double x, y;
+
+            // Пересчитываем пиксели в координаты на графике
+            // У ZedGraph есть несколько перегруженных методов ReverseTransform.
+            planeGraph.GraphPane.ReverseTransform(pos, out x, out y);
+            double xmin = planeGraph.GraphPane.XAxis.Scale.Min;
+            double ymin = planeGraph.GraphPane.YAxis.Scale.Min;
+            double xmax = planeGraph.GraphPane.XAxis.Scale.Max;
+            double ymax = planeGraph.GraphPane.YAxis.Scale.Max;
+
+            x = Math.Round(x);
+            y = Math.Round(y);
+            if ((x > xmin) && (y > ymin) && (y < ymax) && (x < xmax))
+            {
+                string text = string.Format("X: {0};    Y: {1}", x, y);
+                coord.Text = text;
+            }
+
+            return false;
+        }
+
+        private void planeGraph_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up) 
+        }
+
+        private void planeGraph_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom.Compiler;
+using System.Runtime.Remoting.Messaging;
 
 public class TwoCordLinkedList
 {
@@ -52,23 +54,78 @@ public class TwoCordLinkedList
         Head.Next = Head;
         Head.Prev = Head;
 	}
+    /// <summary>
+    /// Подсчет элементов списка
+    /// </summary>
+    /// <param name="s"></param>
+    /// <returns></returns>
+    internal int Count()
+    {
+        int count = 0;
+        if (Head != null)
+        {
+
+            if (Head.Prev!=null)
+            {
+                Node temp = Head.Prev;
+                while (temp != Head)
+                {
+                    temp = temp.Prev;
+                    count++;
+                }
+            }
+        }
+            return count;
+    }
+    public Node ElemNumber(int index)
+    {
+        Node temp = null;
+        if (Head!=null && Head.Prev !=null)
+        {
+            temp = Head.Prev;
+            int counter = 0;
+            while (counter < index && temp != Head)
+            {
+                counter++;
+                temp = temp.Prev;
+            }
+          }
+        return temp;
+    }
+      
+    
     public void addLast(Node temp)
     {
         if (temp!= null & Head != null)
         {
             if (Head.Prev == Head)
             {
-                temp.Prev = Head;
                 temp.Next = Head;
-                Head.Prev = temp;
+                temp.Prev = Head;
                 Head.Next = temp;
+                Head.Prev = temp;
             }
             else
             {
-                temp.Next = Head;
+                Head.Prev.Next = temp;
                 temp.Prev = Head.Prev;
+                temp.Next = Head;
                 Head.Prev = temp;
             }
+
+            //if (Head.Prev == Head)
+            //{
+            //    temp.Prev = Head;
+            //    temp.Next = Head;
+            //    Head.Prev = temp;
+            //    Head.Next = temp;
+            //}
+            //else
+            //{
+            //    temp.Next = Head; 
+            //    temp.Prev = Head.Prev;
+            //    Head.Prev = temp;
+            //}
            
         }
     }
