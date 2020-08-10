@@ -19,6 +19,8 @@ using System.Drawing.Printing;
 using System.Xml.Schema;
 using System.Runtime.InteropServices;
 using ComPortReader.Classes;
+using ComPortReader.Forms;
+using System.CodeDom;
 
 namespace ComPortReader
 {
@@ -26,11 +28,13 @@ namespace ComPortReader
     {
 
 
-
+        internal List<DynamicToolStripButton> buttons = new List<DynamicToolStripButton>();
+        DynamicToolStripButton linearPart;
         public MainProgram form;
 
 
         LineItem curve;
+        LineItem lineCurve;
         GraphPane pane;
         
         
@@ -55,7 +59,6 @@ namespace ComPortReader
 
         double coefficient = 1.0;
        
-        
         public bool AtLeastOnePointPassed
         {
             get { return atLeastOnePointPassed; }
@@ -67,7 +70,20 @@ namespace ComPortReader
             get { return curve; }
             set { curve = value; }
         }
-      
+        public LineItem getLineCurve
+
+        {
+            get { return lineCurve; }
+            set { lineCurve = value; }
+        }
+
+        public ToolStripDropDownButton CurvesDropDownButton
+        {
+            get { return curvesDropDownBtn; }
+            set { curvesDropDownBtn = value; }
+        }
+
+
         public double Coefficent
         {
             get { return coefficient; }
@@ -88,38 +104,38 @@ namespace ComPortReader
         }
         public string XAxisData
         {
-            get { return pane.XAxis.Title.Text; }
-            set { pane.XAxis.Title.Text = value; }
+            get { return planeGraph.GraphPane.XAxis.Title.Text; }
+            set { planeGraph.GraphPane.XAxis.Title.Text = value; }
         }
         public string YAxisData
         {
-            get { return pane.YAxis.Title.Text; }
-            set { pane.YAxis.Title.Text = value; }
+            get { return planeGraph.GraphPane.YAxis.Title.Text; }
+            set { planeGraph.GraphPane.YAxis.Title.Text = value; }
         }
         public string GraphName
         {
-            get { return pane.Title.Text; }
-            set { pane.Title.Text = value; }
+            get { return planeGraph.GraphPane.Title.Text; }
+            set { planeGraph.GraphPane.Title.Text = value; }
         }
         public double MinXValue
         {
-            get { return pane.XAxis.Scale.Min; }
-            set { pane.XAxis.Scale.Min = value; }
+            get { return planeGraph.GraphPane.XAxis.Scale.Min; }
+            set { planeGraph.GraphPane.XAxis.Scale.Min = value; }
         }
         public double MaxXValue
         {
-            get { return pane.XAxis.Scale.Max; }
-            set { pane.XAxis.Scale.Max = value; }
+            get { return planeGraph.GraphPane.XAxis.Scale.Max; }
+            set { planeGraph.GraphPane.XAxis.Scale.Max = value; }
         }
         public double MinYValue
         {
-            get { return pane.YAxis.Scale.Min; }
-            set { pane.YAxis.Scale.Min = value; }
+            get { return planeGraph.GraphPane.YAxis.Scale.Min; }
+            set { planeGraph.GraphPane.YAxis.Scale.Min = value; }
         }
         public double MaxYValue
         {
-            get { return pane.YAxis.Scale.Max; }
-            set { pane.YAxis.Scale.Max = value; }
+            get { return planeGraph.GraphPane.YAxis.Scale.Max; }
+            set { planeGraph.GraphPane.YAxis.Scale.Max = value; }
         }
         public GraphPane GraphPaneInstance
         {
@@ -136,6 +152,11 @@ namespace ComPortReader
             get { return savePath; }
             set { savePath = value; }
         }
+        public ToolStripDropDownButton CurvesButtons
+        {
+            get { return curvesDropDownBtn;  }
+            set { curvesDropDownBtn = value; }
+        }
         public testGraph getTestDrawingMethod
         {
             get { return drawTest; }
@@ -147,7 +168,7 @@ namespace ComPortReader
              * куда будут добавляться такие вещи, которые пользователь и так 
              * может задать в явном виде
              */
-            drawTest = new testGraph(GraphProcessing.drawTestGraph);
+            //drawTest = new testGraph(GraphProcessing.drawTestGraph);
             defaultPath = @"C:\r5";
             if (!Directory.Exists(defaultPath))
             {
@@ -165,8 +186,15 @@ namespace ComPortReader
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
+        double? xMin = null;
+       
         private void port_DataReceived(object sender, SerialDataReceivedEventArgs e) 
         {
+            if (curve == null)
+            {
+                buttons.Add(GraphProcessing.CreateCurve(ref curve, curvesDropDownBtn, planeGraph, "Основной График", Color.Red, 4, SymbolType.Circle, Color.Red));
+                curve.Tag = 1;  
+            }
             if (everySecond == null) СreateTimer(); // Логика за этим? Зачем таймер.
             drawGraphMethod print = new drawGraphMethod(GraphProcessing.AddInRealTime); //Инициализация переменных для ком-порта
             // Show all the incoming data in the port's buffer
@@ -181,15 +209,15 @@ namespace ComPortReader
                 comPortData = comPortData.Substring(lengthOfOneReading); // Вся остальная строка
                 TwoCordLinkedList.Node temp = Parsing.ProcessDataMK2(tempStr, coefficient);
                 listOfPoints.addLast(temp);
+                if (xMin == null && temp != null) 
+                    xMin = temp.X;
                 if (temp != null) // Отрисовка добавленной в список точки
                 {
-                    planeGraph.Invoke((Action)(() => print(curve, temp.X, temp.Y)));
+                    planeGraph.Invoke((Action)(() => print(curve, (temp.X - (double) (xMin)), temp.Y)));
                     planeGraph.Invoke((Action)(() => GraphProcessing.UpdateGraph(planeGraph)));
                 }
             }
         }
-       
-
         /// <summary>
         /// Loading the main form
         /// </summary>
@@ -197,7 +225,7 @@ namespace ComPortReader
         /// <param name="e"></param>
         private void MainMenu_Load(object sender, EventArgs e)
         {
-            GraphProcessing.CreateGraph(planeGraph, ref curve, ref pane);  //Создать график
+            GraphProcessing.CreateGraph(planeGraph, "Основной график", "N Value", "F Value", 100, 100);  //Создать график
             string[] test = SerialPort.GetPortNames(); // Получить список доступных имен ком-портов
             for (int i = 0; i < test.Length; i++) comPortStatusB.Items.Add(test[i]);
         }
@@ -208,8 +236,8 @@ namespace ComPortReader
         /// <param name="e"></param>
         private void aboutWindow_Click(object sender, EventArgs e)
         {
-            var newForm = new About(this.form);
-            newForm.Show();
+ 
+           
         }
         /// <summary>
         /// Opens chosen comport.
@@ -325,7 +353,8 @@ namespace ComPortReader
                 counterTimer = 0;
                 atLeastOnePointPassed = false;      //Сохранение текстового файла автоматом
                 everySecond = null;
-                using (Bitmap imageOfGraph = pane.GetImage())
+                xMin = null;
+                using (Bitmap imageOfGraph = planeGraph.GraphPane.GetImage())
                 {
                     using (Graphics g = Graphics.FromImage(imageOfGraph))
                     {
@@ -349,7 +378,7 @@ namespace ComPortReader
 
         private void PrintButton_Click(object sender, EventArgs e)
         {
-            using (Bitmap imageOfGraph = pane.GetImage())
+            using (Bitmap imageOfGraph = planeGraph.GraphPane.GetImage())
             {
                 using (Graphics g = Graphics.FromImage(imageOfGraph))
                 {
@@ -398,8 +427,8 @@ namespace ComPortReader
         LineItem selectionCurve;
         private void planeGraph_MouseClick(object sender, MouseEventArgs e)
         {
-            int pos = pane.CurveList.IndexOf("Selection");
-            if (pos >= 0) pane.CurveList.RemoveAt(pos);
+            int pos = planeGraph.GraphPane.CurveList.IndexOf("Selection");
+            if (pos >= 0) planeGraph.GraphPane.CurveList.RemoveAt(pos);
             selectionCurve = null;
             object nearestObject;
             int index;
@@ -407,9 +436,9 @@ namespace ComPortReader
             if (nearestObject != null && nearestObject.GetType() == typeof(LineItem))
             {
                 PointPairList pointList = new PointPairList();
-                selectionCurve = pane.AddCurve("Selection", pointList, Color.Blue
+                selectionCurve = planeGraph.GraphPane.AddCurve("Selection", pointList, Color.Blue
   );
-                selectionCurve.Symbol.Size = curve.Symbol.Size * 1.5f;
+                selectionCurve.Symbol.Size = curve.Symbol.Size * 2f;
                 selectionCurve.Symbol.Type = SymbolType.Square;
                 selectionCurve.Symbol.Fill = curve.Symbol.Fill;
                 LineItem nearestLineItemObject = (LineItem)nearestObject;
@@ -444,13 +473,133 @@ namespace ComPortReader
 
             return false;
         }
+        
 
         private void planeGraph_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up) 
+           
         }
 
         private void planeGraph_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void planeGraph_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            double stepX = Math.Log10(Math.Abs(planeGraph.ScrollMaxX - planeGraph.ScrollMinX));
+            double stepY = Math.Log10(Math.Abs(planeGraph.ScrollMaxY - planeGraph.ScrollMinY));
+
+            if (e.KeyCode == Keys.Up)
+            {
+                MinYValue += stepY;
+                MaxYValue += stepY;
+            }
+
+
+            if (e.KeyCode == Keys.Down)
+            {
+                MinYValue -= stepY;
+                MaxYValue -= stepY;
+            }
+
+            if (e.KeyCode == Keys.Left)
+            {
+                MinXValue -= stepX;
+                MaxXValue -= stepX;
+            }
+
+            if (e.KeyCode == Keys.Right)
+            {
+                MinXValue += stepX;
+                MaxXValue += stepX;
+            }
+         
+
+            GraphProcessing.UpdateGraph(planeGraph);
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var newForm = new About(this.form);
+            newForm.Show();
+        }
+
+        private void toolStripDropDownButton1_Click(object sender, EventArgs e)
+        {
+
+        }
+        public LineItem processedCurve = null;
+        public LineItem processedCurve2 = null;
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            if (curve != null)
+            {
+                if (lineCurve != null)
+                {
+                    planeGraph.GraphPane.CurveList.Remove(lineCurve);
+                    curvesDropDownBtn.DropDownItems.Remove(linearPart.button);
+                    buttons.Remove(linearPart);
+                    linearPart = null;
+                    lineCurve = null;
+                }
+                linearPart = GraphProcessing.CreateCurve(ref lineCurve, curvesDropDownBtn, planeGraph, "Линейный участок", Color.Blue, 8, SymbolType.Circle, Color.Blue);
+                buttons.Add(linearPart);
+                LineItem firstDerivativeCurve = new LineItem("d1");
+                LineItem secondDerivativeCurve = new LineItem("d1");
+                LineItem firstMovingAverageCurve = new LineItem("mad1");
+
+
+                buttons.Add(GraphProcessing.CreateCurve(ref processedCurve, form.CurvesDropDownButton, planeGraph, "Скользящее среднее", Color.Red, 6, SymbolType.Circle, Color.Blue));
+                processedCurve = new LineItem("movingAverage1");
+                processedCurve2 = new LineItem("movingAverage2");
+                double[] data = GraphProcessing.CurveToArray(curve, false);
+                double[] movingAverage = GraphProcessing.MovingAverage(data, 8);
+                for (int i = 0; i < movingAverage.Length - 1; i++)
+                {
+                    processedCurve.AddPoint(curve.Points[i].X, movingAverage[i]);
+                }
+                double[] movingAverage1 = GraphProcessing.MovingAverage(data, 6);
+                for (int i = 0; i < movingAverage1.Length - 1; i++)
+                {
+                    processedCurve2.AddPoint(curve.Points[i].X, movingAverage1[i]);
+                }
+         
+
+
+                GraphProcessing.DerivativeGraph(curve, ref firstDerivativeCurve);
+                GraphProcessing.SecondDerivativeGraph(firstDerivativeCurve, ref secondDerivativeCurve);
+
+                GraphProcessing.DerivativeGraph(processedCurve, ref firstMovingAverageCurve);
+
+                LineItem tempCurve = new LineItem("temp");
+                LineItem secondMovingAverageCurve = new LineItem("sMAC");
+                GraphProcessing.DerivativeGraph(processedCurve2, ref tempCurve);
+                GraphProcessing.DerivativeGraph(tempCurve, ref secondMovingAverageCurve);   
+
+                int[] bounds = GraphProcessing.CalculatePointsForLinear(curve, secondMovingAverageCurve, firstMovingAverageCurve);
+                for (int i = bounds[0]; i < bounds[1]; i++) lineCurve.AddPoint(curve[i]);
+                lineCurve.Tag = 4;
+                GraphProcessing.UpdateGraph(planeGraph);
+            }
+            else
+            {
+                ErrorMessage form = new ErrorMessage("Нет графика на котором нужно найти линейный участок");
+            }
+            double[] xData = GraphProcessing.CurveToArray(lineCurve, true);
+            double[] yData = GraphProcessing.CurveToArray(lineCurve, false);  
+            var ds = new XYDataSet(xData, yData);
+
+
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            var newForm = new DerivateForm(this.form);
+            newForm.Show();
+        }
+
+        private void resetB_Click(object sender, EventArgs e)
         {
 
         }

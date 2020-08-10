@@ -36,10 +36,12 @@
             this.startBuilding = new System.Windows.Forms.ToolStripMenuItem();
             this.stopBuilding = new System.Windows.Forms.ToolStripMenuItem();
             this.setCOMB = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.comPortStatusB = new System.Windows.Forms.ToolStripComboBox();
-            this.aboutB = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.coord = new System.Windows.Forms.ToolStripLabel();
+            this.curvesDropDownBtn = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.planeGraph = new ZedGraph.ZedGraphControl();
             this.textBox2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -52,14 +54,16 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resetB,
             this.startingRecordMenuB,
-            this.setCOMB,
             this.comPortStatusB,
-            this.aboutB,
+            this.setCOMB,
             this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripButton3,
+            this.curvesDropDownBtn,
             this.coord});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(636, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(726, 31);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -71,6 +75,7 @@
             this.resetB.Name = "resetB";
             this.resetB.Size = new System.Drawing.Size(62, 28);
             this.resetB.Text = "Свойства";
+            this.resetB.Click += new System.EventHandler(this.resetB_Click);
             this.resetB.MouseDown += new System.Windows.Forms.MouseEventHandler(this.resetB_MouseDown);
             // 
             // startingRecordMenuB
@@ -90,14 +95,14 @@
             // startBuilding
             // 
             this.startBuilding.Name = "startBuilding";
-            this.startBuilding.Size = new System.Drawing.Size(116, 22);
+            this.startBuilding.Size = new System.Drawing.Size(180, 22);
             this.startBuilding.Text = "Начало";
             this.startBuilding.Click += new System.EventHandler(this.startBuilding_Click);
             // 
             // stopBuilding
             // 
             this.stopBuilding.Name = "stopBuilding";
-            this.stopBuilding.Size = new System.Drawing.Size(116, 22);
+            this.stopBuilding.Size = new System.Drawing.Size(180, 22);
             this.stopBuilding.Text = "Стоп";
             this.stopBuilding.Click += new System.EventHandler(this.stopBuilding_Click);
             // 
@@ -111,22 +116,22 @@
             this.setCOMB.Text = "установить COM";
             this.setCOMB.Click += new System.EventHandler(this.SetupCOMport_Click);
             // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(115, 28);
+            this.toolStripButton2.Text = "Линейный участок";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
             // comPortStatusB
             // 
             this.comPortStatusB.Name = "comPortStatusB";
             this.comPortStatusB.Size = new System.Drawing.Size(82, 31);
             this.comPortStatusB.DropDownClosed += new System.EventHandler(this.ComPortStatus_DropDownClosed);
             this.comPortStatusB.SelectedIndexChanged += new System.EventHandler(this.portList_SelectedIndexChanged);
-            // 
-            // aboutB
-            // 
-            this.aboutB.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.aboutB.Image = ((System.Drawing.Image)(resources.GetObject("aboutB.Image")));
-            this.aboutB.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.aboutB.Name = "aboutB";
-            this.aboutB.Size = new System.Drawing.Size(86, 28);
-            this.aboutB.Text = "О программе";
-            this.aboutB.Click += new System.EventHandler(this.aboutWindow_Click);
             // 
             // toolStripButton1
             // 
@@ -143,6 +148,26 @@
             this.coord.Name = "coord";
             this.coord.Size = new System.Drawing.Size(0, 28);
             // 
+            // curvesDropDownBtn
+            // 
+            this.curvesDropDownBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.curvesDropDownBtn.Image = ((System.Drawing.Image)(resources.GetObject("curvesDropDownBtn.Image")));
+            this.curvesDropDownBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.curvesDropDownBtn.Name = "curvesDropDownBtn";
+            this.curvesDropDownBtn.Size = new System.Drawing.Size(37, 28);
+            this.curvesDropDownBtn.Text = "Скрыть/Показать графики";
+            this.curvesDropDownBtn.Click += new System.EventHandler(this.toolStripDropDownButton1_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(28, 28);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
             // planeGraph
             // 
             this.planeGraph.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -157,13 +182,14 @@
             this.planeGraph.ScrollMinY = 1000D;
             this.planeGraph.ScrollMinY2 = 1000D;
             this.planeGraph.SelectModifierKeys = System.Windows.Forms.Keys.None;
-            this.planeGraph.Size = new System.Drawing.Size(636, 335);
+            this.planeGraph.Size = new System.Drawing.Size(726, 377);
             this.planeGraph.TabIndex = 13;
             this.planeGraph.UseExtendedPrintDialog = true;
             this.planeGraph.MouseMoveEvent += new ZedGraph.ZedGraphControl.ZedMouseEventHandler(this.planeGraph_MouseMoveEvent);
             this.planeGraph.Load += new System.EventHandler(this.planeGraph_Load_1);
             this.planeGraph.KeyDown += new System.Windows.Forms.KeyEventHandler(this.planeGraph_KeyDown);
             this.planeGraph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.planeGraph_MouseClick);
+            this.planeGraph.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.planeGraph_PreviewKeyDown);
             // 
             // textBox2
             // 
@@ -177,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(636, 360);
+            this.ClientSize = new System.Drawing.Size(726, 399);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.planeGraph);
             this.Controls.Add(this.toolStrip1);
@@ -195,7 +221,6 @@
 
         #endregion
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton aboutB;
         private System.Windows.Forms.ToolStripButton setCOMB;
         private System.Windows.Forms.ToolStripComboBox comPortStatusB;
         private ZedGraph.ZedGraphControl planeGraph;
@@ -207,6 +232,9 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripLabel coord;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripDropDownButton curvesDropDownBtn;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
     }
 }
 

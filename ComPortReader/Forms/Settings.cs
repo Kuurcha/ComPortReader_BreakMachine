@@ -15,7 +15,7 @@ namespace ComPortReader
     public partial class Settings : Form
     {
         MainProgram mainForm;
-        GraphPane graph;
+       
 
         public Settings()
         {
@@ -35,8 +35,7 @@ namespace ComPortReader
         }
         private void settings_Load(object sender, EventArgs e)
         {
-            sizeCB.Text = mainForm.getCurve.Symbol.Size.ToString();
-            graph = mainForm.GraphPaneInstance;
+            sizeCB.Text = "4";
             coefficientTB.Text = mainForm.Coefficent.ToString();
             autosavePathTB.Text = mainForm.GetPath;
             xAxisNameTB.Text = mainForm.XAxisData;
@@ -87,10 +86,10 @@ namespace ComPortReader
             if (double.TryParse(coefficientTB.Text, out coefficient) && coefficient > 0 && coefficient < 100000)
             {
                 mainForm.Coefficent = coefficient;
-                mainForm.GraphPaneInstance.XAxis.Scale.Min *= coefficient;
-                mainForm.GraphPaneInstance.XAxis.Scale.Max *= coefficient;
-                mainForm.GraphPaneInstance.YAxis.Scale.Min *= coefficient;
-                mainForm.GraphPaneInstance.YAxis.Scale.Max *= coefficient;
+                mainForm.ZGCInstance.GraphPane.XAxis.Scale.Min *= coefficient;
+                mainForm.ZGCInstance.GraphPane.XAxis.Scale.Max *= coefficient;
+                mainForm.ZGCInstance.GraphPane.YAxis.Scale.Min *= coefficient;
+                mainForm.ZGCInstance.GraphPane.YAxis.Scale.Max *= coefficient;
 
             }
             else
@@ -101,12 +100,12 @@ namespace ComPortReader
             }
             if (!throwError)
             {
-                mainForm.GraphPaneInstance = graph;
+               
                 mainForm.ZGCInstance.Refresh();
                 mainForm.ZGCInstance.AxisChange();
-                graph.XAxis.Title.Text = yAxisNameTB.Text;
-                graph.YAxis.Title.Text = yAxisNameTB.Text;
-                graph.Title.Text = graphNameLabelTB.Text;
+                mainForm.ZGCInstance.GraphPane.XAxis.Title.Text = yAxisNameTB.Text;
+                mainForm.ZGCInstance.GraphPane.YAxis.Title.Text = yAxisNameTB.Text;
+                mainForm.ZGCInstance.GraphPane.Title.Text = graphNameLabelTB.Text;
             }
             else
             {
@@ -119,12 +118,12 @@ namespace ComPortReader
             mainForm.ZGCInstance.AxisChange();
 
             // Установим масштаб по умолчанию для оси X
-            mainForm.GraphPaneInstance.XAxis.Scale.MinAuto = true;
-            mainForm.GraphPaneInstance.XAxis.Scale.MaxAuto = true;
+            mainForm.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
+            mainForm.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;
 
             // Установим масштаб по умолчанию для оси Y
-            mainForm.GraphPaneInstance.YAxis.Scale.MinAuto = true;
-            mainForm.GraphPaneInstance.YAxis.Scale.MaxAuto = true;
+            mainForm.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
+            mainForm.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
         }   
 
         private void graphNameLabelTB_TextChanged(object sender, EventArgs e)
@@ -144,30 +143,31 @@ namespace ComPortReader
 
         private void drawGraphB_Click(object sender, EventArgs e)
         {
-            RestoreBackToDefault();
-            mainForm.getTestDrawingMethod(mainForm);
+            var newForm = new About();
+            newForm.Show();
         }
         public void RestoreBackToDefault()
         {
             PointPairList list = new PointPairList();
+          
+            mainForm.MinXValue = 0;
+            mainForm.MinYValue = 0;
+            mainForm.MaxXValue = 100;
+            mainForm.MaxYValue = 100;
             mainForm.ZGCInstance.GraphPane.CurveList.Clear();
             mainForm.ZGCInstance.AxisChange();
             mainForm.ZGCInstance.Invalidate();
-            mainForm.getCurve = mainForm.GraphPaneInstance.AddCurve(" ", list, Color.Red
-                  );
-            int size = (int)mainForm.getCurve.Symbol.Size;
-            mainForm.getCurve.Symbol.Size = size;
-            mainForm.getCurve.Symbol.Type = checkForSymbol();
-
-            mainForm.getCurve.Symbol.Fill = new Fill(Color.White);
-
+            mainForm.ZGCInstance.GraphPane.CurveList.Clear();
+            mainForm.buttons.Clear();
+            mainForm.getCurve = null;
+            mainForm.CurvesButtons.DropDownItems.Clear();
             // Установим масштаб по умолчанию для оси X
-            mainForm.GraphPaneInstance.XAxis.Scale.MinAuto = true;
-            mainForm.GraphPaneInstance.XAxis.Scale.MaxAuto = true;
+            mainForm.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
+            mainForm.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;
 
             // Установим масштаб по умолчанию для оси Y
-            mainForm.GraphPaneInstance.YAxis.Scale.MinAuto = true;
-            mainForm.GraphPaneInstance.YAxis.Scale.MaxAuto = true;
+            mainForm.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
+            mainForm.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
         }
         private void button1_Click(object sender, EventArgs e)
         {

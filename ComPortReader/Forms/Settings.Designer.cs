@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem1 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem2 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem3 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem4 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem5 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem6 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem7 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem8 = new ImageComboBox.ImageComboBoxItem();
             this.xAxisRangeLabel = new System.Windows.Forms.Label();
             this.xAxisNameLabel = new System.Windows.Forms.Label();
             this.graphNameLabel = new System.Windows.Forms.Label();
@@ -66,7 +66,7 @@
             // xAxisRangeLabel
             // 
             this.xAxisRangeLabel.AutoSize = true;
-            this.xAxisRangeLabel.Location = new System.Drawing.Point(12, 123);
+            this.xAxisRangeLabel.Location = new System.Drawing.Point(12, 115);
             this.xAxisRangeLabel.Name = "xAxisRangeLabel";
             this.xAxisRangeLabel.Size = new System.Drawing.Size(139, 13);
             this.xAxisRangeLabel.TabIndex = 34;
@@ -133,7 +133,7 @@
             // yAxisRangeLabel
             // 
             this.yAxisRangeLabel.AutoSize = true;
-            this.yAxisRangeLabel.Location = new System.Drawing.Point(12, 146);
+            this.yAxisRangeLabel.Location = new System.Drawing.Point(12, 138);
             this.yAxisRangeLabel.Name = "yAxisRangeLabel";
             this.yAxisRangeLabel.Size = new System.Drawing.Size(140, 13);
             this.yAxisRangeLabel.TabIndex = 40;
@@ -142,7 +142,7 @@
             // 
             // xMinValueTb
             // 
-            this.xMinValueTb.Location = new System.Drawing.Point(159, 120);
+            this.xMinValueTb.Location = new System.Drawing.Point(159, 112);
             this.xMinValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.xMinValueTb.MaxLength = 300;
             this.xMinValueTb.Name = "xMinValueTb";
@@ -152,7 +152,7 @@
             // 
             // xMaxValueTb
             // 
-            this.xMaxValueTb.Location = new System.Drawing.Point(230, 120);
+            this.xMaxValueTb.Location = new System.Drawing.Point(230, 112);
             this.xMaxValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.xMaxValueTb.MaxLength = 300;
             this.xMaxValueTb.Name = "xMaxValueTb";
@@ -161,7 +161,7 @@
             // 
             // yMinValueTb
             // 
-            this.yMinValueTb.Location = new System.Drawing.Point(159, 146);
+            this.yMinValueTb.Location = new System.Drawing.Point(159, 138);
             this.yMinValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.yMinValueTb.MaxLength = 300;
             this.yMinValueTb.Name = "yMinValueTb";
@@ -170,7 +170,7 @@
             // 
             // yMaxValueTb
             // 
-            this.yMaxValueTb.Location = new System.Drawing.Point(230, 148);
+            this.yMaxValueTb.Location = new System.Drawing.Point(230, 140);
             this.yMaxValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.yMaxValueTb.MaxLength = 300;
             this.yMaxValueTb.Name = "yMaxValueTb";
@@ -181,7 +181,7 @@
             // 
             this.dash1.AutoSize = true;
             this.dash1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dash1.Location = new System.Drawing.Point(213, 120);
+            this.dash1.Location = new System.Drawing.Point(213, 112);
             this.dash1.Name = "dash1";
             this.dash1.Size = new System.Drawing.Size(14, 20);
             this.dash1.TabIndex = 45;
@@ -191,7 +191,7 @@
             // 
             this.dash2.AutoSize = true;
             this.dash2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dash2.Location = new System.Drawing.Point(213, 145);
+            this.dash2.Location = new System.Drawing.Point(213, 137);
             this.dash2.Name = "dash2";
             this.dash2.Size = new System.Drawing.Size(14, 20);
             this.dash2.TabIndex = 46;
@@ -219,7 +219,7 @@
             // applyChanges
             // 
             this.applyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.applyChanges.Location = new System.Drawing.Point(291, 173);
+            this.applyChanges.Location = new System.Drawing.Point(283, 187);
             this.applyChanges.Margin = new System.Windows.Forms.Padding(2);
             this.applyChanges.Name = "applyChanges";
             this.applyChanges.Size = new System.Drawing.Size(133, 23);
@@ -230,20 +230,20 @@
             // 
             // drawGraphB
             // 
-            this.drawGraphB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.drawGraphB.Location = new System.Drawing.Point(302, 60);
+            this.drawGraphB.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.drawGraphB.Location = new System.Drawing.Point(8, 187);
             this.drawGraphB.Margin = new System.Windows.Forms.Padding(2);
             this.drawGraphB.Name = "drawGraphB";
-            this.drawGraphB.Size = new System.Drawing.Size(116, 21);
+            this.drawGraphB.Size = new System.Drawing.Size(88, 23);
             this.drawGraphB.TabIndex = 50;
-            this.drawGraphB.Text = "Тестовый график";
+            this.drawGraphB.Text = "О программе";
             this.drawGraphB.UseVisualStyleBackColor = true;
             this.drawGraphB.Click += new System.EventHandler(this.drawGraphB_Click);
             // 
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(302, 86);
+            this.button1.Location = new System.Drawing.Point(308, 44);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(116, 21);
@@ -254,7 +254,7 @@
             // 
             // coefficientTB
             // 
-            this.coefficientTB.Location = new System.Drawing.Point(104, 170);
+            this.coefficientTB.Location = new System.Drawing.Point(104, 162);
             this.coefficientTB.Margin = new System.Windows.Forms.Padding(2);
             this.coefficientTB.MaxLength = 8;
             this.coefficientTB.Name = "coefficientTB";
@@ -264,7 +264,7 @@
             // coefficientL
             // 
             this.coefficientL.AutoSize = true;
-            this.coefficientL.Location = new System.Drawing.Point(12, 173);
+            this.coefficientL.Location = new System.Drawing.Point(12, 165);
             this.coefficientL.Name = "coefficientL";
             this.coefficientL.Size = new System.Drawing.Size(77, 13);
             this.coefficientL.TabIndex = 53;
@@ -287,35 +287,35 @@
             this.symbolCB.ImageList = this.ListForCombo;
             this.symbolCB.Indent = 0;
             this.symbolCB.ItemHeight = 15;
-            imageComboBoxItem1.Font = null;
-            imageComboBoxItem1.Image = "1";
-            imageComboBoxItem1.ImageIndex = 1;
-            imageComboBoxItem1.IndentLevel = 0;
-            imageComboBoxItem1.Item = null;
-            imageComboBoxItem1.Text = "Звезда";
-            imageComboBoxItem2.Font = null;
-            imageComboBoxItem2.Image = "3";
-            imageComboBoxItem2.ImageIndex = 3;
-            imageComboBoxItem2.IndentLevel = 0;
-            imageComboBoxItem2.Item = null;
-            imageComboBoxItem2.Text = "Палка";
-            imageComboBoxItem3.Font = null;
-            imageComboBoxItem3.Image = "0";
-            imageComboBoxItem3.ImageIndex = 0;
-            imageComboBoxItem3.IndentLevel = 0;
-            imageComboBoxItem3.Item = null;
-            imageComboBoxItem3.Text = "Круг";
-            imageComboBoxItem4.Font = null;
-            imageComboBoxItem4.Image = "2";
-            imageComboBoxItem4.ImageIndex = 2;
-            imageComboBoxItem4.IndentLevel = 0;
-            imageComboBoxItem4.Item = null;
-            imageComboBoxItem4.Text = "Линия";
+            imageComboBoxItem5.Font = null;
+            imageComboBoxItem5.Image = "1";
+            imageComboBoxItem5.ImageIndex = 1;
+            imageComboBoxItem5.IndentLevel = 0;
+            imageComboBoxItem5.Item = null;
+            imageComboBoxItem5.Text = "Звезда";
+            imageComboBoxItem6.Font = null;
+            imageComboBoxItem6.Image = "3";
+            imageComboBoxItem6.ImageIndex = 3;
+            imageComboBoxItem6.IndentLevel = 0;
+            imageComboBoxItem6.Item = null;
+            imageComboBoxItem6.Text = "Палка";
+            imageComboBoxItem7.Font = null;
+            imageComboBoxItem7.Image = "0";
+            imageComboBoxItem7.ImageIndex = 0;
+            imageComboBoxItem7.IndentLevel = 0;
+            imageComboBoxItem7.Item = null;
+            imageComboBoxItem7.Text = "Круг";
+            imageComboBoxItem8.Font = null;
+            imageComboBoxItem8.Image = "2";
+            imageComboBoxItem8.ImageIndex = 2;
+            imageComboBoxItem8.IndentLevel = 0;
+            imageComboBoxItem8.Item = null;
+            imageComboBoxItem8.Text = "Линия";
             this.symbolCB.Items.AddRange(new ImageComboBox.ImageComboBoxItem[] {
-            imageComboBoxItem1,
-            imageComboBoxItem2,
-            imageComboBoxItem3,
-            imageComboBoxItem4});
+            imageComboBoxItem5,
+            imageComboBoxItem6,
+            imageComboBoxItem7,
+            imageComboBoxItem8});
             this.symbolCB.Location = new System.Drawing.Point(365, 19);
             this.symbolCB.Margin = new System.Windows.Forms.Padding(2);
             this.symbolCB.Name = "symbolCB";
@@ -360,7 +360,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 204);
+            this.ClientSize = new System.Drawing.Size(427, 215);
             this.Controls.Add(this.sizeCB);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.symbolCB);
