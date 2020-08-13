@@ -112,8 +112,11 @@ namespace ComPortReader
                 ErrorMessage form = new ErrorMessage(errorMessageString);
                 form.Show();
             }
-            mainForm.getCurve.Symbol.Type = checkForSymbol();
-            mainForm.getCurve.Symbol.Size = int.Parse(sizeCB.Text);
+            if (mainForm.getCurve != null)
+            {
+                mainForm.getCurve.Symbol.Type = checkForSymbol();
+                mainForm.getCurve.Symbol.Size = int.Parse(sizeCB.Text);
+            }
             mainForm.ZGCInstance.Refresh();
             mainForm.ZGCInstance.AxisChange();
 

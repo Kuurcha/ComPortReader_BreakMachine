@@ -258,8 +258,6 @@ namespace ComPortReader
                 }
             }
             bool negativeMet = false;
-            bool previousIsNegative = false;
-            bool positiveFound = false;
             int zeroCounter = 0;
             int positiveCounter = 0;
             while (positiveCounter < 3 && !(positiveCounter > 0 && zeroCounter > 3) && endPoint < secondDerivativeCurve.Points.Count-1)
@@ -314,7 +312,6 @@ namespace ComPortReader
             }
 
             secondDerivativeCounter = 0;
-            int exceptionRaiseCounter = 0;
             bool negationStarted = false;
             bool previousIsPositive = false;
             endPoint = startingPoint;
@@ -323,10 +320,6 @@ namespace ComPortReader
             while ((secondDerivativeCounter < 4 && (Math.Abs(sumOfNegative) < 2.5)) &&  endPoint < lengthFirst)
             {
                 double pointToCheck = secondDerivativeCurve.Points[endPoint].Y;
-                if (endPoint == 109)
-                {
-                    int a = 1;
-                }
                 if (pointToCheck > 0)
                 {
                     if(secondDerivativeCounter > 2)
