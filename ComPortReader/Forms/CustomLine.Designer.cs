@@ -106,6 +106,7 @@
             this.MinimizeBox = false;
             this.Name = "CustomLine";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomLine_FormClosing);
             this.Load += new System.EventHandler(this.CustomLine_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

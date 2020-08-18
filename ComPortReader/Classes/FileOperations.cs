@@ -79,11 +79,15 @@ namespace ComPortReader.Classes
                 form.MinXValue = 0;
                 form.MaxYValue = 10;
                 form.MinYValue = 0;
+                form.MyBaudRate = 38400;
+                form.MyParity = Parity.None;
+                form.MyDataBits = 8;
+                form.MyStopBits = StopBits.One;
                 
                 byte[] bytes = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(path + "\r");
                 fileStream.Write(bytes, 0, bytes.Length);
-                byte[] bytes2 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes("true\r");
-                fileStream.Write(bytes2, 0, bytes2.Length);
+                //byte[] bytes2 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes("true\r");
+                //fileStream.Write(bytes2, 0, bytes2.Length);
                 byte[] bytes3 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes("1\r");
                 fileStream.Write(bytes3, 0, bytes3.Length);
                 byte[] bytes4 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes("N spins\r");
@@ -100,6 +104,14 @@ namespace ComPortReader.Classes
                 fileStream.Write(bytes9, 0, bytes9.Length);
                 byte[] bytes10 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(0 + "\r");
                 fileStream.Write(bytes10, 0, bytes10.Length);
+                byte[] bytes11 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.MyBaudRate + "\r");
+                fileStream.Write(bytes11, 0, bytes11.Length);
+                byte[] bytes12 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes((int) form.MyParity + "\r");
+                fileStream.Write(bytes12, 0, bytes12.Length);
+                byte[] bytes13 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.MyDataBits + "\r");
+                fileStream.Write(bytes13, 0, bytes13.Length);
+                byte[] bytes14 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes((int) form.MyStopBits + "\r");
+                fileStream.Write(bytes14, 0, bytes14.Length);
 
             }
         }
@@ -115,8 +127,8 @@ namespace ComPortReader.Classes
                 
                 byte[] bytes = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.GetPath + "\r");
                 fileStream.Write(bytes, 0, bytes.Length);
-                byte[] bytes2 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.leastSquares + "\r");
-                fileStream.Write(bytes2, 0, bytes2.Length);
+                //byte[] bytes2 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.leastSquares + "\r");
+                //fileStream.Write(bytes2, 0, bytes2.Length);
                 byte[] bytes3 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.Coefficent.ToString() + "\r");
                 fileStream.Write(bytes3, 0, bytes3.Length);
                 byte[] bytes4 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.XAxisData + "\r");
@@ -133,7 +145,15 @@ namespace ComPortReader.Classes
                 fileStream.Write(bytes9, 0, bytes9.Length);
                 byte[] bytes10 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.MinYValue.ToString() + "\r");
                 fileStream.Write(bytes10, 0, bytes10.Length);
-            }
+                byte[] bytes11 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.MyBaudRate + "\r");
+                fileStream.Write(bytes11, 0, bytes11.Length);
+                byte[] bytes12 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes((int) form.MyParity + "\r");
+                fileStream.Write(bytes12, 0, bytes12.Length);
+                byte[] bytes13 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(form.MyDataBits + "\r");
+                fileStream.Write(bytes13, 0, bytes13.Length);
+                byte[] bytes14 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes((int) form.MyStopBits + "\r");
+                fileStream.Write(bytes14, 0, bytes14.Length);
+            }   
         }
 
 
@@ -170,6 +190,21 @@ namespace ComPortReader.Classes
                         form.MaxYValue = intresult;
                         int.TryParse(list[8], out intresult);
                         form.MinYValue = intresult;
+                        int.TryParse(list[9], out intresult);
+                        form.MyBaudRate = intresult;
+                        int.TryParse(list[10], out intresult);
+                        form.MyParity = (Parity)intresult;
+                        int.TryParse(list[11], out intresult);
+                        form.MyDataBits = intresult;
+                        int.TryParse(list[12], out intresult);
+                        form.MyStopBits = (StopBits)intresult;
+                        form.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
+                        form.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;
+
+                        // Установим масштаб по умолчанию для оси Y
+                        form.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
+                        form.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
+
                     }
                 }
                 else

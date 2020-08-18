@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem5 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem6 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem7 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem8 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem1 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem2 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem3 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem4 = new ImageComboBox.ImageComboBoxItem();
             this.xAxisRangeLabel = new System.Windows.Forms.Label();
             this.xAxisNameLabel = new System.Windows.Forms.Label();
             this.graphNameLabel = new System.Windows.Forms.Label();
@@ -60,6 +60,16 @@
             this.afterSelectEventHandlerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.sizeCB = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.baudRateTB = new System.Windows.Forms.TextBox();
+            this.parityTB = new System.Windows.Forms.ComboBox();
+            this.dataBitTB = new System.Windows.Forms.TextBox();
+            this.stopBitTB = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.afterSelectEventHandlerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,7 +171,7 @@
             // 
             // yMinValueTb
             // 
-            this.yMinValueTb.Location = new System.Drawing.Point(159, 138);
+            this.yMinValueTb.Location = new System.Drawing.Point(159, 140);
             this.yMinValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.yMinValueTb.MaxLength = 300;
             this.yMinValueTb.Name = "yMinValueTb";
@@ -219,7 +229,7 @@
             // applyChanges
             // 
             this.applyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.applyChanges.Location = new System.Drawing.Point(283, 187);
+            this.applyChanges.Location = new System.Drawing.Point(298, 245);
             this.applyChanges.Margin = new System.Windows.Forms.Padding(2);
             this.applyChanges.Name = "applyChanges";
             this.applyChanges.Size = new System.Drawing.Size(133, 23);
@@ -231,7 +241,7 @@
             // drawGraphB
             // 
             this.drawGraphB.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.drawGraphB.Location = new System.Drawing.Point(8, 187);
+            this.drawGraphB.Location = new System.Drawing.Point(17, 245);
             this.drawGraphB.Margin = new System.Windows.Forms.Padding(2);
             this.drawGraphB.Name = "drawGraphB";
             this.drawGraphB.Size = new System.Drawing.Size(88, 23);
@@ -254,7 +264,7 @@
             // 
             // coefficientTB
             // 
-            this.coefficientTB.Location = new System.Drawing.Point(104, 162);
+            this.coefficientTB.Location = new System.Drawing.Point(104, 165);
             this.coefficientTB.Margin = new System.Windows.Forms.Padding(2);
             this.coefficientTB.MaxLength = 8;
             this.coefficientTB.Name = "coefficientTB";
@@ -264,7 +274,7 @@
             // coefficientL
             // 
             this.coefficientL.AutoSize = true;
-            this.coefficientL.Location = new System.Drawing.Point(12, 165);
+            this.coefficientL.Location = new System.Drawing.Point(12, 168);
             this.coefficientL.Name = "coefficientL";
             this.coefficientL.Size = new System.Drawing.Size(77, 13);
             this.coefficientL.TabIndex = 53;
@@ -287,35 +297,35 @@
             this.symbolCB.ImageList = this.ListForCombo;
             this.symbolCB.Indent = 0;
             this.symbolCB.ItemHeight = 15;
-            imageComboBoxItem5.Font = null;
-            imageComboBoxItem5.Image = "1";
-            imageComboBoxItem5.ImageIndex = 1;
-            imageComboBoxItem5.IndentLevel = 0;
-            imageComboBoxItem5.Item = null;
-            imageComboBoxItem5.Text = "Звезда";
-            imageComboBoxItem6.Font = null;
-            imageComboBoxItem6.Image = "3";
-            imageComboBoxItem6.ImageIndex = 3;
-            imageComboBoxItem6.IndentLevel = 0;
-            imageComboBoxItem6.Item = null;
-            imageComboBoxItem6.Text = "Палка";
-            imageComboBoxItem7.Font = null;
-            imageComboBoxItem7.Image = "0";
-            imageComboBoxItem7.ImageIndex = 0;
-            imageComboBoxItem7.IndentLevel = 0;
-            imageComboBoxItem7.Item = null;
-            imageComboBoxItem7.Text = "Круг";
-            imageComboBoxItem8.Font = null;
-            imageComboBoxItem8.Image = "2";
-            imageComboBoxItem8.ImageIndex = 2;
-            imageComboBoxItem8.IndentLevel = 0;
-            imageComboBoxItem8.Item = null;
-            imageComboBoxItem8.Text = "Линия";
+            imageComboBoxItem1.Font = null;
+            imageComboBoxItem1.Image = "1";
+            imageComboBoxItem1.ImageIndex = 1;
+            imageComboBoxItem1.IndentLevel = 0;
+            imageComboBoxItem1.Item = null;
+            imageComboBoxItem1.Text = "Звезда";
+            imageComboBoxItem2.Font = null;
+            imageComboBoxItem2.Image = "3";
+            imageComboBoxItem2.ImageIndex = 3;
+            imageComboBoxItem2.IndentLevel = 0;
+            imageComboBoxItem2.Item = null;
+            imageComboBoxItem2.Text = "Палка";
+            imageComboBoxItem3.Font = null;
+            imageComboBoxItem3.Image = "0";
+            imageComboBoxItem3.ImageIndex = 0;
+            imageComboBoxItem3.IndentLevel = 0;
+            imageComboBoxItem3.Item = null;
+            imageComboBoxItem3.Text = "Круг";
+            imageComboBoxItem4.Font = null;
+            imageComboBoxItem4.Image = "2";
+            imageComboBoxItem4.ImageIndex = 2;
+            imageComboBoxItem4.IndentLevel = 0;
+            imageComboBoxItem4.Item = null;
+            imageComboBoxItem4.Text = "Линия";
             this.symbolCB.Items.AddRange(new ImageComboBox.ImageComboBoxItem[] {
-            imageComboBoxItem5,
-            imageComboBoxItem6,
-            imageComboBoxItem7,
-            imageComboBoxItem8});
+            imageComboBoxItem1,
+            imageComboBoxItem2,
+            imageComboBoxItem3,
+            imageComboBoxItem4});
             this.symbolCB.Location = new System.Drawing.Point(365, 19);
             this.symbolCB.Margin = new System.Windows.Forms.Padding(2);
             this.symbolCB.Name = "symbolCB";
@@ -356,11 +366,120 @@
             this.sizeCB.TabIndex = 57;
             this.sizeCB.SelectedIndexChanged += new System.EventHandler(this.sizeCB_SelectedIndexChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(156, 187);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 13);
+            this.label1.TabIndex = 58;
+            this.label1.Text = "Настройки COM-порта";
+            // 
+            // baudRateTB
+            // 
+            this.baudRateTB.Location = new System.Drawing.Point(55, 220);
+            this.baudRateTB.Name = "baudRateTB";
+            this.baudRateTB.Size = new System.Drawing.Size(88, 20);
+            this.baudRateTB.TabIndex = 59;
+            this.toolTip1.SetToolTip(this.baudRateTB, "Скорость передачи (Baud Rate)");
+            this.baudRateTB.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.baudRateTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.baudRateTB_KeyPress);
+            // 
+            // parityTB
+            // 
+            this.parityTB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.parityTB.FormattingEnabled = true;
+            this.parityTB.Items.AddRange(new object[] {
+            "Отсуствует",
+            "Всегда чет",
+            "Всегда нечет",
+            "Всегда 1",
+            "Всегда 0"});
+            this.parityTB.Location = new System.Drawing.Point(168, 219);
+            this.parityTB.Name = "parityTB";
+            this.parityTB.Size = new System.Drawing.Size(91, 21);
+            this.parityTB.TabIndex = 61;
+            this.toolTip1.SetToolTip(this.parityTB, "Бит четности (Parity)");
+            this.parityTB.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
+            // 
+            // dataBitTB
+            // 
+            this.dataBitTB.Location = new System.Drawing.Point(283, 220);
+            this.dataBitTB.MaxLength = 1;
+            this.dataBitTB.Name = "dataBitTB";
+            this.dataBitTB.Size = new System.Drawing.Size(25, 20);
+            this.dataBitTB.TabIndex = 63;
+            this.toolTip1.SetToolTip(this.dataBitTB, "Бит данных (dataBit)");
+            this.dataBitTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dataBitTB_KeyPress);
+            // 
+            // stopBitTB
+            // 
+            this.stopBitTB.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.stopBitTB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.stopBitTB.ForeColor = System.Drawing.SystemColors.Info;
+            this.stopBitTB.FormattingEnabled = true;
+            this.stopBitTB.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "1,5",
+            "2"});
+            this.stopBitTB.Location = new System.Drawing.Point(346, 219);
+            this.stopBitTB.Name = "stopBitTB";
+            this.stopBitTB.Size = new System.Drawing.Size(39, 21);
+            this.stopBitTB.TabIndex = 65;
+            this.toolTip1.SetToolTip(this.stopBitTB, "Стоп бит (Stop Bit)");
+            this.stopBitTB.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(50, 204);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(105, 13);
+            this.label3.TabIndex = 60;
+            this.label3.Text = "Скорость передачи";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(175, 204);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(73, 13);
+            this.label4.TabIndex = 62;
+            this.label4.Text = "Бит четности";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(265, 204);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.TabIndex = 64;
+            this.label5.Text = "Бит данных";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(343, 204);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(51, 13);
+            this.label6.TabIndex = 66;
+            this.label6.Text = "Cтоп бит";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 215);
+            this.ClientSize = new System.Drawing.Size(442, 279);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.stopBitTB);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.dataBitTB);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.parityTB);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.baudRateTB);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.sizeCB);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.symbolCB);
@@ -425,5 +544,15 @@
         private System.Windows.Forms.BindingSource afterSelectEventHandlerBindingSource;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox sizeCB;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TextBox baudRateTB;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox parityTB;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox dataBitTB;
+        private System.Windows.Forms.ComboBox stopBitTB;
+        private System.Windows.Forms.Label label6;
     }
 }

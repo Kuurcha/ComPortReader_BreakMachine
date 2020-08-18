@@ -27,8 +27,30 @@ namespace ComPortReader
             }
             while (File.Exists(path))
             {
-                string temp = path.Remove(path.Length - 5);
+                string temp = path.Remove(path.Length - 4 - counter.ToString().Length);
                 path = temp + counter + ".txt";
+                counter++;
+            }
+            return path;
+        }
+        // <summary>
+        /// Check for default path and renames files (txt) if there is a duplicate with a same name
+        /// </summary>
+        /// <param name="path">Path to file</param>
+        /// <param name="defaultPath">Default for the program folder for the saving</param>
+        /// <param name="name">name which you want to set for your file "%PATH%\name" + counter + ".txt</param>
+        /// <returns>A string with a different file name if duplicate was found, the same string that entered in other cases</returns>
+        public static string CheckForDuplicateDOCX(string path, string defaultPath, string name)
+        {
+            int counter = 1;
+            if (path == defaultPath)
+            {
+                path += @"\" + name + ".docx";
+            }
+            while (File.Exists(path))
+            {
+                string temp = path.Remove(path.Length - 4 - counter.ToString().Length);
+                path = temp + counter + ".docx";
                 counter++;
             }
             return path;
@@ -49,7 +71,7 @@ namespace ComPortReader
             }
             while (File.Exists(path))
             {
-                string temp = path.Remove(path.Length - 5);
+                string temp = path.Remove(path.Length - 4 - counter.ToString().Length);
                 path = temp + counter + ".png";
                 counter++;
             }

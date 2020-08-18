@@ -14,7 +14,7 @@ namespace ComPortReader.Classes
     {
         ToolStripDropDownButton dropDownBtn;
         ZedGraphControl zgc;
-        LineItem curve;
+        internal LineItem curve;
         internal ToolStripMenuItem button;
         /// <summary>
         ///  Object for creating dynamicly the dropdownitem button with event to hide curves on ZedGraphControl.

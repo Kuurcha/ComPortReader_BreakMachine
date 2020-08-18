@@ -9,7 +9,7 @@ using System.Timers;
 using System.Windows.Forms;
 using ComPortReader.Classes;
 using System.Xml.Schema;
-
+using System.IO.Ports;
 namespace ComPortReader
 {
     class GraphProcessing
@@ -110,6 +110,9 @@ namespace ComPortReader
             curve.Symbol.Size = size;
             curve.Symbol.Type = symbolType;
             curve.Symbol.Fill = new Fill(fillColor);
+            curve.Label.FontSpec = new FontSpec("Arial", 8, Color.Black, false, false, false);
+
+           
             DynamicToolStripButton btn = new DynamicToolStripButton(curve, zgc, dropdownBtn);
             dropdownBtn.DropDownItems.Add(btn.button);
             return btn;
@@ -239,13 +242,59 @@ namespace ComPortReader
             return (next - prev) / 2;
         }
 
-        
+        public static void resetGraph(MainProgram mainForm)
+        {
+            PointPairList list = new PointPairList();
+
+            mainForm.MinXValue = 0;
+            mainForm.MinYValue = 0;
+            mainForm.MaxXValue = 100;
+            mainForm.MaxYValue = 100;
+            mainForm.ZGCInstance.GraphPane.CurveList.Clear();
+            mainForm.ZGCInstance.AxisChange();
+            mainForm.ZGCInstance.Invalidate();
+            mainForm.ZGCInstance.GraphPane.CurveList.Clear();
+            mainForm.buttons.Clear();
+            mainForm.getCurve = null;
+            mainForm.CurvesButtons.DropDownItems.Clear();
+            if (mainForm.everySecond!=null) mainForm.everySecond.Elapsed += new System.Timers.ElapsedEventHandler(mainForm.timer_tick);
+            mainForm.everySecond = null;
+            mainForm.AtLeastOnePointPassed = false;
+            mainForm.counterTimer = 0;
+            mainForm.SelectionCurveBegin = null;
+            mainForm.SelectionCurveEnd = null;
+
+            // Установим масштаб по умолчанию для оси X
+            mainForm.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
+            mainForm.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;
+
+            // Установим масштаб по умолчанию для оси Y
+            mainForm.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
+            mainForm.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
+                mainForm.Port.Close();
+                mainForm.Port.DataReceived -= new SerialDataReceivedEventHandler(mainForm.port_DataReceived);
+                mainForm.openComPort();
+                mainForm.Port.DataReceived += new SerialDataReceivedEventHandler(mainForm.port_DataReceived);
+                mainForm.Port.Open();
+       
+        }
         internal static int[] CalculatePointsForLinear(LineItem originalCurve, LineItem secondDerivativeCurve, LineItem firstMovingAverageCurve)
         {
             // bound[0] - startPoint
             // bound[1] - endPoint
             int startPoint = 0;
             while (originalCurve.Points[startPoint].Y < 25 && startPoint < originalCurve.Points.Count - 1) startPoint++;
+            double average = 0;
+            for (int i = startPoint; i < secondDerivativeCurve.Points.Count-10; i++) average += Math.Abs(secondDerivativeCurve.Points[i].Y);
+            average /= secondDerivativeCurve.Points.Count - 10;
+            int counterFlag = 0;
+            bool flag = true;
+            while( startPoint < secondDerivativeCurve.Points.Count -1 && flag)
+            {
+                if (secondDerivativeCurve.Points[startPoint].Y < 1.2*average) counterFlag++;
+                if (counterFlag == 5) flag = false;
+                startPoint++;
+            }
             double max = Double.MinValue;
             int endPoint = startPoint;
             for (int i = 0; i < firstMovingAverageCurve.Points.Count-1; i++)

@@ -62,13 +62,21 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Xceed.Document.NET, Version=1.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.7.0\lib\net40\Xceed.Document.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Words.NET, Version=1.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.7.0\lib\net40\Xceed.Words.NET.dll</HintPath>
+    </Reference>
     <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
       <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\DynamicToolStripButton.cs" />
+    <Compile Include="Classes\ExperimentReading.cs" />
     <Compile Include="Classes\FileOperations.cs" />
+    <Compile Include="Classes\MyMath.cs" />
     <Compile Include="Classes\XYDataSet.cs" />
     <Compile Include="Classes\PointD.cs" />
     <Compile Include="Forms\About.cs">
@@ -97,6 +105,18 @@
     <Compile Include="Forms\errorMessage.Designer.cs">
       <DependentUpon>errorMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FirstInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FirstInput.Designer.cs">
+      <DependentUpon>FirstInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MakeAWordDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MakeAWordDocumentForm.Designer.cs">
+      <DependentUpon>MakeAWordDocumentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainProgram.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +143,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\errorMessage.resx">
       <DependentUpon>errorMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FirstInput.resx">
+      <DependentUpon>FirstInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MakeAWordDocumentForm.resx">
+      <DependentUpon>MakeAWordDocumentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainProgram.resx">
       <DependentUpon>MainProgram.cs</DependentUpon>
@@ -186,7 +212,13 @@
     <Content Include="Resources\Circle.png" />
     <Content Include="Resources\Cross.png" />
     <Content Include="Resources\empty.png" />
-    <Content Include="Resources\line.png" />
+    <EmbeddedResource Include="Resources\ИТ_Сервис.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Визитка.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\line.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

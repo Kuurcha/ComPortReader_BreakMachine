@@ -38,10 +38,9 @@
             this.comPortStatusB = new System.Windows.Forms.ToolStripComboBox();
             this.setCOMB = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.curvesDropDownBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.coord = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.planeGraph = new ZedGraph.ZedGraphControl();
             this.textBox2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -56,16 +55,16 @@
             this.startingRecordMenuB,
             this.comPortStatusB,
             this.setCOMB,
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3,
             this.curvesDropDownBtn,
-            this.coord});
+            this.coord,
+            this.toolStripButton1,
+            this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(745, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(1159, 31);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // resetB
             // 
@@ -133,26 +132,6 @@
             this.toolStripButton1.Text = "Печать";
             this.toolStripButton1.Click += new System.EventHandler(this.PrintButton_Click);
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(115, 28);
-            this.toolStripButton2.Text = "Линейный участок";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(28, 28);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
-            // 
             // curvesDropDownBtn
             // 
             this.curvesDropDownBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -168,6 +147,16 @@
             this.coord.Name = "coord";
             this.coord.Size = new System.Drawing.Size(0, 28);
             // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(98, 28);
+            this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
+            // 
             // planeGraph
             // 
             this.planeGraph.AutoSize = true;
@@ -182,12 +171,14 @@
             this.planeGraph.ScrollMinY = 1000D;
             this.planeGraph.ScrollMinY2 = 1000D;
             this.planeGraph.SelectModifierKeys = System.Windows.Forms.Keys.None;
-            this.planeGraph.Size = new System.Drawing.Size(744, 367);
+            this.planeGraph.Size = new System.Drawing.Size(1159, 583);
             this.planeGraph.TabIndex = 13;
             this.planeGraph.UseExtendedPrintDialog = true;
             this.planeGraph.MouseMoveEvent += new ZedGraph.ZedGraphControl.ZedMouseEventHandler(this.planeGraph_MouseMoveEvent);
             this.planeGraph.DoubleClickEvent += new ZedGraph.ZedGraphControl.ZedMouseEventHandler(this.planeGraph_DoubleClickEvent);
             this.planeGraph.Load += new System.EventHandler(this.planeGraph_Load_1);
+            this.planeGraph.DockChanged += new System.EventHandler(this.planeGraph_DockChanged);
+            this.planeGraph.DoubleClick += new System.EventHandler(this.planeGraph_DoubleClick);
             this.planeGraph.KeyDown += new System.Windows.Forms.KeyEventHandler(this.planeGraph_KeyDown);
             this.planeGraph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.planeGraph_MouseClick);
             this.planeGraph.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.planeGraph_PreviewKeyDown);
@@ -204,8 +195,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(745, 392);
+            this.ClientSize = new System.Drawing.Size(1159, 608);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.planeGraph);
             this.Controls.Add(this.toolStrip1);
@@ -237,8 +227,7 @@
         private System.Windows.Forms.ToolStripLabel coord;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripDropDownButton curvesDropDownBtn;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
     }
 }
 

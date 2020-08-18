@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.IO.Ports;
 using ZedGraph;
 
 namespace ComPortReader
@@ -15,7 +16,7 @@ namespace ComPortReader
     public partial class Settings : Form
     {
         MainProgram mainForm;
-       
+
 
         public Settings()
         {
@@ -45,6 +46,10 @@ namespace ComPortReader
             xMinValueTb.Text = mainForm.MinXValue.ToString();
             yMaxValueTb.Text = mainForm.MaxYValue.ToString();
             yMinValueTb.Text = mainForm.MinYValue.ToString();
+            baudRateTB.Text = mainForm.MyBaudRate.ToString();
+            parityTB.Text = ParityEnumToString((int)mainForm.MyParity);
+            dataBitTB.Text = mainForm.MyDataBits.ToString();
+            stopBitTB.Text = StopEnumToString(mainForm.MyStopBits);
         }
         private SymbolType checkForSymbol()
         {
@@ -54,12 +59,94 @@ namespace ComPortReader
             else if (symbolCB.Text == "Линия") outPut = SymbolType.None;
             return outPut;
         }
+
+        public StopBits StringToStopEnum(string enumS)
+        {
+            switch (enumS)
+            {
+                case "0":
+                    return (StopBits)0;
+                case "1":
+                    return (StopBits)1;
+                case "1.5":
+                    return (StopBits)2;
+                case "2":
+                    return (StopBits)3;
+                default:
+                    return (StopBits)0;
+            }
+        }
+        public string StopEnumToString(StopBits enumVar)
+        {
+            int enumInt = (int)enumVar;
+            switch (enumInt)
+            {
+                case 0:
+                    return "0";
+                case 1:
+                    return "1";
+                case 2:
+                    return "1.5";
+                case 3:
+                    return "2";
+                default:
+                    return "0";
+            }
+        }
+
+        /// <summary>
+        /// Метод для перевода из названия для пользовател в конкретный Enum состояния Parity.
+        /// </summary>
+        /// <param name="enumS">Строка из TextBox</param>
+        /// <returns>Соответсвующий Enum</returns>
+        private int StringToParityEnum(string enumS)
+        {
+            switch (enumS)
+            {
+                case "Отсуствует":
+                    return 0;
+                case "Всегда нечет":
+                    return 1;
+                case "Всегда чет":
+                    return 2;
+                case "Всегда 1":
+                    return 3;
+                case "Всегда 0":
+                    return 4;
+                default:
+                    return -1;
+            }
+        }
+        /// <summary>
+        /// Метод для перевода из чисел в активное название в Textbox
+        /// </summary>
+        /// <param name="enumInt">Число из настроек COM порта</param>
+        /// <returns>Соответсвующую текущую строку в Textbox</returns>
+        private string ParityEnumToString(int enumInt)
+        {
+            switch (enumInt)
+            {
+                case 0:
+                    return "Отсуствует";
+                case 1:
+                    return "Всегда нечет";
+                case 2:
+                    return "Всегда чет";
+                case 3:
+                    return "Всегда 1";
+                case 4:
+                    return "Всегда 0";
+                default:
+                    return "Неопознанная ошибка";
+            }
+        }
         private void applyChanges_Click(object sender, EventArgs e)
         {
             double xMin, xMax, yMin, yMax;
             bool throwError = false;
             string errorMessageString = "";
             double coefficient = 1.0;
+            int baudRate, dataBit;
             if (double.TryParse(xMinValueTb.Text, out xMin) && double.TryParse(xMaxValueTb.Text, out xMax) && double.TryParse(yMinValueTb.Text, out yMin) && double.TryParse(yMaxValueTb.Text, out yMax))
             {
                 mainForm.MinXValue = xMin;
@@ -100,7 +187,7 @@ namespace ComPortReader
             }
             if (!throwError)
             {
-               
+
                 mainForm.ZGCInstance.Refresh();
                 mainForm.ZGCInstance.AxisChange();
                 mainForm.ZGCInstance.GraphPane.XAxis.Title.Text = yAxisNameTB.Text;
@@ -117,6 +204,15 @@ namespace ComPortReader
                 mainForm.getCurve.Symbol.Type = checkForSymbol();
                 mainForm.getCurve.Symbol.Size = int.Parse(sizeCB.Text);
             }
+            if (int.TryParse(baudRateTB.Text, out baudRate) && int.TryParse(dataBitTB.Text, out dataBit))
+            {
+                mainForm.MyBaudRate = baudRate;
+                mainForm.MyDataBits = dataBit;
+            }
+            mainForm.MyParity = (Parity)StringToParityEnum(parityTB.Text);
+            mainForm.MyStopBits = StringToStopEnum(stopBitTB.Text);
+
+
             mainForm.ZGCInstance.Refresh();
             mainForm.ZGCInstance.AxisChange();
 
@@ -127,7 +223,7 @@ namespace ComPortReader
             // Установим масштаб по умолчанию для оси Y
             mainForm.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
             mainForm.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
-        }   
+        }
 
         private void graphNameLabelTB_TextChanged(object sender, EventArgs e)
         {
@@ -149,32 +245,11 @@ namespace ComPortReader
             var newForm = new About();
             newForm.Show();
         }
-        public void RestoreBackToDefault()
-        {
-            PointPairList list = new PointPairList();
-          
-            mainForm.MinXValue = 0;
-            mainForm.MinYValue = 0;
-            mainForm.MaxXValue = 100;
-            mainForm.MaxYValue = 100;
-            mainForm.ZGCInstance.GraphPane.CurveList.Clear();
-            mainForm.ZGCInstance.AxisChange();
-            mainForm.ZGCInstance.Invalidate();
-            mainForm.ZGCInstance.GraphPane.CurveList.Clear();
-            mainForm.buttons.Clear();
-            mainForm.getCurve = null;
-            mainForm.CurvesButtons.DropDownItems.Clear();
-            // Установим масштаб по умолчанию для оси X
-            mainForm.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
-            mainForm.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;
-
-            // Установим масштаб по умолчанию для оси Y
-            mainForm.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
-            mainForm.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
-        }
+       
+       
         private void button1_Click(object sender, EventArgs e)
         {
-            RestoreBackToDefault();
+            GraphProcessing.resetGraph(mainForm);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -243,6 +318,30 @@ namespace ComPortReader
         private void Settings_FormClosed(object sender, FormClosedEventArgs e)
         {
             mainForm.settingsForm = new Settings(mainForm);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void baudRateTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void dataBitTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
     }
 }
