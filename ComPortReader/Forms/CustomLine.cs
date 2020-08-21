@@ -86,7 +86,7 @@ namespace ComPortReader.Forms
                         for (int i = begin; i < end; i++) temp.AddPoint(form.getCurve.Points[i]);
                        
                         MyMath.leastSquaresBuild(begin, end, temp, ref aproximateLinearCurve, form);
-                        form.AproximateLinearCurve = aproximateLinearCurve;
+                        aproximateLinearCurve  = form.AproximateLinearCurve;
 
 
                         GraphProcessing.UpdateGraph(form.ZGCInstance);
