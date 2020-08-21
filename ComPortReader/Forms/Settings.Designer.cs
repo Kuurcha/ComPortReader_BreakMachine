@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem1 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem2 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem3 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem4 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem5 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem6 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem7 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem8 = new ImageComboBox.ImageComboBoxItem();
             this.xAxisRangeLabel = new System.Windows.Forms.Label();
             this.xAxisNameLabel = new System.Windows.Forms.Label();
             this.graphNameLabel = new System.Windows.Forms.Label();
@@ -66,17 +66,19 @@
             this.parityTB = new System.Windows.Forms.ComboBox();
             this.dataBitTB = new System.Windows.Forms.TextBox();
             this.stopBitTB = new System.Windows.Forms.ComboBox();
+            this.sensitivityTB = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.afterSelectEventHandlerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // xAxisRangeLabel
             // 
             this.xAxisRangeLabel.AutoSize = true;
-            this.xAxisRangeLabel.Location = new System.Drawing.Point(12, 115);
+            this.xAxisRangeLabel.Location = new System.Drawing.Point(12, 108);
             this.xAxisRangeLabel.Name = "xAxisRangeLabel";
             this.xAxisRangeLabel.Size = new System.Drawing.Size(139, 13);
             this.xAxisRangeLabel.TabIndex = 34;
@@ -85,7 +87,7 @@
             // xAxisNameLabel
             // 
             this.xAxisNameLabel.AutoSize = true;
-            this.xAxisNameLabel.Location = new System.Drawing.Point(12, 76);
+            this.xAxisNameLabel.Location = new System.Drawing.Point(17, 77);
             this.xAxisNameLabel.Name = "xAxisNameLabel";
             this.xAxisNameLabel.Size = new System.Drawing.Size(88, 13);
             this.xAxisNameLabel.TabIndex = 35;
@@ -103,7 +105,7 @@
             // yAxisNameLabel
             // 
             this.yAxisNameLabel.AutoSize = true;
-            this.yAxisNameLabel.Location = new System.Drawing.Point(12, 55);
+            this.yAxisNameLabel.Location = new System.Drawing.Point(16, 56);
             this.yAxisNameLabel.Name = "yAxisNameLabel";
             this.yAxisNameLabel.Size = new System.Drawing.Size(89, 13);
             this.yAxisNameLabel.TabIndex = 36;
@@ -143,7 +145,7 @@
             // yAxisRangeLabel
             // 
             this.yAxisRangeLabel.AutoSize = true;
-            this.yAxisRangeLabel.Location = new System.Drawing.Point(12, 138);
+            this.yAxisRangeLabel.Location = new System.Drawing.Point(14, 135);
             this.yAxisRangeLabel.Name = "yAxisRangeLabel";
             this.yAxisRangeLabel.Size = new System.Drawing.Size(140, 13);
             this.yAxisRangeLabel.TabIndex = 40;
@@ -152,7 +154,7 @@
             // 
             // xMinValueTb
             // 
-            this.xMinValueTb.Location = new System.Drawing.Point(159, 112);
+            this.xMinValueTb.Location = new System.Drawing.Point(159, 105);
             this.xMinValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.xMinValueTb.MaxLength = 300;
             this.xMinValueTb.Name = "xMinValueTb";
@@ -162,7 +164,7 @@
             // 
             // xMaxValueTb
             // 
-            this.xMaxValueTb.Location = new System.Drawing.Point(230, 112);
+            this.xMaxValueTb.Location = new System.Drawing.Point(230, 105);
             this.xMaxValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.xMaxValueTb.MaxLength = 300;
             this.xMaxValueTb.Name = "xMaxValueTb";
@@ -171,7 +173,7 @@
             // 
             // yMinValueTb
             // 
-            this.yMinValueTb.Location = new System.Drawing.Point(159, 140);
+            this.yMinValueTb.Location = new System.Drawing.Point(159, 133);
             this.yMinValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.yMinValueTb.MaxLength = 300;
             this.yMinValueTb.Name = "yMinValueTb";
@@ -180,7 +182,7 @@
             // 
             // yMaxValueTb
             // 
-            this.yMaxValueTb.Location = new System.Drawing.Point(230, 140);
+            this.yMaxValueTb.Location = new System.Drawing.Point(230, 133);
             this.yMaxValueTb.Margin = new System.Windows.Forms.Padding(2);
             this.yMaxValueTb.MaxLength = 300;
             this.yMaxValueTb.Name = "yMaxValueTb";
@@ -191,7 +193,7 @@
             // 
             this.dash1.AutoSize = true;
             this.dash1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dash1.Location = new System.Drawing.Point(213, 112);
+            this.dash1.Location = new System.Drawing.Point(213, 105);
             this.dash1.Name = "dash1";
             this.dash1.Size = new System.Drawing.Size(14, 20);
             this.dash1.TabIndex = 45;
@@ -201,7 +203,7 @@
             // 
             this.dash2.AutoSize = true;
             this.dash2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dash2.Location = new System.Drawing.Point(213, 137);
+            this.dash2.Location = new System.Drawing.Point(213, 130);
             this.dash2.Name = "dash2";
             this.dash2.Size = new System.Drawing.Size(14, 20);
             this.dash2.TabIndex = 46;
@@ -229,7 +231,7 @@
             // applyChanges
             // 
             this.applyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.applyChanges.Location = new System.Drawing.Point(298, 245);
+            this.applyChanges.Location = new System.Drawing.Point(305, 245);
             this.applyChanges.Margin = new System.Windows.Forms.Padding(2);
             this.applyChanges.Name = "applyChanges";
             this.applyChanges.Size = new System.Drawing.Size(133, 23);
@@ -253,10 +255,10 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(308, 44);
+            this.button1.Location = new System.Drawing.Point(326, 44);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(116, 21);
+            this.button1.Size = new System.Drawing.Size(105, 29);
             this.button1.TabIndex = 51;
             this.button1.Text = "Обнулить график";
             this.button1.UseVisualStyleBackColor = true;
@@ -264,7 +266,7 @@
             // 
             // coefficientTB
             // 
-            this.coefficientTB.Location = new System.Drawing.Point(104, 165);
+            this.coefficientTB.Location = new System.Drawing.Point(159, 158);
             this.coefficientTB.Margin = new System.Windows.Forms.Padding(2);
             this.coefficientTB.MaxLength = 8;
             this.coefficientTB.Name = "coefficientTB";
@@ -274,7 +276,7 @@
             // coefficientL
             // 
             this.coefficientL.AutoSize = true;
-            this.coefficientL.Location = new System.Drawing.Point(12, 168);
+            this.coefficientL.Location = new System.Drawing.Point(74, 161);
             this.coefficientL.Name = "coefficientL";
             this.coefficientL.Size = new System.Drawing.Size(77, 13);
             this.coefficientL.TabIndex = 53;
@@ -297,35 +299,35 @@
             this.symbolCB.ImageList = this.ListForCombo;
             this.symbolCB.Indent = 0;
             this.symbolCB.ItemHeight = 15;
-            imageComboBoxItem1.Font = null;
-            imageComboBoxItem1.Image = "1";
-            imageComboBoxItem1.ImageIndex = 1;
-            imageComboBoxItem1.IndentLevel = 0;
-            imageComboBoxItem1.Item = null;
-            imageComboBoxItem1.Text = "Звезда";
-            imageComboBoxItem2.Font = null;
-            imageComboBoxItem2.Image = "3";
-            imageComboBoxItem2.ImageIndex = 3;
-            imageComboBoxItem2.IndentLevel = 0;
-            imageComboBoxItem2.Item = null;
-            imageComboBoxItem2.Text = "Палка";
-            imageComboBoxItem3.Font = null;
-            imageComboBoxItem3.Image = "0";
-            imageComboBoxItem3.ImageIndex = 0;
-            imageComboBoxItem3.IndentLevel = 0;
-            imageComboBoxItem3.Item = null;
-            imageComboBoxItem3.Text = "Круг";
-            imageComboBoxItem4.Font = null;
-            imageComboBoxItem4.Image = "2";
-            imageComboBoxItem4.ImageIndex = 2;
-            imageComboBoxItem4.IndentLevel = 0;
-            imageComboBoxItem4.Item = null;
-            imageComboBoxItem4.Text = "Линия";
+            imageComboBoxItem5.Font = null;
+            imageComboBoxItem5.Image = "1";
+            imageComboBoxItem5.ImageIndex = 1;
+            imageComboBoxItem5.IndentLevel = 0;
+            imageComboBoxItem5.Item = null;
+            imageComboBoxItem5.Text = "Звезда";
+            imageComboBoxItem6.Font = null;
+            imageComboBoxItem6.Image = "3";
+            imageComboBoxItem6.ImageIndex = 3;
+            imageComboBoxItem6.IndentLevel = 0;
+            imageComboBoxItem6.Item = null;
+            imageComboBoxItem6.Text = "Палка";
+            imageComboBoxItem7.Font = null;
+            imageComboBoxItem7.Image = "0";
+            imageComboBoxItem7.ImageIndex = 0;
+            imageComboBoxItem7.IndentLevel = 0;
+            imageComboBoxItem7.Item = null;
+            imageComboBoxItem7.Text = "Круг";
+            imageComboBoxItem8.Font = null;
+            imageComboBoxItem8.Image = "2";
+            imageComboBoxItem8.ImageIndex = 2;
+            imageComboBoxItem8.IndentLevel = 0;
+            imageComboBoxItem8.Item = null;
+            imageComboBoxItem8.Text = "Линия";
             this.symbolCB.Items.AddRange(new ImageComboBox.ImageComboBoxItem[] {
-            imageComboBoxItem1,
-            imageComboBoxItem2,
-            imageComboBoxItem3,
-            imageComboBoxItem4});
+            imageComboBoxItem5,
+            imageComboBoxItem6,
+            imageComboBoxItem7,
+            imageComboBoxItem8});
             this.symbolCB.Location = new System.Drawing.Point(365, 19);
             this.symbolCB.Margin = new System.Windows.Forms.Padding(2);
             this.symbolCB.Name = "symbolCB";
@@ -342,7 +344,7 @@
             // 
             this.label2.AutoEllipsis = true;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(299, 4);
+            this.label2.Location = new System.Drawing.Point(313, 3);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(125, 13);
             this.label2.TabIndex = 56;
@@ -359,7 +361,7 @@
             "4",
             "5",
             "6"});
-            this.sizeCB.Location = new System.Drawing.Point(302, 19);
+            this.sizeCB.Location = new System.Drawing.Point(332, 19);
             this.sizeCB.Margin = new System.Windows.Forms.Padding(2);
             this.sizeCB.Name = "sizeCB";
             this.sizeCB.Size = new System.Drawing.Size(29, 21);
@@ -369,7 +371,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(156, 187);
+            this.label1.Location = new System.Drawing.Point(165, 187);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(121, 13);
             this.label1.TabIndex = 58;
@@ -377,9 +379,9 @@
             // 
             // baudRateTB
             // 
-            this.baudRateTB.Location = new System.Drawing.Point(55, 220);
+            this.baudRateTB.Location = new System.Drawing.Point(63, 220);
             this.baudRateTB.Name = "baudRateTB";
-            this.baudRateTB.Size = new System.Drawing.Size(88, 20);
+            this.baudRateTB.Size = new System.Drawing.Size(77, 20);
             this.baudRateTB.TabIndex = 59;
             this.toolTip1.SetToolTip(this.baudRateTB, "Скорость передачи (Baud Rate)");
             this.baudRateTB.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
@@ -395,16 +397,16 @@
             "Всегда нечет",
             "Всегда 1",
             "Всегда 0"});
-            this.parityTB.Location = new System.Drawing.Point(168, 219);
+            this.parityTB.Location = new System.Drawing.Point(178, 219);
             this.parityTB.Name = "parityTB";
-            this.parityTB.Size = new System.Drawing.Size(91, 21);
+            this.parityTB.Size = new System.Drawing.Size(70, 21);
             this.parityTB.TabIndex = 61;
             this.toolTip1.SetToolTip(this.parityTB, "Бит четности (Parity)");
             this.parityTB.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
             // 
             // dataBitTB
             // 
-            this.dataBitTB.Location = new System.Drawing.Point(283, 220);
+            this.dataBitTB.Location = new System.Drawing.Point(285, 219);
             this.dataBitTB.MaxLength = 1;
             this.dataBitTB.Name = "dataBitTB";
             this.dataBitTB.Size = new System.Drawing.Size(25, 20);
@@ -423,12 +425,23 @@
             "1",
             "1,5",
             "2"});
-            this.stopBitTB.Location = new System.Drawing.Point(346, 219);
+            this.stopBitTB.Location = new System.Drawing.Point(346, 218);
             this.stopBitTB.Name = "stopBitTB";
             this.stopBitTB.Size = new System.Drawing.Size(39, 21);
             this.stopBitTB.TabIndex = 65;
             this.toolTip1.SetToolTip(this.stopBitTB, "Стоп бит (Stop Bit)");
             this.stopBitTB.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
+            // sensitivityTB
+            // 
+            this.sensitivityTB.Location = new System.Drawing.Point(346, 108);
+            this.sensitivityTB.Margin = new System.Windows.Forms.Padding(2);
+            this.sensitivityTB.MaxLength = 3;
+            this.sensitivityTB.Name = "sensitivityTB";
+            this.sensitivityTB.Size = new System.Drawing.Size(51, 20);
+            this.sensitivityTB.TabIndex = 68;
+            this.toolTip1.SetToolTip(this.sensitivityTB, "Чувствительность сглаживания графика для определения предела текучести");
+            this.sensitivityTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sensitivityTB_KeyPress);
             // 
             // label3
             // 
@@ -466,11 +479,22 @@
             this.label6.TabIndex = 66;
             this.label6.Text = "Cтоп бит";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(323, 94);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(101, 13);
+            this.label7.TabIndex = 67;
+            this.label7.Text = "Чувствительность";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(442, 279);
+            this.Controls.Add(this.sensitivityTB);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.stopBitTB);
             this.Controls.Add(this.label5);
@@ -554,5 +578,7 @@
         private System.Windows.Forms.TextBox dataBitTB;
         private System.Windows.Forms.ComboBox stopBitTB;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox sensitivityTB;
     }
 }

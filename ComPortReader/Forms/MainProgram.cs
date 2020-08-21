@@ -61,6 +61,12 @@ namespace ComPortReader
         private int dataBits;
         private StopBits stopBits;
 
+        internal int sensitivy;
+        public int Sensitivy
+        {
+            get { return sensitivy; }
+            set { sensitivy = value; }
+        }
         public string MyComPort
         {
             get { return comPort; }
@@ -269,6 +275,7 @@ namespace ComPortReader
             comPortData = comPortData.Replace("\r \n \0N", " "); //Удаление символов перехода строки
             comPortData = comPortData.Replace("\t", " ");
             int lengthOfOneReading = Parsing.GetLengthOfOneReading(comPortData);
+
             while (lengthOfOneReading > 0 && comPortData.Length > lengthOfOneReading) //Перебираем все пары усилий и поворотов в полученной строке
             {
                 if (everySecond == null) СreateTimer();
@@ -278,7 +285,7 @@ namespace ComPortReader
                 comPortData = comPortData.Substring(lengthOfOneReading); // Вся остальная строка
                 TwoCordLinkedList.Node temp = Parsing.ProcessDataMK2(tempStr, coefficient);
                 listOfPoints.addLast(temp);
-                if (!firstValue) { xMin = temp.X; firstValue = true; }
+                if (!firstValue && temp!=null) { xMin = temp.X; firstValue = true; }
                 
                 if (temp != null) // Отрисовка добавленной в список точки
                 {
@@ -343,9 +350,10 @@ namespace ComPortReader
         {
             if (comPort != null)
             {
-                if (readingInOneSession == null) readingInOneSession = new List<ExperimentReading>();
-                readingInput = new FirstInput(this);
-                readingInput.Show();
+
+              form.openComPort();
+               
+             
             }
         }
         private void portList_SelectedIndexChanged(object sender, EventArgs e)
@@ -357,30 +365,43 @@ namespace ComPortReader
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+
+        
         private void startBuilding_Click(object sender, EventArgs e)
         {
 
-            port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
-            stopBuilding.Enabled = true;
-            try
+            if (!port.IsOpen & readingInput==null)
             {
-                port.Open(); isCoefficentEnabled = false;
-                settingsForm.SetGetCoefficentTBEnabled = false;
-            }
-            catch (Exception ex)
-            {
-                if (ex is UnauthorizedAccessException || ex is InvalidOperationException)
+                try
                 {
-                    ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!");
-                    form.Show();
+                    readingInOneSession = new List<ExperimentReading>();
+                    port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
+                    stopBuilding.Enabled = true;
+                    isCoefficentEnabled = false;
+                    settingsForm.SetGetCoefficentTBEnabled = false;
+                    readingInput = new FirstInput(this);
+                    readingInput.Show();
+                    startBuilding.Enabled = false;
+                    
+                }
+                catch (Exception ex)
+                {
+                    if (ex is UnauthorizedAccessException || ex is InvalidOperationException)
+                    {
+                        ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!");
+                        form.Show();
+                    }
                 }
             }
+            else { ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!"); }
+            
             GraphProcessing.UpdateGraph(planeGraph);
         }
 
         private void stopBuilding_Click(object sender, EventArgs e)
         {
-
+            if (readingInput != null) readingInput = null;
+            startBuilding.Enabled = true;
             port.Close(); isCoefficentEnabled = true; settingsForm.SetGetCoefficentTBEnabled = isCoefficentEnabled; stopBuilding.Enabled = false;
             planeGraph.Refresh();
         }
@@ -737,13 +758,13 @@ namespace ComPortReader
                 processedCurve = new LineItem("movingAverage1");
                 processedCurve2 = new LineItem("movingAverage2");
                 double[] data = GraphProcessing.CurveToArray(curve, false);
-                double[] movingAverage = GraphProcessing.MovingAverage(data, 8);
+                double[] movingAverage = GraphProcessing.MovingAverage(data, sensitivy);
                 for (int i = 0; i < movingAverage.Length - 1; i++)
                 {
                    
                     processedCurve.AddPoint(curve.Points[i].X, movingAverage[i]);
                 }
-                double[] movingAverage1 = GraphProcessing.MovingAverage(data, 6);
+                double[] movingAverage1 = GraphProcessing.MovingAverage(data, sensitivy);
                 for (int i = 0; i < movingAverage1.Length - 1; i++)
                 {
                     processedCurve2.AddPoint(curve.Points[i].X, movingAverage1[i]);
@@ -764,18 +785,10 @@ namespace ComPortReader
                 aproximateLinearCurve = null;
                 int begin = (int) bounds[0];
                 int end = (int) bounds[1];
-                double x1 = form.getCurve.Points[begin].X;
-                double y1 = form.getCurve.Points[begin].Y;
 
-                double x2 = form.getCurve.Points[end].X;
-                double y2 = form.getCurve.Points[end].Y;
 
                 // y= y1+(x-x1) (y2 - y1) / (x2-x1) ; y = k*(x-x1) + y1 = kx - (kx1 + y1)
-
-                double coef = (y2 - y1) / (x2 - x1);
-
-                form.buttons.Add(GraphProcessing.CreateCurve(ref aproximateLinearCurve, form.CurvesDropDownButton, form.ZGCInstance, "Линейный участок через две точки", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
-                for (int i = (int)form.getCurve.Points[(int)begin].X; i < form.getCurve.Points[(int)end].X; i++) aproximateLinearCurve.AddPoint(new PointPair(i, coef * (i - x1) + y1));
+                MyMath.leastSquaresBuild(begin, end, lineCurve, ref aproximateLinearCurve, this);
                 form.AproximateLinearCurve = aproximateLinearCurve;
                 GraphProcessing.UpdateGraph(planeGraph);
             }
@@ -924,6 +937,12 @@ namespace ComPortReader
         private void planeGraph_DoubleClick(object sender, EventArgs e)
         {
             
+        }
+
+        private void toolStripButton2_Click_1(object sender, EventArgs e)
+        {
+            var form = new DerivateForm(this);
+            form.Show();
         }
     }
 }

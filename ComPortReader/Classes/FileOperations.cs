@@ -83,6 +83,7 @@ namespace ComPortReader.Classes
                 form.MyParity = Parity.None;
                 form.MyDataBits = 8;
                 form.MyStopBits = StopBits.One;
+                form.Sensitivy = 10;
                 
                 byte[] bytes = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes(path + "\r");
                 fileStream.Write(bytes, 0, bytes.Length);
@@ -112,6 +113,8 @@ namespace ComPortReader.Classes
                 fileStream.Write(bytes13, 0, bytes13.Length);
                 byte[] bytes14 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes((int) form.MyStopBits + "\r");
                 fileStream.Write(bytes14, 0, bytes14.Length);
+                byte[] bytes15 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes((int)form.Sensitivy + "\r");
+                fileStream.Write(bytes15, 0, bytes15.Length);
 
             }
         }
@@ -153,6 +156,8 @@ namespace ComPortReader.Classes
                 fileStream.Write(bytes13, 0, bytes13.Length);
                 byte[] bytes14 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes((int) form.MyStopBits + "\r");
                 fileStream.Write(bytes14, 0, bytes14.Length);
+                byte[] bytes15 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true).GetBytes((int)form.Sensitivy + "\r");
+                fileStream.Write(bytes15, 0, bytes15.Length);
             }   
         }
 
@@ -198,6 +203,9 @@ namespace ComPortReader.Classes
                         form.MyDataBits = intresult;
                         int.TryParse(list[12], out intresult);
                         form.MyStopBits = (StopBits)intresult;
+                        int.TryParse(list[13], out intresult);
+                        form.Sensitivy = intresult;
+
                         form.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
                         form.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;
 

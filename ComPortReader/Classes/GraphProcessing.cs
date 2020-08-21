@@ -291,8 +291,11 @@ namespace ComPortReader
             bool flag = true;
             while( startPoint < secondDerivativeCurve.Points.Count -1 && flag)
             {
-                if (secondDerivativeCurve.Points[startPoint].Y < 1.2*average) counterFlag++;
+                double temp = Math.Abs(secondDerivativeCurve.Points[startPoint].Y);
+                if (temp < average/1.2) counterFlag++;
+                else counterFlag = 0;
                 if (counterFlag == 5) flag = false;
+
                 startPoint++;
             }
             double max = Double.MinValue;

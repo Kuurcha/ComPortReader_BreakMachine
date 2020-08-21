@@ -22,7 +22,7 @@ namespace ComPortReader.Forms
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (typeCB.SelectedItem.ToString() == "Прямоугольная")
+            if (typeCB.SelectedItem.ToString() == "Плоская")
             {
                 bDimTB.Enabled = true;
                 bDimTB.Visible = true;
@@ -32,7 +32,7 @@ namespace ComPortReader.Forms
                 bDimTB.ReadOnly = false;
                
             }
-            if (typeCB.SelectedItem.ToString() == "Круглая")
+            if (typeCB.SelectedItem.ToString() == "Цилиндрическая")
             {
                 bDimTB.ReadOnly = true;
                 firstInputSizeLabel.Text = "Диаметр до разрыва";
@@ -41,14 +41,7 @@ namespace ComPortReader.Forms
             }
 
         }
-        public void checkForDouble(KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-            (e.KeyChar != ','))
-            {
-                e.Handled = true;
-            }
-        }
+    
          
 
         private void button1_Click(object sender, EventArgs e)
@@ -56,14 +49,15 @@ namespace ComPortReader.Forms
             double aDimnesion = 0, bDimension = 0, originalLength = 0, endLength = 0, maxForce = 0;
             if (endLengthTB.ReadOnly)
             {
-                if (double.TryParse(aDimTB.Text, out aDimnesion) && double.TryParse(bDimTB.Text, out bDimension) && double.TryParse(startLength.Text, out originalLength))
+                if (double.TryParse(aDimTB.Text, out aDimnesion) && (double.TryParse(bDimTB.Text, out bDimension) | bDimTB.ReadOnly) && double.TryParse(startLength.Text, out originalLength))
                 {
+                    if (!form.Port.IsOpen)form.Port.Open();
                     form.aDim = aDimnesion;
                     form.bDim = bDimension;
                     form.originalLength = originalLength;
                     form.metalMarking = markingTB.Text;
                     form.type = typeCB.Text;
-                    if (form.readingInOneSession.Count < 1) form.openComPort();
+                 
                     aDimTB.ReadOnly = true;
                     bDimTB.ReadOnly = true;
                     startLength.ReadOnly = true;
@@ -72,8 +66,10 @@ namespace ComPortReader.Forms
                     this.Visible = false;
                     endLengthTB.ReadOnly = false;
                     maxForceTB.ReadOnly = false;
-                    bDimTB.ReadOnly = false;
+                   
                     this.Hide();
+                    if (typeCB.Text == "Прямоугольная") bDimTB.ReadOnly = true;
+                    else { bDimTB.ReadOnly = false; }
                 }
                 else
                 {
@@ -83,7 +79,7 @@ namespace ComPortReader.Forms
             else
             {
 
-                if (double.TryParse(endLengthTB.Text, out endLength) && double.TryParse(maxForceTB.Text, out maxForce))
+                if (double.TryParse(endLengthTB.Text, out endLength) && double.TryParse(maxForceTB.Text, out maxForce) && double.TryParse(bDimTB.Text, out bDimension))
                 {
                     double max = Double.MinValue;
                     for (int i = 0; i < form.getCurve.Points.Count; i++) if (form.getCurve.Points[i].Y > max) max = form.getCurve.Points[i].Y;
@@ -103,7 +99,7 @@ namespace ComPortReader.Forms
                     form.forceAtStressFlow = new int?[2];
                     for (int i = 0; i < form.yieldPoints.Length; i++) if (form.yieldPoints[i] != null) form.forceAtStressFlow[i] = (int?)Math.Round((form.yieldPoints[i].Y * coef));
                     form.relativeExpansion = Math.Abs(Math.Round((((form.endLength / form.originalLength) - 1) * 100), 1));
-                    if (form.type == "Прямоугольная") {
+                    if (form.type == "Плоская") {
                        
                         form.aDim = Math.Round(form.aDim, 2);
                         form.bDim = Math.Round(form.bDim, 2);
@@ -112,15 +108,16 @@ namespace ComPortReader.Forms
                         form.tempTearResistance = Math.Round(maxForce / form.totalArea);
                         form.readingInOneSession.Add(new Classes.ExperimentReading(form.metalMarking, form.aDim, form.bDim, form.totalArea, form.originalLength, form.endLength, form.maxForce, form.forceAtStressFlow, form.stressFlow, form.tempTearResistance, form.relativeExpansion, form.yieldPoints));
                     }
-                    if (form.type == "Круглая")
+                    if (form.type == "Цилиндрическая")
                     {
-                        form.diameterAfter = Math.Round(form.bDim, 2);
+                        form.bDim = bDimension;
+                        form.diameterAfter = Math.Round(bDimension, 2);
                         form.diameterBefore = Math.Round(form.aDim, 2);
                         form.totalArea = Math.Round(((Math.PI * form.diameterBefore * form.diameterBefore) / 4), 2);
                         for (int i = 0; i < form.forceAtStressFlow.Length; i++) if (form.forceAtStressFlow[i] != null) form.stressFlow[i] = (int?)(form.forceAtStressFlow[i] / form.totalArea);
                         form.tempTearResistance = Math.Round(maxForce / form.totalArea);
                       
-                        form.relativeNarrowing = Math.Abs(Math.Round((1 - ((Math.PI * form.diameterAfter * form.diameterAfter) / form.totalArea)), 1));
+                        form.relativeNarrowing = 100*Math.Abs(Math.Round((((Math.PI * form.diameterAfter * form.diameterAfter) / form.totalArea)), 1));
                         form.readingInOneSession.Add(new Classes.ExperimentReading(form.metalMarking, form.aDim, form.bDim, form.totalArea, form.originalLength, form.endLength, form.maxForce, form.forceAtStressFlow, form.stressFlow, form.tempTearResistance, form.relativeExpansion, form.relativeNarrowing, form.yieldPoints));
                     }
 
@@ -153,6 +150,7 @@ namespace ComPortReader.Forms
                     for (int i = 0; i < form.AproximateLinearCurve.Points.Count; i++) form.AproximateLinearCurve[i].X = form.originalLength + form.AproximateLinearCurve[i].X / coefOfDiv;
 
 
+                    
                     //form.MinXValue = form.originalLength;
                     //form.MaxXValue = form.endLength;
                     //form.MinYValue = 0;
@@ -174,25 +172,25 @@ namespace ComPortReader.Forms
                         temp.Save(Parsing.CheckForDuplicateImage(form.savePath, form.savePath, form.GraphName), System.Drawing.Imaging.ImageFormat.Bmp);
                     }
                     catch (Exception ex) { MessageBox.Show(ex.ToString()); }
-                    //this.Close();
-                    //this.Dispose();
-                    //switch (MessageBox.Show("Чтение показаний закончились. Вы хотите еще один эксперимент перед формированием отчета?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                    //{
-                    //    case DialogResult.Yes:
-                    //        form.ReadingInput = new FirstInput(form);
-                    //        form.ReadingInput.Show();
-                    //        form.SelectionCurveEnd = null;
-                    //        form.SelectionCurveBegin = null;
-                            
+                    this.Close();
+                    this.Dispose();
+                    switch (MessageBox.Show("Чтение показаний закончились. Вы хотите еще один эксперимент перед формированием отчета?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        case DialogResult.Yes:
+                            form.ReadingInput = new FirstInput(form);
+                            form.ReadingInput.Show();
+                            form.SelectionCurveEnd = null;
+                            form.SelectionCurveBegin = null;
 
-                    //        GraphProcessing.resetGraph(form);
-                    //        break;
 
-                    //    case DialogResult.No:
-                    //        var report = new MakeAWordDocumentForm(form.readingInOneSession, form.GetPath);
-                    //         report.Show();
-                    //        break;
-                    //}
+                            GraphProcessing.resetGraph(form);
+                            break;
+
+                        case DialogResult.No:
+                            var report = new MakeAWordDocumentForm(form.readingInOneSession, form.GetPath);
+                            report.Show();
+                            break;
+                    }
                 }
             }
           
@@ -200,17 +198,17 @@ namespace ComPortReader.Forms
 
         private void startLength_KeyPress(object sender, KeyPressEventArgs e)
         {
-            checkForDouble(e);
+            Parsing.checkForDouble(e);
         }
 
         private void sizeATB_KeyPress(object sender, KeyPressEventArgs e)
         {
-            checkForDouble(e);
+            Parsing.checkForDouble(e);
         }
 
         private void sizeBTB_KeyPress(object sender, KeyPressEventArgs e)
         {
-            checkForDouble(e);
+            Parsing.checkForDouble(e);
         }
 
         private void FirstInput_Load(object sender, EventArgs e)
@@ -225,12 +223,25 @@ namespace ComPortReader.Forms
 
         private void endLengthTB_KeyPress(object sender, KeyPressEventArgs e)
         {
-            checkForDouble(e);
+            Parsing.checkForDouble(e);
         }
 
         private void maxForce_KeyPress(object sender, KeyPressEventArgs e)
         {
-            checkForDouble(e);
+            Parsing.checkForDouble(e);
+        }
+
+        private void FirstInput_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (form.Port.IsOpen) form.Port.Close();
+            if (maxForceTB.ReadOnly)
+            {
+                form.ReadingInput = null;    
+                this.Dispose();
+                form.startBuilding.Enabled = true;
+                form.stopBuilding.Enabled = false;
+            }
+
         }
     }
 }

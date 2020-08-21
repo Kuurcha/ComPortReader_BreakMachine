@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.IO.Ports;
 using System.Runtime.Remoting.Messaging;
-
+using System.Windows.Forms;
 namespace ComPortReader
 {
     class Parsing
@@ -33,6 +33,14 @@ namespace ComPortReader
             }
             return path;
         }
+        public static void checkForDouble(KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+            (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+        }   
         // <summary>
         /// Check for default path and renames files (txt) if there is a duplicate with a same name
         /// </summary>

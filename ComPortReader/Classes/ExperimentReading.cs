@@ -40,7 +40,7 @@ namespace ComPortReader.Classes
             this.tempTearResistance = tempTearResistance;
             this.relativeExpansion = relativeExpansion;
             this.yieldPoints = yieldPoints;
-            type = "Прямоугольная";
+            type = "Плоская";
         }
         internal ExperimentReading(string metalMarking, double diameterBefore, double diameterAfter, double totalArea, double originalLength, double endLength, int maxForce, int?[] forceAtStressFlow, int?[] stressFlow, double tempTearResistance, double relativeExpansion, double relativeNarrowing, PointPair[] yieldPoints)
         {
@@ -57,7 +57,7 @@ namespace ComPortReader.Classes
             this.relativeExpansion = relativeExpansion;
             this.relativeNarrowing = relativeNarrowing;
             this.yieldPoints = yieldPoints;
-            type = "Круглая";
+            type = "Цилиндрическая";
         }
     }
   

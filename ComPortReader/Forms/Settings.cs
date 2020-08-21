@@ -50,6 +50,7 @@ namespace ComPortReader
             parityTB.Text = ParityEnumToString((int)mainForm.MyParity);
             dataBitTB.Text = mainForm.MyDataBits.ToString();
             stopBitTB.Text = StopEnumToString(mainForm.MyStopBits);
+            sensitivityTB.Text = mainForm.sensitivy.ToString();
         }
         private SymbolType checkForSymbol()
         {
@@ -146,7 +147,7 @@ namespace ComPortReader
             bool throwError = false;
             string errorMessageString = "";
             double coefficient = 1.0;
-            int baudRate, dataBit;
+            int baudRate, dataBit, sensitivity;
             if (double.TryParse(xMinValueTb.Text, out xMin) && double.TryParse(xMaxValueTb.Text, out xMax) && double.TryParse(yMinValueTb.Text, out yMin) && double.TryParse(yMaxValueTb.Text, out yMax))
             {
                 mainForm.MinXValue = xMin;
@@ -204,10 +205,11 @@ namespace ComPortReader
                 mainForm.getCurve.Symbol.Type = checkForSymbol();
                 mainForm.getCurve.Symbol.Size = int.Parse(sizeCB.Text);
             }
-            if (int.TryParse(baudRateTB.Text, out baudRate) && int.TryParse(dataBitTB.Text, out dataBit))
+            if (int.TryParse(baudRateTB.Text, out baudRate) && int.TryParse(dataBitTB.Text, out dataBit) && int.TryParse(sensitivityTB.Text, out sensitivity))
             {
                 mainForm.MyBaudRate = baudRate;
                 mainForm.MyDataBits = dataBit;
+                mainForm.Sensitivy = sensitivity;
             }
             mainForm.MyParity = (Parity)StringToParityEnum(parityTB.Text);
             mainForm.MyStopBits = StringToStopEnum(stopBitTB.Text);
@@ -342,6 +344,11 @@ namespace ComPortReader
         private void dataBitTB_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void sensitivityTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Parsing.checkForDouble(e);
         }
     }
 }

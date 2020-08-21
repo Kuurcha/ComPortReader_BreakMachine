@@ -38,7 +38,6 @@ namespace ComPortReader.Forms
             switch (MessageBox.Show("Вы точно хотите выйти?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
                 case DialogResult.Yes:
-                    this.Close();
                     break;
                 case DialogResult.No:
                     cancelEventArgs.Cancel = true;
@@ -56,9 +55,9 @@ namespace ComPortReader.Forms
 
         private void accept_Click(object sender, EventArgs e)
         {
-            if (form.SelectionCurveBegin != null && form.SelectionCurveEnd != null)
+                if (form.SelectionCurveBegin != null && form.SelectionCurveEnd != null)
             {
-                int index = form.ZGCInstance.GraphPane.CurveList.IndexOf("Линейный участок МНК (автомат)");
+                int index = form.ZGCInstance.GraphPane.CurveList.IndexOf("Линейный участок через две точки");
                 if (index >= 0)
                 {
                     form.ZGCInstance.GraphPane.CurveList.RemoveAt(index);
@@ -66,13 +65,11 @@ namespace ComPortReader.Forms
                     for (int i = 0; i < form.buttons.Count; i++)
                     {
                         string test = form.buttons[i].curve.Label.Text;
-                        if (test == "Линейный участок МНК (автомат)") { tempBtn = form.buttons[i]; break; }
+                        if (test == "Линейный участок через две точки") { tempBtn = form.buttons[i]; break; }
                     }
-
-                   
                     form.CurvesDropDownButton.DropDownItems.Remove(tempBtn.button);
                 }
-
+                
 
                 PointPairList tempPointPair = (PointPairList)form.getCurve.Points;
                 LineItem aproximateLinearCurve = form.AproximateLinearCurve;
@@ -81,23 +78,26 @@ namespace ComPortReader.Forms
                 int begin = (int)Math.Min(beginX, endX);
                 int end = (int)Math.Max(beginX, endX);
                 LineItem temp = new LineItem("tempCurve");
+
                 if (form.getCurve != null)
                 {
                     if (leastSquaresMode)
                     {
                         for (int i = begin; i < end; i++) temp.AddPoint(form.getCurve.Points[i]);
-                        double[] xData = GraphProcessing.CurveToArray(temp, true);
-                        double[] yData = GraphProcessing.CurveToArray(temp, false);
-                        var ds = new XYDataSet(xData, yData);
-                        double k = ds.Slope;
-                        double b = ds.YIntercept;
-                        aproximateLinearCurve = null;
-                        form.buttons.Add(GraphProcessing.CreateCurve(ref aproximateLinearCurve, form.CurvesDropDownButton, form.ZGCInstance, "Линейный участок МНК", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
-                        for (int i = begin; i < end; i++) 
-                            aproximateLinearCurve.AddPoint(new PointPair(i, k * i + b));
+                       
+                        MyMath.leastSquaresBuild(begin, end, temp, ref aproximateLinearCurve, form);
                         form.AproximateLinearCurve = aproximateLinearCurve;
+
+
                         GraphProcessing.UpdateGraph(form.ZGCInstance);
-                        
+                        LineItem curve1 = form.AproximateLinearCurve;
+                        LineItem curve2 = null;
+                        form.buttons.Add(GraphProcessing.CreateCurve(ref curve1, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 1", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
+                        form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 2", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
+                        MyMath.zeroTwoSigma(ref curve1, ref curve2, form.secondDerivativeCurve);
+                        //MyMath.OffSetTheLine1(new PointPair(xData[0], yData[0]), new PointPair(xData[xData.Length-1], yData[yData.Length-1]), form.secondDerivativeCurve, form.getCurve, form);
+                        //GraphProcessing.UpdateGraph(form.ZGCInstance);
+
                     }
                     if (regularMode)
                     {
@@ -115,9 +115,11 @@ namespace ComPortReader.Forms
                         form.buttons.Add(GraphProcessing.CreateCurve(ref aproximateLinearCurve, form.CurvesDropDownButton, form.ZGCInstance, "Линейный участок через две точки", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
                         for (int i = (int) form.getCurve.Points[(int)begin].X; i < form.getCurve.Points[(int)end].X; i++) aproximateLinearCurve.AddPoint(new PointPair(i, coef * (i - x1) + y1));
                         form.AproximateLinearCurve = aproximateLinearCurve;
-                        //GraphProcessing.UpdateGraph(form.ZGCInstance);
-                        // MyMath.OffSetTheLine1(new PointPair(x1, y1), new PointPair(x2, y2), form.secondDerivativeCurve, form.getCurve, form);
-                        
+                        GraphProcessing.UpdateGraph(form.ZGCInstance);
+                        LineItem curveTemp = form.getCurve;
+                        //MyMath.buildLine(form.secondDerivativeCurve, ref curveTemp, form);
+                        form.getCurve = curveTemp;
+                        GraphProcessing.UpdateGraph(form.ZGCInstance);
                         //y = (x-x1)*(y2-y1)/(x2-x1) + y1
                     }
                 }
@@ -170,6 +172,11 @@ namespace ComPortReader.Forms
         {
             Task.Delay(500);
             MessageBox.Show("Выберите одну или две точки где находится предел текучести и нажмите Enter как будет готово");
+
+        }
+
+        private void CustomLine_FormClosed(object sender, FormClosedEventArgs e)
+        {
 
         }
     }

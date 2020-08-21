@@ -37,13 +37,14 @@
             this.stopBuilding = new System.Windows.Forms.ToolStripMenuItem();
             this.comPortStatusB = new System.Windows.Forms.ToolStripComboBox();
             this.setCOMB = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.curvesDropDownBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.coord = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.planeGraph = new ZedGraph.ZedGraphControl();
             this.textBox2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,7 +59,8 @@
             this.curvesDropDownBtn,
             this.coord,
             this.toolStripButton1,
-            this.toolStripButton4});
+            this.toolStripButton4,
+            this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1159, 31);
@@ -94,14 +96,14 @@
             // startBuilding
             // 
             this.startBuilding.Name = "startBuilding";
-            this.startBuilding.Size = new System.Drawing.Size(116, 22);
+            this.startBuilding.Size = new System.Drawing.Size(180, 22);
             this.startBuilding.Text = "Начало";
             this.startBuilding.Click += new System.EventHandler(this.startBuilding_Click);
             // 
             // stopBuilding
             // 
             this.stopBuilding.Name = "stopBuilding";
-            this.stopBuilding.Size = new System.Drawing.Size(116, 22);
+            this.stopBuilding.Size = new System.Drawing.Size(180, 22);
             this.stopBuilding.Text = "Стоп";
             this.stopBuilding.Click += new System.EventHandler(this.stopBuilding_Click);
             // 
@@ -122,16 +124,6 @@
             this.setCOMB.Text = "установить COM";
             this.setCOMB.Click += new System.EventHandler(this.SetupCOMport_Click);
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(28, 28);
-            this.toolStripButton1.Text = "Печать";
-            this.toolStripButton1.Click += new System.EventHandler(this.PrintButton_Click);
-            // 
             // curvesDropDownBtn
             // 
             this.curvesDropDownBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -146,6 +138,16 @@
             // 
             this.coord.Name = "coord";
             this.coord.Size = new System.Drawing.Size(0, 28);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(28, 28);
+            this.toolStripButton1.Text = "Печать";
+            this.toolStripButton1.Click += new System.EventHandler(this.PrintButton_Click);
             // 
             // toolStripButton4
             // 
@@ -191,6 +193,16 @@
             this.textBox2.Size = new System.Drawing.Size(0, 13);
             this.textBox2.TabIndex = 36;
             // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(28, 28);
+            this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
+            // 
             // MainProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -220,14 +232,15 @@
         private ZedGraph.ZedGraphControl planeGraph;
         private System.Windows.Forms.ToolStripButton resetB;
         private System.Windows.Forms.Label textBox2;
-        private System.Windows.Forms.ToolStripDropDownButton startingRecordMenuB;
-        private System.Windows.Forms.ToolStripMenuItem startBuilding;
-        private System.Windows.Forms.ToolStripMenuItem stopBuilding;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripLabel coord;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripDropDownButton curvesDropDownBtn;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        internal System.Windows.Forms.ToolStripDropDownButton startingRecordMenuB;
+        internal System.Windows.Forms.ToolStripMenuItem startBuilding;
+        internal System.Windows.Forms.ToolStripMenuItem stopBuilding;
     }
 }
 

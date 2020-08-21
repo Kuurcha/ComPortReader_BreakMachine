@@ -72,7 +72,7 @@
             // 
             // decline
             // 
-            this.decline.Location = new System.Drawing.Point(191, 124);
+            this.decline.Location = new System.Drawing.Point(203, 124);
             this.decline.Name = "decline";
             this.decline.Size = new System.Drawing.Size(75, 23);
             this.decline.TabIndex = 3;
@@ -84,10 +84,10 @@
             // 
             this.info.Location = new System.Drawing.Point(9, 9);
             this.info.Name = "info";
-            this.info.Size = new System.Drawing.Size(254, 56);
+            this.info.Size = new System.Drawing.Size(269, 56);
             this.info.TabIndex = 4;
-            this.info.Text = "        Автоматическое построение линейного участка завершено.  Если участок пост" +
-    "роен неверно вы можете сделать это вручную, для этого нажмите потвердить";
+            this.info.Text = "Автоматическое построение линейного участка завершено.  Если участок построен нев" +
+    "ерно вы можете сделать это  вручную, для этого нажмите \r\nпотвердить";
             this.info.Click += new System.EventHandler(this.info_Click);
             // 
             // CustomLine
@@ -95,7 +95,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(278, 154);
+            this.ClientSize = new System.Drawing.Size(290, 154);
             this.Controls.Add(this.info);
             this.Controls.Add(this.decline);
             this.Controls.Add(this.accept);
@@ -107,6 +107,7 @@
             this.Name = "CustomLine";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomLine_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CustomLine_FormClosed);
             this.Load += new System.EventHandler(this.CustomLine_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

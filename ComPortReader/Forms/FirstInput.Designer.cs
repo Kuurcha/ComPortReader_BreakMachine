@@ -50,8 +50,8 @@
             this.typeCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.typeCB.FormattingEnabled = true;
             this.typeCB.Items.AddRange(new object[] {
-            "Прямоугольная",
-            "Круглая"});
+            "Плоская",
+            "Цилиндрическая"});
             this.typeCB.Location = new System.Drawing.Point(12, 29);
             this.typeCB.Name = "typeCB";
             this.typeCB.Size = new System.Drawing.Size(121, 21);
@@ -65,7 +65,6 @@
             this.aDimTB.Name = "aDimTB";
             this.aDimTB.Size = new System.Drawing.Size(100, 20);
             this.aDimTB.TabIndex = 3;
-            this.aDimTB.Text = "1";
             this.aDimTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sizeATB_KeyPress);
             // 
             // bDimTB
@@ -75,23 +74,21 @@
             this.bDimTB.Name = "bDimTB";
             this.bDimTB.Size = new System.Drawing.Size(100, 20);
             this.bDimTB.TabIndex = 4;
-            this.bDimTB.Text = "2";
             this.bDimTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sizeBTB_KeyPress);
             // 
             // startLength
             // 
-            this.startLength.Location = new System.Drawing.Point(12, 76);
+            this.startLength.Location = new System.Drawing.Point(45, 76);
             this.startLength.MaxLength = 10;
             this.startLength.Name = "startLength";
             this.startLength.Size = new System.Drawing.Size(121, 20);
             this.startLength.TabIndex = 5;
-            this.startLength.Text = "3";
             this.startLength.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.startLength_KeyPress);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 14);
+            this.label1.Location = new System.Drawing.Point(24, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 13);
             this.label1.TabIndex = 4;
@@ -100,7 +97,7 @@
             // firstInputSizeLabel
             // 
             this.firstInputSizeLabel.AutoSize = true;
-            this.firstInputSizeLabel.Location = new System.Drawing.Point(302, 10);
+            this.firstInputSizeLabel.Location = new System.Drawing.Point(275, 14);
             this.firstInputSizeLabel.Name = "firstInputSizeLabel";
             this.firstInputSizeLabel.Size = new System.Drawing.Size(40, 13);
             this.firstInputSizeLabel.TabIndex = 5;
@@ -109,7 +106,7 @@
             // secondInputSizeLabel
             // 
             this.secondInputSizeLabel.AutoSize = true;
-            this.secondInputSizeLabel.Location = new System.Drawing.Point(430, 11);
+            this.secondInputSizeLabel.Location = new System.Drawing.Point(401, 14);
             this.secondInputSizeLabel.Name = "secondInputSizeLabel";
             this.secondInputSizeLabel.Size = new System.Drawing.Size(46, 13);
             this.secondInputSizeLabel.TabIndex = 6;
@@ -118,7 +115,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(0, 60);
+            this.label2.Location = new System.Drawing.Point(24, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(182, 13);
             this.label2.TabIndex = 7;
@@ -126,9 +123,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(205, 194);
+            this.button1.Location = new System.Drawing.Point(183, 160);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(148, 23);
+            this.button1.Size = new System.Drawing.Size(170, 23);
             this.button1.TabIndex = 7;
             this.button1.Text = "Потвердить";
             this.button1.UseVisualStyleBackColor = true;
@@ -136,20 +133,19 @@
             // 
             // endLengthTB
             // 
-            this.endLengthTB.Location = new System.Drawing.Point(385, 76);
+            this.endLengthTB.Location = new System.Drawing.Point(382, 76);
             this.endLengthTB.MaxLength = 10;
             this.endLengthTB.Name = "endLengthTB";
             this.endLengthTB.ReadOnly = true;
             this.endLengthTB.Size = new System.Drawing.Size(122, 20);
             this.endLengthTB.TabIndex = 6;
-            this.endLengthTB.Text = "4";
             this.endLengthTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.endLengthTB_KeyDown);
             this.endLengthTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.endLengthTB_KeyPress);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(371, 63);
+            this.label3.Location = new System.Drawing.Point(366, 60);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(163, 13);
             this.label3.TabIndex = 10;
@@ -162,12 +158,11 @@
             this.markingTB.Name = "markingTB";
             this.markingTB.Size = new System.Drawing.Size(100, 20);
             this.markingTB.TabIndex = 2;
-            this.markingTB.Text = "к";
             // 
             // marking
             // 
             this.marking.AutoSize = true;
-            this.marking.Location = new System.Drawing.Point(163, 13);
+            this.marking.Location = new System.Drawing.Point(155, 13);
             this.marking.Name = "marking";
             this.marking.Size = new System.Drawing.Size(85, 13);
             this.marking.TabIndex = 12;
@@ -175,19 +170,18 @@
             // 
             // maxForceTB
             // 
-            this.maxForceTB.Location = new System.Drawing.Point(194, 132);
+            this.maxForceTB.Location = new System.Drawing.Point(183, 134);
             this.maxForceTB.MaxLength = 10;
             this.maxForceTB.Name = "maxForceTB";
             this.maxForceTB.ReadOnly = true;
             this.maxForceTB.Size = new System.Drawing.Size(170, 20);
             this.maxForceTB.TabIndex = 13;
-            this.maxForceTB.Text = "4";
             this.maxForceTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.maxForce_KeyPress);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(155, 116);
+            this.label4.Location = new System.Drawing.Point(155, 118);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(245, 13);
             this.label4.TabIndex = 14;
@@ -197,7 +191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 229);
+            this.ClientSize = new System.Drawing.Size(541, 186);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.maxForceTB);
             this.Controls.Add(this.marking);
@@ -216,6 +210,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FirstInput";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FirstInput_FormClosing);
             this.Load += new System.EventHandler(this.FirstInput_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
