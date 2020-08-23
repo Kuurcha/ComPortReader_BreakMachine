@@ -50,7 +50,7 @@ namespace ComPortReader
             parityTB.Text = ParityEnumToString((int)mainForm.MyParity);
             dataBitTB.Text = mainForm.MyDataBits.ToString();
             stopBitTB.Text = StopEnumToString(mainForm.MyStopBits);
-            sensitivityTB.Text = mainForm.sensitivy.ToString();
+            sensitivityTB.Text = mainForm.Sensitivy.ToString();
         }
         private SymbolType checkForSymbol()
         {
@@ -251,7 +251,7 @@ namespace ComPortReader
        
         private void button1_Click(object sender, EventArgs e)
         {
-            GraphProcessing.resetGraph(mainForm);
+                GraphProcessing.resetGraph(mainForm);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

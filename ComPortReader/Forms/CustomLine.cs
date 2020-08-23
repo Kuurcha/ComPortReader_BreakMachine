@@ -56,45 +56,50 @@ namespace ComPortReader.Forms
         private void accept_Click(object sender, EventArgs e)
         {
                 if (form.SelectionCurveBegin != null && form.SelectionCurveEnd != null)
-            {
-                int index = form.ZGCInstance.GraphPane.CurveList.IndexOf("Линейный участок через две точки");
+                {
+                int index = form.ZGCInstance.GraphPane.CurveList.IndexOf("Линейный участок МНК");
                 if (index >= 0)
                 {
                     form.ZGCInstance.GraphPane.CurveList.RemoveAt(index);
+                    
                     DynamicToolStripButton tempBtn = null;
                     for (int i = 0; i < form.buttons.Count; i++)
                     {
                         string test = form.buttons[i].curve.Label.Text;
-                        if (test == "Линейный участок через две точки") { tempBtn = form.buttons[i]; break; }
+                        if (test == "Линейный участок МНК") { tempBtn = form.buttons[i]; break; }
                     }
                     form.CurvesDropDownButton.DropDownItems.Remove(tempBtn.button);
                 }
                 
 
                 PointPairList tempPointPair = (PointPairList)form.getCurve.Points;
-                LineItem aproximateLinearCurve = form.AproximateLinearCurve;
+                
                 double beginX = tempPointPair.IndexOf(form.SelectionCurveBegin.Points[0]);
-                double endX = tempPointPair.IndexOf(form.SelectionCurveEnd.Points[0]); 
+                double endX = tempPointPair.IndexOf(form.SelectionCurveEnd.Points[0]);
                 int begin = (int)Math.Min(beginX, endX);
                 int end = (int)Math.Max(beginX, endX);
                 LineItem temp = new LineItem("tempCurve");
-
+                temp.Tag = 5;
+                LineItem aproximateLinearCurve = null;
                 if (form.getCurve != null)
                 {
                     if (leastSquaresMode)
                     {
                         for (int i = begin; i < end; i++) temp.AddPoint(form.getCurve.Points[i]);
-                       
+                        begin =  (int) form.getCurve.Points[begin].X;
+                        end = (int) form.getCurve.Points[end].X;
+                    
+                        form.buttons.Add(GraphProcessing.CreateCurve(ref aproximateLinearCurve, form.CurvesDropDownButton, form.ZGCInstance, "Линейный участок МНК", Color.Green, 2, SymbolType.Default, Color.Green));
+                        aproximateLinearCurve.Tag = 2;
                         MyMath.leastSquaresBuild(begin, end, temp, ref aproximateLinearCurve, form);
-                        form.AproximateLinearCurve = aproximateLinearCurve;
-
-
+                     
+                        form.ZGCInstance.Refresh();
                         GraphProcessing.UpdateGraph(form.ZGCInstance);
-                        LineItem curve1 = form.AproximateLinearCurve;
-                        LineItem curve2 = null;
-                        form.buttons.Add(GraphProcessing.CreateCurve(ref curve1, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 1", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
-                        form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 2", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
-                        MyMath.zeroTwoSigma(ref curve1, ref curve2, form.secondDerivativeCurve);
+                        //LineItem curve1 = form.AproximateLinearCurve;
+                        //LineItem curve2 = null;
+                        //form.buttons.Add(GraphProcessing.CreateCurve(ref curve1, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 1", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
+                        //form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 2", Color.DarkCyan, 6, SymbolType.Circle, Color.DarkCyan));
+                        MyMath.zeroTwoSigma(form.getCurve, new PointPair (form.SelectionCurveEnd.Points[0]), aproximateLinearCurve, form.secondDerivativeCurve, form);
                         //MyMath.OffSetTheLine1(new PointPair(xData[0], yData[0]), new PointPair(xData[xData.Length-1], yData[yData.Length-1]), form.secondDerivativeCurve, form.getCurve, form);
                         //GraphProcessing.UpdateGraph(form.ZGCInstance);
 
@@ -107,7 +112,7 @@ namespace ComPortReader.Forms
 
                         double x2 = form.getCurve.Points[end].X;
                         double y2 = form.getCurve.Points[end].Y;
-                        
+                  
                         // y= y1+(x-x1) (y2 - y1) / (x2-x1) ; y = k*(x-x1) + y1 = kx - (kx1 + y1)
 
                         double coef = (y2 - y1) / (x2 - x1);
@@ -117,6 +122,8 @@ namespace ComPortReader.Forms
                         form.AproximateLinearCurve = aproximateLinearCurve;
                         GraphProcessing.UpdateGraph(form.ZGCInstance);
                         LineItem curveTemp = form.getCurve;
+                        curveTemp.Tag = 5;
+                        aproximateLinearCurve.Tag = 2;
                         //MyMath.buildLine(form.secondDerivativeCurve, ref curveTemp, form);
                         form.getCurve = curveTemp;
                         GraphProcessing.UpdateGraph(form.ZGCInstance);

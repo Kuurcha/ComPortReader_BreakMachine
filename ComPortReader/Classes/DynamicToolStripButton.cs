@@ -29,6 +29,14 @@ namespace ComPortReader.Classes
             this.zgc = zgc;
             this.curve = curve;
             button = (ToolStripMenuItem)dropDownBtn.DropDownItems.Add(curve.Label.Text, null, DynamicButton_Click);
+            /*
+             * Изначально это исключение было создано в этом стеке вызовов: 
+    [Внешний код]
+    ComPortReader.Classes.DynamicToolStripButton.DynamicToolStripButton(ZedGraph.LineItem, ZedGraph.ZedGraphControl, System.Windows.Forms.ToolStripDropDownButton) в DynamicToolStripButton.cs
+    ComPortReader.GraphProcessing.CreateCurve(ref ZedGraph.LineItem, System.Windows.Forms.ToolStripDropDownButton, ZedGraph.ZedGraphControl, string, System.Drawing.Color, float, ZedGraph.SymbolType, System.Drawing.Color) в GraphProcessing.cs
+    ComPortReader.MainProgram.port_DataReceived(object, System.IO.Ports.SerialDataReceivedEventArgs) в MainProgram.cs
+    [Внешний код]
+*/
             button.Checked = true;
         }
         private void DynamicButton_Click(object sender, EventArgs e)

@@ -11,22 +11,118 @@ namespace ComPortReader.Classes
 {
     static class  MyMath
     {
-
-        public static void zeroTwoSigma(ref LineItem curve,  ref LineItem curve2, LineItem curved2)
+        public static void zeroTwoSigma2(LineItem originalCurve, PointPair p2, LineItem LineCurve, LineItem curved2, MainProgram form)
         {
+            LineItem curve1 = null;
+            LineItem curve2 = null;
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve1, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 1", Color.DarkCyan, 4, SymbolType.Default, Color.DarkCyan));
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 2", Color.DarkCyan, 4, SymbolType.Default, Color.DarkCyan));
+    
+            int max = 0;
+            for (int i = 0; i < originalCurve.Points.Count; i++) if (originalCurve.Points[i].X > max) max = (int)originalCurve.Points[i].X;
             double average = 0;
             for (int i = 0; i < curved2.Points.Count - 10; i++) average += Math.Abs(curved2[i].Y);
             average /= curved2.Points.Count - 10;
             int index = 0;
             for (index = 0; index < curved2.Points.Count; index++) { if (curved2[index].Y > 10.0 * average) break; }
-            PointPair p2 = curve[curve.Points.Count - 1];
-            double offSetY = curve[index].Y - p2.Y;
-            double offSetX = curve[index].X - p2.X;
-            paralellLine(offSetX, offSetY, ref curve);
-            curve2 = curve;
-            int offSetX2 = (int)Math.Round(0.2 * curve.Points[curve.Points.Count - 1].X);
-            paralellLine(offSetX2, 0, ref curve2);
+            double offSetY = originalCurve[index].Y - p2.Y;
+            double offSetX = originalCurve[index].X - p2.X;
+            for (int i = 0; i < LineCurve.Points.Count - 1; i++)
+            {
+                double x = LineCurve.Points[i].X - offSetX;
+                double y = LineCurve.Points[i].Y + offSetY;
+                curve1.AddPoint(new PointPair(x, y));
+            }
+            int offSetX2 = (int)Math.Round(0.8 * curve1.Points[0].X);
+
+            for (int i = 0; i < curve1.Points.Count; i++)
+            {
+                curve2.AddPoint(new PointPair(curve1.Points[i].X - offSetX2, curve1.Points[i].Y));
+            }
+            curve1.Tag = 5;
+            curve2.Tag = 5;
+        }
+        public static void zeroTwoSigma1(LineItem originalCurve, PointPair p2, LineItem LineCurve, LineItem curved2, MainProgram form)
+        {
+            LineItem curve1 = null;
+            LineItem curve2 = null;
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve1, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 2", Color.DarkCyan, 4, SymbolType.Default, Color.DarkCyan));
+            curve1 = LineCurve;
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 2", Color.DarkCyan, 4, SymbolType.Default, Color.DarkCyan));
+            int max = 0;
+            for (int i = 0; i < originalCurve.Points.Count; i++) if (originalCurve.Points[i].X > max) max = (int)originalCurve.Points[i].X;
+            double average = 0;
+            for (int i = 0; i < curved2.Points.Count - 10; i++) average += Math.Abs(curved2[i].Y);
+            average /= curved2.Points.Count - 10;
+            int index = 0;
+            for (index = 0; index < curved2.Points.Count; index++) { if (curved2[index].Y > 10.0 * average) break; }
+            double offSetY = originalCurve[index].Y - p2.Y;
+            double offSetX = originalCurve[index].X - p2.X;
+            for (int i = 0; i < LineCurve.Points.Count-1; i++)
+            {
+                curve1.AddPoint(new PointPair(LineCurve.Points[i].X + offSetX, LineCurve.Points[i].Y += offSetY));
+            }
+            int offSetX2 = (int)Math.Round(0.98 * originalCurve.Points[index].X);
+
+            for (int i = 0; i<curve1.Points.Count; i++)
+            {
+                curve2.AddPoint(new PointPair(curve1.Points[i].X + offSetX2, curve1.Points[i].Y));
+            }
+
+        }
+            public static void zeroTwoSigma(LineItem originalCurve, PointPair p2, LineItem LineCurve, LineItem curved2, MainProgram form)
+        {
+
+            int max = 0;
+            for (int i = 0; i < originalCurve.Points.Count; i++) if (originalCurve.Points[i].X > max) max = (int)originalCurve.Points[i].X;
+
+
+
+
+            double average = 0;
+            for (int i = 0; i < curved2.Points.Count - 10; i++) average += Math.Abs(curved2[i].Y);
+            average /= curved2.Points.Count - 10;
+            int index = 0;
+            for (index = 0; index < curved2.Points.Count; index++) { if (curved2[index].Y > 10.0 * average) break; }
+            double[] xData = GraphProcessing.CurveToArray(LineCurve, true);
+            double[] yData = GraphProcessing.CurveToArray(LineCurve, false);
+            double offSetY = originalCurve[index].Y - p2.Y;
+            double offSetX = originalCurve[index].X - p2.X;
+
+            for (int i = 0; i < xData.Length; i++)
+            {
+                xData[i] += offSetX;
+                yData[i] += offSetY;
+            }
+
+            var ds = new XYDataSet(xData, yData);
+            double k = ds.Slope;
+            double b = ds.YIntercept;
+            LineItem curve = null;
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль", Color.DarkCyan, 4, SymbolType.Default, Color.DarkCyan));
+           
+            for (int i = 0; i < max; i++)
+                if ((k * i + b) > 0)
+                    curve.AddPoint(new PointPair(i, k * i + b));
             
+            int offSetX2 = (int)Math.Round(0.8 * curve.Points[0].X);
+
+            LineItem curve2;
+            curve2 = curve;
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 2", Color.DarkCyan, 4, SymbolType.Default, Color.DarkCyan));
+            for (int i = 0; i < xData.Length; i++)
+            {
+                xData[i] -= offSetX2;
+            }
+            var ds1 = new XYDataSet(xData, yData);
+            double k1 = ds1.Slope;
+            double b1 = ds1.YIntercept;
+            for (int i = 0; i < max/2; i++)
+                if ( (k1 * i + b1) > 0)
+                curve2.AddPoint(new PointPair(i, k1 * i + b1));
+
+            curve.Tag = 5;
+            curve2.Tag = 5;
         }
 
         public static void paralellLine ( double offSetX, double offSetY, ref LineItem curve)
@@ -57,11 +153,17 @@ namespace ComPortReader.Classes
             var ds = new XYDataSet(xData, yData);
             double k = ds.Slope;
             double b = ds.YIntercept;
-            form.buttons.Add(GraphProcessing.CreateCurve(ref curve, form.CurvesDropDownButton, form.ZGCInstance, "Линейный участок МНК", Color.DarkCyan, 4, SymbolType.Default, Color.DarkCyan));
+            curve.Tag = 2;
             for (int i = begin; i < end; i++)
                curve.AddPoint(new PointPair(i, k * i + b));
         }
-        public static LineItem BuildLine(PointPair p1, PointPair p2, ref LineItem result)
+        public static void leastSquaresBuild(ref LineItem curve, double k, double b, int end)
+        {
+            for (int i = 0; i < end; i++)
+                if (k*i+b > 0) curve.AddPoint(new PointPair(i, k * i + b));
+
+        }
+            public static LineItem BuildLine(PointPair p1, PointPair p2, ref LineItem result)
         {
 
             double x1 = p1.X;

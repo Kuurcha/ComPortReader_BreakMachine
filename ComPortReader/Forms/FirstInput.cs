@@ -46,7 +46,7 @@ namespace ComPortReader.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            double aDimnesion = 0, bDimension = 0, originalLength = 0, endLength = 0, maxForce = 0;
+             double aDimnesion = 0, bDimension = 0, originalLength = 0, endLength = 0, maxForce = 0;
             if (endLengthTB.ReadOnly)
             {
                 if (double.TryParse(aDimTB.Text, out aDimnesion) && (double.TryParse(bDimTB.Text, out bDimension) | bDimTB.ReadOnly) && double.TryParse(startLength.Text, out originalLength))
@@ -66,7 +66,7 @@ namespace ComPortReader.Forms
                     this.Visible = false;
                     endLengthTB.ReadOnly = false;
                     maxForceTB.ReadOnly = false;
-                   
+                    form.ZGCInstance.GraphPane.Title.Text = markingTB.Text;
                     this.Hide();
                     if (typeCB.Text == "Прямоугольная") bDimTB.ReadOnly = true;
                     else { bDimTB.ReadOnly = false; }

@@ -34,8 +34,16 @@ namespace ComPortReader
             zgc.Refresh();
             zgc.Invalidate();
             zgc.AxisChange();
+            //zgc.GraphPane.CurveList.Sort(new CurveItemTagComparer());
         }
-
+        class CurveItemTagComparer : IComparer<CurveItem>
+        {
+            public int Compare(CurveItem x, CurveItem y)
+            {
+                return ((int)x.Tag).CompareTo((int)y.Tag);
+             
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -47,7 +55,7 @@ namespace ComPortReader
             int length = curve.Points.Count;
             int a = ((isXAxis) ? 1 : 2);
             double[] array = new double[length];
-            for (int i = 0; i < length - 2; i++) { array[i] = (isXAxis ?  curve.Points[i].X : array[i] = curve.Points[i].Y); }
+            for (int i = 0; i < length; i++) { array[i] = (isXAxis ?  curve.Points[i].X : curve.Points[i].Y); }
             return array;
         }
       
@@ -292,7 +300,7 @@ namespace ComPortReader
             while( startPoint < secondDerivativeCurve.Points.Count -1 && flag)
             {
                 double temp = Math.Abs(secondDerivativeCurve.Points[startPoint].Y);
-                if (temp < average/1.2) counterFlag++;
+                if (temp < 1.5*average) counterFlag++;
                 else counterFlag = 0;
                 if (counterFlag == 5) flag = false;
 
@@ -415,11 +423,9 @@ namespace ComPortReader
            
             for (int i = 1; i < length - 2; i++)
             {
-                
                 double bottom = 2*(curve.Points[i + 1].X - curve.Points[i].X);
                 double top = (curve.Points[i + 1].Y - curve.Points[i-1].Y);
                 printCurve.AddPoint(curve.Points[i + 1].X, top/bottom);
-
             }
         }
         internal static void SecondDerivativeGraph(LineItem curve, ref LineItem printCurve)

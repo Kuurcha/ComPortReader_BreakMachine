@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem5 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem6 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem7 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem8 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem1 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem2 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem3 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem4 = new ImageComboBox.ImageComboBoxItem();
             this.xAxisRangeLabel = new System.Windows.Forms.Label();
             this.xAxisNameLabel = new System.Windows.Forms.Label();
             this.graphNameLabel = new System.Windows.Forms.Label();
@@ -72,6 +72,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.afterSelectEventHandlerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -299,35 +301,35 @@
             this.symbolCB.ImageList = this.ListForCombo;
             this.symbolCB.Indent = 0;
             this.symbolCB.ItemHeight = 15;
-            imageComboBoxItem5.Font = null;
-            imageComboBoxItem5.Image = "1";
-            imageComboBoxItem5.ImageIndex = 1;
-            imageComboBoxItem5.IndentLevel = 0;
-            imageComboBoxItem5.Item = null;
-            imageComboBoxItem5.Text = "Звезда";
-            imageComboBoxItem6.Font = null;
-            imageComboBoxItem6.Image = "3";
-            imageComboBoxItem6.ImageIndex = 3;
-            imageComboBoxItem6.IndentLevel = 0;
-            imageComboBoxItem6.Item = null;
-            imageComboBoxItem6.Text = "Палка";
-            imageComboBoxItem7.Font = null;
-            imageComboBoxItem7.Image = "0";
-            imageComboBoxItem7.ImageIndex = 0;
-            imageComboBoxItem7.IndentLevel = 0;
-            imageComboBoxItem7.Item = null;
-            imageComboBoxItem7.Text = "Круг";
-            imageComboBoxItem8.Font = null;
-            imageComboBoxItem8.Image = "2";
-            imageComboBoxItem8.ImageIndex = 2;
-            imageComboBoxItem8.IndentLevel = 0;
-            imageComboBoxItem8.Item = null;
-            imageComboBoxItem8.Text = "Линия";
+            imageComboBoxItem1.Font = null;
+            imageComboBoxItem1.Image = "1";
+            imageComboBoxItem1.ImageIndex = 1;
+            imageComboBoxItem1.IndentLevel = 0;
+            imageComboBoxItem1.Item = null;
+            imageComboBoxItem1.Text = "Звезда";
+            imageComboBoxItem2.Font = null;
+            imageComboBoxItem2.Image = "3";
+            imageComboBoxItem2.ImageIndex = 3;
+            imageComboBoxItem2.IndentLevel = 0;
+            imageComboBoxItem2.Item = null;
+            imageComboBoxItem2.Text = "Палка";
+            imageComboBoxItem3.Font = null;
+            imageComboBoxItem3.Image = "0";
+            imageComboBoxItem3.ImageIndex = 0;
+            imageComboBoxItem3.IndentLevel = 0;
+            imageComboBoxItem3.Item = null;
+            imageComboBoxItem3.Text = "Круг";
+            imageComboBoxItem4.Font = null;
+            imageComboBoxItem4.Image = "2";
+            imageComboBoxItem4.ImageIndex = 2;
+            imageComboBoxItem4.IndentLevel = 0;
+            imageComboBoxItem4.Item = null;
+            imageComboBoxItem4.Text = "Линия";
             this.symbolCB.Items.AddRange(new ImageComboBox.ImageComboBoxItem[] {
-            imageComboBoxItem5,
-            imageComboBoxItem6,
-            imageComboBoxItem7,
-            imageComboBoxItem8});
+            imageComboBoxItem1,
+            imageComboBoxItem2,
+            imageComboBoxItem3,
+            imageComboBoxItem4});
             this.symbolCB.Location = new System.Drawing.Point(365, 19);
             this.symbolCB.Margin = new System.Windows.Forms.Padding(2);
             this.symbolCB.Name = "symbolCB";
@@ -482,17 +484,39 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(323, 94);
+            this.label7.Location = new System.Drawing.Point(310, 93);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(101, 13);
+            this.label7.Size = new System.Drawing.Size(121, 13);
             this.label7.TabIndex = 67;
-            this.label7.Text = "Чувствительность";
+            this.label7.Text = "Чувствительность зуб";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(310, 136);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(122, 13);
+            this.label8.TabIndex = 69;
+            this.label8.Text = "Чувствительность низ";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(346, 151);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.MaxLength = 3;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(51, 20);
+            this.textBox1.TabIndex = 70;
+            this.toolTip1.SetToolTip(this.textBox1, "Коэф на сколько маленькой допускается разброс производной для определения нижней " +
+        "границы");
             // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(442, 279);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.sensitivityTB);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -580,5 +604,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox sensitivityTB;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

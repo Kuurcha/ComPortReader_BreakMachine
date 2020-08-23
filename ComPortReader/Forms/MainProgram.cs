@@ -266,19 +266,21 @@ namespace ComPortReader
             if (curve == null)
             {
                 buttons.Add(GraphProcessing.CreateCurve(ref curve, curvesDropDownBtn, planeGraph, "Основной График", Color.Red, 4, SymbolType.Circle, Color.Red));
-                curve.Tag = 1;
+                curve.Tag = 3;
             }
           // Логика за этим? Зачем таймер.
             drawGraphMethod print = new drawGraphMethod(GraphProcessing.AddInRealTime); //Инициализация переменных для ком-порта
             // Show all the incoming data in the port's buffer
             string comPortData = ((SerialPort)sender).ReadExisting().ToString();//Чтение данных из текущего ком порта.
-            comPortData = comPortData.Replace("\r \n \0N", " "); //Удаление символов перехода строки
+            comPortData = comPortData.Replace("0\r#0", " "); //Удаление символов перехода строки
             comPortData = comPortData.Replace("\t", " ");
             int lengthOfOneReading = Parsing.GetLengthOfOneReading(comPortData);
-
+            counterTimer = 0;
+            saveTimerTick = 0;
             while (lengthOfOneReading > 0 && comPortData.Length > lengthOfOneReading) //Перебираем все пары усилий и поворотов в полученной строке
             {
                 if (everySecond == null) СreateTimer();
+                
                 atLeastOnePointPassed = true;
                 lengthOfOneReading = Parsing.GetLengthOfOneReading(comPortData);
                 string tempStr = comPortData.Substring(0, lengthOfOneReading); //Если в полученной строке несколько показаний, отделяем одно
@@ -752,18 +754,15 @@ namespace ComPortReader
                 linearPart = GraphProcessing.CreateCurve(ref lineCurve, curvesDropDownBtn, planeGraph, "Линейный участок", Color.Blue, 8, SymbolType.Circle, Color.Blue);
                 buttons.Add(linearPart);
                 LineItem firstDerivativeCurve = new LineItem("d1");
-                
+                firstDerivativeCurve.Tag = 5;
                 LineItem firstMovingAverageCurve = new LineItem("mad1");
-
+                firstMovingAverageCurve.Tag = 5;
                 processedCurve = new LineItem("movingAverage1");
+                processedCurve.Tag = 5;
                 processedCurve2 = new LineItem("movingAverage2");
+                processedCurve2.Tag = 5;
                 double[] data = GraphProcessing.CurveToArray(curve, false);
-                double[] movingAverage = GraphProcessing.MovingAverage(data, sensitivy);
-                for (int i = 0; i < movingAverage.Length - 1; i++)
-                {
-                   
-                    processedCurve.AddPoint(curve.Points[i].X, movingAverage[i]);
-                }
+   
                 double[] movingAverage1 = GraphProcessing.MovingAverage(data, sensitivy);
                 for (int i = 0; i < movingAverage1.Length - 1; i++)
                 {
@@ -773,23 +772,30 @@ namespace ComPortReader
 
 
                 GraphProcessing.DerivativeGraph(curve, ref firstDerivativeCurve);
+
                 GraphProcessing.SecondDerivativeGraph(firstDerivativeCurve, ref secondDerivativeCurve);
                 GraphProcessing.DerivativeGraph(processedCurve, ref firstMovingAverageCurve);
                 LineItem tempCurve = new LineItem("temp");
+                tempCurve.Tag = 5;
                 LineItem secondMovingAverageCurve = new LineItem("sMAC");
+                secondMovingAverageCurve.Tag = 5;
                 GraphProcessing.DerivativeGraph(processedCurve2, ref tempCurve);
                 GraphProcessing.DerivativeGraph(tempCurve, ref secondMovingAverageCurve);
                 int[] bounds = GraphProcessing.CalculatePointsForLinear(curve, secondMovingAverageCurve, firstMovingAverageCurve);
                 for (int i = bounds[0]; i < bounds[1]; i++) lineCurve.AddPoint(curve[i]);
-                lineCurve.Tag = 4;
-                aproximateLinearCurve = null;
+                
+                aproximateLinearCurve = null;  
                 int begin = (int) bounds[0];
                 int end = (int) bounds[1];
-
-
+                buttons.Add(GraphProcessing.CreateCurve(ref aproximateLinearCurve, curvesDropDownBtn, planeGraph, "Линейный участок МНК", Color.Green, 2, SymbolType.Circle, Color.Green));
+                //(int) curve.Points[begin].X (int) curve.Points[end].X
                 // y= y1+(x-x1) (y2 - y1) / (x2-x1) ; y = k*(x-x1) + y1 = kx - (kx1 + y1)
-                MyMath.leastSquaresBuild(begin, end, lineCurve, ref aproximateLinearCurve, this);
+                MyMath.leastSquaresBuild((int)curve.Points[begin].X, (int)curve.Points[end].X, lineCurve, ref aproximateLinearCurve, this);
+                aproximateLinearCurve.Tag = 2;
                 form.AproximateLinearCurve = aproximateLinearCurve;
+
+                lineCurve.Tag = 5;
+                planeGraph.Refresh();
                 GraphProcessing.UpdateGraph(planeGraph);
             }
             else
@@ -824,6 +830,7 @@ namespace ComPortReader
 
         private bool planeGraph_DoubleClickEvent(ZedGraphControl sender, MouseEventArgs e)
         {
+           
             object nearestObject;
             int index;
             this.planeGraph.GraphPane.FindNearestObject(new PointF(e.X, e.Y), this.CreateGraphics(), out nearestObject, out index);
@@ -843,6 +850,7 @@ namespace ComPortReader
                             setCurve("Точка 1", ref selectionCurveBegin);
                             selectionCurveBegin.AddPoint(clickedPoint);
                             selectionCurveBegin.Label.IsVisible = false;
+                            selectionCurveBegin.Tag = 1;
 
                         }
                         else if (selectionCurveEnd == null)
@@ -850,6 +858,7 @@ namespace ComPortReader
                             setCurve("Точка 2", ref selectionCurveEnd);
                             selectionCurveEnd.AddPoint(clickedPoint);
                             selectionCurveEnd.Label.IsVisible = false;
+                            selectionCurveEnd.Tag = 1;
                         }
                         else
                         {
@@ -860,6 +869,7 @@ namespace ComPortReader
                             setCurve(curveName, ref curve);
                             curve.AddPoint(clickedPoint);
                             curve.Label.IsVisible = false;
+                            curve.Tag = 1;
                             if (curveName == "Точка 1") selectionCurveBegin = curve;
                             else if (curveName == "Точка 2") selectionCurveEnd = curve;
                         }
