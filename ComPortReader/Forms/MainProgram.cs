@@ -27,7 +27,10 @@ namespace ComPortReader
     public partial class MainProgram : Form
     {
 
-
+        internal double bCoef;
+        internal double kCoef;
+        internal double IntersectionPointBegin; //Первая точка пересечения паралелльной прямой линейному участку предела текучести
+        internal double IntersectionPointEnd; //Вторая точка пересечения паралелльной прямой линейному участку предела текучести
 
         internal string metalMarking;
         internal string type;
@@ -265,7 +268,7 @@ namespace ComPortReader
         {
             if (curve == null)
             {
-                buttons.Add(GraphProcessing.CreateCurve(ref curve, curvesDropDownBtn, planeGraph, "Основной График", Color.Red, 4, SymbolType.Circle, Color.Red));
+                buttons.Add(GraphProcessing.CreateCurve(ref curve, curvesDropDownBtn, planeGraph, "Основной График", Color.Red, 2, SymbolType.Circle, Color.Red));
                 curve.Tag = 3;
             }
           // Логика за этим? Зачем таймер.
@@ -579,8 +582,8 @@ namespace ComPortReader
         {
             PointPairList pointList = new PointPairList();
             curve = planeGraph.GraphPane.AddCurve(name, pointList, Color.Blue);
-            curve.Symbol.Size = curve.Symbol.Size * 2f;
-            curve.Symbol.Type = SymbolType.Square;
+            curve.Symbol.Size = 10;
+            curve.Symbol.Type = SymbolType.XCross;
             curve.Symbol.Fill = curve.Symbol.Fill;
         }
 
@@ -836,13 +839,11 @@ namespace ComPortReader
             this.planeGraph.GraphPane.FindNearestObject(new PointF(e.X, e.Y), this.CreateGraphics(), out nearestObject, out index);
             if (nearestObject != null && nearestObject.GetType() == typeof(LineItem))
             {
-                
                 LineItem nearestLineItemObject = (LineItem)nearestObject;
                 PointPair clickedPoint = nearestLineItemObject.Points[index];
                 int i = 0;
                 bool pointBelongToCurve = false;
                 PointPairList temp = (PointPairList) curve.Points;
-             
                 if (temp.Contains(clickedPoint))
                 {
                         if (selectionCurveBegin == null)
@@ -850,7 +851,7 @@ namespace ComPortReader
                             setCurve("Точка 1", ref selectionCurveBegin);
                             selectionCurveBegin.AddPoint(clickedPoint);
                             selectionCurveBegin.Label.IsVisible = false;
-                            selectionCurveBegin.Tag = 1;
+                            selectionCurveBegin.Tag = 0;
 
                         }
                         else if (selectionCurveEnd == null)
@@ -858,18 +859,18 @@ namespace ComPortReader
                             setCurve("Точка 2", ref selectionCurveEnd);
                             selectionCurveEnd.AddPoint(clickedPoint);
                             selectionCurveEnd.Label.IsVisible = false;
-                            selectionCurveEnd.Tag = 1;
+                            selectionCurveEnd.Tag = 0;
                         }
                         else
                         {
                             string curveName = ComputeClosestPoint(clickedPoint.X, clickedPoint.Y);
                             int pos = planeGraph.GraphPane.CurveList.IndexOf(curveName);
-                            if (pos > 0) planeGraph.GraphPane.CurveList.RemoveAt(pos);
+                            if (pos >= 0) planeGraph.GraphPane.CurveList.RemoveAt(pos);
                             LineItem curve = null;
                             setCurve(curveName, ref curve);
                             curve.AddPoint(clickedPoint);
                             curve.Label.IsVisible = false;
-                            curve.Tag = 1;
+                            curve.Tag = 0;
                             if (curveName == "Точка 1") selectionCurveBegin = curve;
                             else if (curveName == "Точка 2") selectionCurveEnd = curve;
                         }

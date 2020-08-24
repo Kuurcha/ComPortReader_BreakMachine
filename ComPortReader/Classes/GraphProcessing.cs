@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using ComPortReader.Classes;
 using System.Xml.Schema;
 using System.IO.Ports;
+using System.Data;
+
 namespace ComPortReader
 {
     class GraphProcessing
@@ -34,7 +36,7 @@ namespace ComPortReader
             zgc.Refresh();
             zgc.Invalidate();
             zgc.AxisChange();
-            //zgc.GraphPane.CurveList.Sort(new CurveItemTagComparer());
+            zgc.GraphPane.CurveList.Sort(new CurveItemTagComparer());
         }
         class CurveItemTagComparer : IComparer<CurveItem>
         {
@@ -283,8 +285,26 @@ namespace ComPortReader
                 mainForm.Port.DataReceived -= new SerialDataReceivedEventHandler(mainForm.port_DataReceived);
                 mainForm.openComPort();
                 mainForm.Port.DataReceived += new SerialDataReceivedEventHandler(mainForm.port_DataReceived);
-                mainForm.Port.Open();
+            try { mainForm.Port.Open(); }
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
        
+        }
+        public static void RemoveLine(string name, MainProgram form)
+        {
+            int pos = form.ZGCInstance.GraphPane.CurveList.IndexOf(name);
+            if (pos >= 0)
+            {
+                form.ZGCInstance.GraphPane.CurveList.RemoveAt(pos);
+                for (int i = 0; i < form.buttons.Count-1; i++)
+                {
+                    LineItem curve = form.buttons[i].curve;
+                    if (curve.Label.Text == name)
+                    {
+                        form.CurvesDropDownButton.DropDownItems.Remove(form.buttons[i].button);
+                        form.buttons.RemoveAt(i);       
+                    }
+                }
+            }
         }
         internal static int[] CalculatePointsForLinear(LineItem originalCurve, LineItem secondDerivativeCurve, LineItem firstMovingAverageCurve)
         {
@@ -505,5 +525,6 @@ namespace ComPortReader
             return pirson;
         }
 
+       
     }
 }

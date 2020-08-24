@@ -66,17 +66,17 @@
             this.accept.Name = "accept";
             this.accept.Size = new System.Drawing.Size(75, 23);
             this.accept.TabIndex = 2;
-            this.accept.Text = "Потвердить";
+            this.accept.Text = "Построить";
             this.accept.UseVisualStyleBackColor = true;
             this.accept.Click += new System.EventHandler(this.accept_Click);
             // 
             // decline
             // 
-            this.decline.Location = new System.Drawing.Point(203, 124);
+            this.decline.Location = new System.Drawing.Point(215, 126);
             this.decline.Name = "decline";
             this.decline.Size = new System.Drawing.Size(75, 23);
             this.decline.TabIndex = 3;
-            this.decline.Text = "Отмена";
+            this.decline.Text = "Потвердить";
             this.decline.UseVisualStyleBackColor = true;
             this.decline.Click += new System.EventHandler(this.decline_Click);
             // 
@@ -84,10 +84,11 @@
             // 
             this.info.Location = new System.Drawing.Point(9, 9);
             this.info.Name = "info";
-            this.info.Size = new System.Drawing.Size(269, 56);
+            this.info.Size = new System.Drawing.Size(281, 56);
             this.info.TabIndex = 4;
             this.info.Text = "Автоматическое построение линейного участка завершено.  Если участок построен нев" +
-    "ерно вы можете сделать это  вручную, для этого нажмите \r\nпотвердить";
+    "ерно вы можете сделать это  вручную, для этого нажмите \r\nпостроить, если пострен" +
+    "ие завершено  - потвердить\r\n";
             this.info.Click += new System.EventHandler(this.info_Click);
             // 
             // CustomLine
@@ -95,7 +96,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(290, 154);
+            this.ClientSize = new System.Drawing.Size(302, 161);
             this.Controls.Add(this.info);
             this.Controls.Add(this.decline);
             this.Controls.Add(this.accept);
