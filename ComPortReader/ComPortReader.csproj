@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ImageComboBox">
-      <HintPath>..\..\ImageComboBox\ImageComboBox\bin\Release\ImageComboBox.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Downloads\ImageComboBoxSource\ImageComboBox\ImageComboBox\bin\Release\ImageComboBox.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -87,6 +87,12 @@
     </Compile>
     <Compile Include="Classes\GraphProcessing.cs" />
     <Compile Include="Classes\Parsing.cs" />
+    <Compile Include="Forms\ChooseStressFlow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChooseStressFlow.Designer.cs">
+      <DependentUpon>ChooseStressFlow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CustomLine.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChooseStressFlow.resx">
+      <DependentUpon>ChooseStressFlow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CustomLine.resx">
       <DependentUpon>CustomLine.cs</DependentUpon>

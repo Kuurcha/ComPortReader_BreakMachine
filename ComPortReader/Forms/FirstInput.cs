@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZedGraph;
 
 namespace ComPortReader.Forms
 {
@@ -37,6 +38,7 @@ namespace ComPortReader.Forms
                 bDimTB.ReadOnly = true;
                 firstInputSizeLabel.Text = "Диаметр до разрыва";
                 secondInputSizeLabel.Text = "Диаметр после разрыва";
+                secondInputSizeLabel.Text = "";
                 
             }
 
@@ -68,7 +70,7 @@ namespace ComPortReader.Forms
                     maxForceTB.ReadOnly = false;
                     form.ZGCInstance.GraphPane.Title.Text = markingTB.Text;
                     this.Hide();
-                    if (typeCB.Text == "Прямоугольная") bDimTB.ReadOnly = true;
+                    if (typeCB.Text == "Плоская") bDimTB.ReadOnly = true;
                     else { bDimTB.ReadOnly = false; }
                 }
                 else
@@ -127,29 +129,24 @@ namespace ComPortReader.Forms
                     int pos2 = form.ZGCInstance.GraphPane.CurveList.IndexOf("Точка 2");
                     if (pos2 > 0) form.ZGCInstance.GraphPane.CurveList.RemoveAt(pos2);
 
-                    for (int i = 0; i < form.getCurve.Points.Count; i++)
+                    
+                    
+                    double coefOfDiv =  Math.Abs((form.originalLength - form.endLength)/ (form.IntersectionPointEnd - form.IntersectionPointBegin));
+                    double distance = form.IntersectionPointEnd;
+                    double distancePositive = form.originalLength;
+                    foreach( LineItem elem in form.ZGCInstance.GraphPane.CurveList)
                     {
-                        form.getCurve.Points[i].Y *= coef;
-                        form.getCurve.Points[i].Y /= form.totalArea;
-                 
-                
+                        for (int i = 0; i < elem.Points.Count; i++)
+                        {
+                            elem[i].X -= distance;
+                            elem[i].X *= coefOfDiv;
+                            elem[i].X += distancePositive;
+                            elem[i].Y *= coef;
+                            form.ZGCInstance.GraphPane.YAxis.Title.Text = "F, Н";
+                            form.ZGCInstance.GraphPane.XAxis.Title.Text = "L, мм";
+                        }
                     }
-                    for (int i = 0; i < form.getLineCurve.Points.Count; i++)
-                    {
-                        form.getLineCurve.Points[i].Y *= coef;
-                        form.getLineCurve.Points[i].Y /= form.totalArea;
-                    }
-                    for (int i =0; i < form.AproximateLinearCurve.Points.Count; i++)
-                    {
-                        form.AproximateLinearCurve.Points[i].Y *= coef;
-                        form.AproximateLinearCurve.Points[i].Y /= form.totalArea;
-                    }
-                    double coefOfDiv = form.getCurve[(form.getCurve.Points.Count - 1)].X / (Math.Abs(form.endLength - form.originalLength));
-                    for (int i = 0; i < form.getCurve.Points.Count; i++) form.getCurve[i].X = form.originalLength + form.getCurve[i].X/coefOfDiv;
-                    for (int i = 0; i < form.getLineCurve.Points.Count; i++) form.getLineCurve[i].X = form.originalLength + form.getLineCurve[i].X/coefOfDiv;
-                    for (int i = 0; i < form.AproximateLinearCurve.Points.Count; i++) form.AproximateLinearCurve[i].X = form.originalLength + form.AproximateLinearCurve[i].X / coefOfDiv;
-
-
+                    GraphProcessing.UpdateGraph(form.ZGCInstance);
                     
                     //form.MinXValue = form.originalLength;
                     //form.MaxXValue = form.endLength;
@@ -177,13 +174,15 @@ namespace ComPortReader.Forms
                     switch (MessageBox.Show("Чтение показаний закончились. Вы хотите еще один эксперимент перед формированием отчета?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                     {
                         case DialogResult.Yes:
+                            form.ReadingInput = null;
+                            GraphProcessing.resetGraph(form);
                             form.ReadingInput = new FirstInput(form);
                             form.ReadingInput.Show();
+                            form.ReadingInput.Focus();
+                            form.ReadingInput.BringToFront();
                             form.SelectionCurveEnd = null;
                             form.SelectionCurveBegin = null;
-
-
-                            GraphProcessing.resetGraph(form);
+                           
                             break;
 
                         case DialogResult.No:

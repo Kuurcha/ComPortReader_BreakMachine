@@ -269,6 +269,8 @@ namespace ComPortReader
             if (curve == null)
             {
                 buttons.Add(GraphProcessing.CreateCurve(ref curve, curvesDropDownBtn, planeGraph, "Основной График", Color.Red, 2, SymbolType.Circle, Color.Red));
+                ZGCInstance.GraphPane.YAxis.Title.Text = "F, условных единиц";
+                ZGCInstance.GraphPane.XAxis.Title.Text = "N, оборотов";
                 curve.Tag = 3;
             }
           // Логика за этим? Зачем таймер.
@@ -336,6 +338,7 @@ namespace ComPortReader
                 {
                     port = new SerialPort(MyComPort, MyBaudRate, MyParity, MyDataBits, MyStopBits);
                     startingRecordMenuB.Enabled = true;
+                    startingRecordMenuB.DropDownItems[0].Enabled = true;
                 }
             }
             catch (Exception Ex) { MessageBox.Show("Не удалось установить порт. Проверьте настройки COM-порта"); }
@@ -360,6 +363,11 @@ namespace ComPortReader
                
              
             }
+            else
+            {
+                comPort = comPortStatusB.Text;
+                form.openComPort();
+            }
         }
         private void portList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -375,19 +383,17 @@ namespace ComPortReader
         private void startBuilding_Click(object sender, EventArgs e)
         {
 
+            
             if (!port.IsOpen & readingInput==null)
             {
                 try
                 {
-                    readingInOneSession = new List<ExperimentReading>();
+                    if (readingInOneSession == null) readingInOneSession = new List<ExperimentReading>();
                     port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
                     stopBuilding.Enabled = true;
-                    isCoefficentEnabled = false;
-                    settingsForm.SetGetCoefficentTBEnabled = false;
                     readingInput = new FirstInput(this);
                     readingInput.Show();
                     startBuilding.Enabled = false;
-                    
                 }
                 catch (Exception ex)
                 {
@@ -398,8 +404,7 @@ namespace ComPortReader
                     }
                 }
             }
-            else { ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!"); }
-            
+            else { ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!"); }         
             GraphProcessing.UpdateGraph(planeGraph);
         }
 
@@ -544,6 +549,8 @@ namespace ComPortReader
             {
                 settingsForm.SetGetCoefficentTBEnabled = isCoefficentEnabled;
                 settingsForm.Show();
+                settingsForm.Focus();
+                settingsForm.BringToFront();
             }
 
 
@@ -680,7 +687,7 @@ namespace ComPortReader
 
         private void planeGraph_Load_1(object sender, EventArgs e)
         {
-
+            f
         }
 
         private void planeGraph_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -756,11 +763,13 @@ namespace ComPortReader
                 }
                 linearPart = GraphProcessing.CreateCurve(ref lineCurve, curvesDropDownBtn, planeGraph, "Линейный участок", Color.Blue, 8, SymbolType.Circle, Color.Blue);
                 buttons.Add(linearPart);
+                lineCurve.Label.IsVisible = false;
                 LineItem firstDerivativeCurve = new LineItem("d1");
                 firstDerivativeCurve.Tag = 5;
                 LineItem firstMovingAverageCurve = new LineItem("mad1");
                 firstMovingAverageCurve.Tag = 5;
                 processedCurve = new LineItem("movingAverage1");
+               
                 processedCurve.Tag = 5;
                 processedCurve2 = new LineItem("movingAverage2");
                 processedCurve2.Tag = 5;
@@ -771,8 +780,8 @@ namespace ComPortReader
                 {
                     processedCurve2.AddPoint(curve.Points[i].X, movingAverage1[i]);
                 }
-
-
+                linearPart.curve.IsVisible = false;
+                processedCurve = processedCurve2.Clone();
 
                 GraphProcessing.DerivativeGraph(curve, ref firstDerivativeCurve);
 
@@ -796,7 +805,8 @@ namespace ComPortReader
                 MyMath.leastSquaresBuild((int)curve.Points[begin].X, (int)curve.Points[end].X, lineCurve, ref aproximateLinearCurve, this);
                 aproximateLinearCurve.Tag = 2;
                 form.AproximateLinearCurve = aproximateLinearCurve;
-
+                aproximateLinearCurve.IsVisible = false;
+                aproximateLinearCurve.Label.IsVisible = false;
                 lineCurve.Tag = 5;
                 planeGraph.Refresh();
                 GraphProcessing.UpdateGraph(planeGraph);
@@ -954,6 +964,11 @@ namespace ComPortReader
         {
             var form = new DerivateForm(this);
             form.Show();
+        }
+
+        private void planeGraph_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
         }
     }
 }

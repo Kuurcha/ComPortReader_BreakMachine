@@ -344,7 +344,7 @@ namespace ComPortReader.Forms
 
                 try
                 {
-                    System.Diagnostics.Process.Start(@"C:\Test\NewDocument.docx");
+                    System.Diagnostics.Process.Start(fileName);
                 }
                 catch (Exception ex1)
                 { MessageBox.Show(ex1.ToString()); }

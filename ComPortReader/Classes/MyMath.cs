@@ -155,11 +155,7 @@ namespace ComPortReader.Classes
 
 
 
-            double average = 0;
-            for (int i = 0; i < curved2.Points.Count - 10; i++) average += Math.Abs(curved2[i].Y);
-            average /= curved2.Points.Count - 10;
-            int index = 0;
-            for (index = 0; index < curved2.Points.Count; index++) { if (curved2[index].Y > 10.0 * average) break; }
+            int index  = originalCurve.Points.Count - 4;
             double[] xData = GraphProcessing.CurveToArray(LineCurve, true);
             double[] yData = GraphProcessing.CurveToArray(LineCurve, false);
             double offSetY = originalCurve[index].Y - p2.Y;
@@ -175,7 +171,7 @@ namespace ComPortReader.Classes
             double k = ds.Slope;
             double b = ds.YIntercept;
             LineItem curve = null;
-            form.buttons.Add(GraphProcessing.CreateCurve(ref curve, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль", Color.DarkCyan, 1, SymbolType.Default, Color.DarkCyan));
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve, form.CurvesDropDownButton, form.ZGCInstance, "Параллель 1", Color.DarkCyan, 1, SymbolType.Default, Color.DarkCyan));
            
             for (int i = 0; i < max; i++)
                 if ((k * i + b) > 0)
@@ -188,7 +184,7 @@ namespace ComPortReader.Classes
 
             LineItem curve2;
             curve2 = LineCurve.Clone();
-            form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, form.ZGCInstance, "Паралелль 2", Color.DarkCyan, 1, SymbolType.Default, Color.DarkCyan));
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, form.ZGCInstance, "Параллель 2", Color.DarkCyan, 1, SymbolType.Default, Color.DarkCyan));
             for (int i = 0; i < LineCurve[0].X; i++)
                  if ((form.kCoef * i + form.bCoef) > 0)
                     curve2.AddPoint(new PointPair(i, form.kCoef * i + form.bCoef));

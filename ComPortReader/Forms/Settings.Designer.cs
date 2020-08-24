@@ -67,13 +67,13 @@
             this.dataBitTB = new System.Windows.Forms.TextBox();
             this.stopBitTB = new System.Windows.Forms.ComboBox();
             this.sensitivityTB = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.afterSelectEventHandlerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -233,7 +233,7 @@
             // applyChanges
             // 
             this.applyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.applyChanges.Location = new System.Drawing.Point(305, 245);
+            this.applyChanges.Location = new System.Drawing.Point(291, 244);
             this.applyChanges.Margin = new System.Windows.Forms.Padding(2);
             this.applyChanges.Name = "applyChanges";
             this.applyChanges.Size = new System.Drawing.Size(133, 23);
@@ -245,7 +245,7 @@
             // drawGraphB
             // 
             this.drawGraphB.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.drawGraphB.Location = new System.Drawing.Point(17, 245);
+            this.drawGraphB.Location = new System.Drawing.Point(11, 245);
             this.drawGraphB.Margin = new System.Windows.Forms.Padding(2);
             this.drawGraphB.Name = "drawGraphB";
             this.drawGraphB.Size = new System.Drawing.Size(88, 23);
@@ -445,6 +445,17 @@
             this.toolTip1.SetToolTip(this.sensitivityTB, "Чувствительность сглаживания графика для определения предела текучести");
             this.sensitivityTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sensitivityTB_KeyPress);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(346, 151);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.MaxLength = 3;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(51, 20);
+            this.textBox1.TabIndex = 70;
+            this.toolTip1.SetToolTip(this.textBox1, "Коэф на сколько маленькой допускается разброс производной для определения нижней " +
+        "границы");
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -498,17 +509,6 @@
             this.label8.Size = new System.Drawing.Size(122, 13);
             this.label8.TabIndex = 69;
             this.label8.Text = "Чувствительность низ";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(346, 151);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.MaxLength = 3;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(51, 20);
-            this.textBox1.TabIndex = 70;
-            this.toolTip1.SetToolTip(this.textBox1, "Коэф на сколько маленькой допускается разброс производной для определения нижней " +
-        "границы");
             // 
             // Settings
             // 

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
 using ZedGraph;
+using ComPortReader.Classes;
 
 namespace ComPortReader
 {
@@ -252,6 +253,9 @@ namespace ComPortReader
         private void button1_Click(object sender, EventArgs e)
         {
                 GraphProcessing.resetGraph(mainForm);
+                mainForm.readingInOneSession = null;
+                if (mainForm.Port.IsOpen) mainForm.Port.Close();
+
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

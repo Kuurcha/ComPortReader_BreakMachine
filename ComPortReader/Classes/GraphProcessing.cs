@@ -252,6 +252,14 @@ namespace ComPortReader
             return (next - prev) / 2;
         }
 
+        public static void RemoveSelection(MainProgram form)
+        {
+            form.ZGCInstance.GraphPane.CurveList.Remove(form.SelectionCurveBegin);
+            form.ZGCInstance.GraphPane.CurveList.Remove(form.SelectionCurveEnd);
+            form.SelectionCurveBegin = null;
+            form.SelectionCurveEnd = null;
+            UpdateGraph(form.ZGCInstance);
+        }
         public static void resetGraph(MainProgram mainForm)
         {
             PointPairList list = new PointPairList();
@@ -273,7 +281,20 @@ namespace ComPortReader
             mainForm.counterTimer = 0;
             mainForm.SelectionCurveBegin = null;
             mainForm.SelectionCurveEnd = null;
+            mainForm.ChooseMode = false;
+            mainForm.ReadingInput = null;
+            mainForm.startingRecordMenuB.DropDownItems[0].Enabled = false;
+            mainForm.startingRecordMenuB.DropDownItems[1].Enabled = false;
+            List<Form> openForms = new List<Form>();
 
+            foreach (Form f in Application.OpenForms)
+                openForms.Add(f);
+
+            foreach (Form f in openForms)
+            {
+                if (f != mainForm)
+                    f.Close();
+            }
             // Установим масштаб по умолчанию для оси X
             mainForm.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
             mainForm.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;
@@ -281,31 +302,23 @@ namespace ComPortReader
             // Установим масштаб по умолчанию для оси Y
             mainForm.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
             mainForm.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
-                mainForm.Port.Close();
-                mainForm.Port.DataReceived -= new SerialDataReceivedEventHandler(mainForm.port_DataReceived);
-                mainForm.openComPort();
-                mainForm.Port.DataReceived += new SerialDataReceivedEventHandler(mainForm.port_DataReceived);
-            try { mainForm.Port.Open(); }
-            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
+             
+
        
         }
         public static void RemoveLine(string name, MainProgram form)
         {
             int pos = form.ZGCInstance.GraphPane.CurveList.IndexOf(name);
-            if (pos >= 0)
-            {
-                form.ZGCInstance.GraphPane.CurveList.RemoveAt(pos);
-                for (int i = 0; i < form.buttons.Count-1; i++)
-                {
-                    LineItem curve = form.buttons[i].curve;
-                    if (curve.Label.Text == name)
-                    {
-                        form.CurvesDropDownButton.DropDownItems.Remove(form.buttons[i].button);
-                        form.buttons.RemoveAt(i);       
-                    }
+            if (pos >= 0) form.ZGCInstance.GraphPane.CurveList.RemoveAt(pos);
+                DynamicToolStripButton tempBtn = null;
+                for (int i = 0; i < form.buttons.Count; i++)
+                {    
+                        string test = form.buttons[i].curve.Label.Text;
+                        if (test == name) { tempBtn = form.buttons[i]; form.CurvesDropDownButton.DropDownItems.Remove(tempBtn.button); form.buttons.RemoveAt(i); }
                 }
-            }
+          
         }
+        
         internal static int[] CalculatePointsForLinear(LineItem originalCurve, LineItem secondDerivativeCurve, LineItem firstMovingAverageCurve)
         {
             // bound[0] - startPoint

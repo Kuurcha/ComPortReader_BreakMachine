@@ -57,14 +57,19 @@ namespace ComPortReader.Forms
                 switch (MessageBox.Show("Вы точно хотите выйти? Вы не построили линию вручную", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                 {
                     case DialogResult.Yes:
+                        GraphProcessing.RemoveSelection(form);
                         closeForm();
                         break;
                     case DialogResult.No:
 
                         break;
                 }
-            else closeForm();
-       
+            else
+            {
+                GraphProcessing.RemoveSelection(form);
+                closeForm();
+            }
+            
         
         }
         
@@ -72,14 +77,19 @@ namespace ComPortReader.Forms
         const string REG_NAME = "Линейный участок через две точки";
         const string PARALELL1_NAME = "Параллель 1";
         const string PARALELL2_NAME = "Параллель 2";
+        const string SIGMANZEROTWO = "Сигма 0.2";
         bool isUsed = false;
         LineItem aproximateLinearCurve = null;
         private void accept_Click(object sender, EventArgs e)
         {
+            aproximateLinearCurve = null;
+            GraphProcessing.RemoveLine(MNK_NAME, form);
             GraphProcessing.RemoveLine(MNK_NAME, form);
             GraphProcessing.RemoveLine(REG_NAME, form);
             GraphProcessing.RemoveLine(PARALELL1_NAME, form);
             GraphProcessing.RemoveLine(PARALELL2_NAME, form);
+            GraphProcessing.RemoveLine(SIGMANZEROTWO, form);
+            GraphProcessing.RemoveLine(SIGMANZEROTWO, form);
             GraphProcessing.UpdateGraph(form.ZGCInstance);
             if (form.SelectionCurveBegin != null && form.SelectionCurveEnd != null)
                 {
@@ -170,18 +180,18 @@ namespace ComPortReader.Forms
 
         private void leastSquares_Click(object sender, EventArgs e)
         {
-            this.leastSquares.Checked = true;
-            this.regular.Checked = false;
-            leastSquaresMode = true;
-            regularMode = false;
+            //this.leastSquares.Checked = true;
+            //this.regular.Checked = false;
+            //leastSquaresMode = true;
+            //regularMode = false;
         }
 
         private void regular_Click(object sender, EventArgs e)
         {
-            this.leastSquares.Checked = false;
-            this.regular.Checked = true;
-            leastSquaresMode = false;
-            regularMode = true;
+            //this.leastSquares.Checked = false;
+            //this.regular.Checked = true;
+            //leastSquaresMode = false;
+            //regularMode = true;
         }
 
         private void info_Click(object sender, EventArgs e)
