@@ -51,7 +51,7 @@ namespace ComPortReader
             parityTB.Text = ParityEnumToString((int)mainForm.MyParity);
             dataBitTB.Text = mainForm.MyDataBits.ToString();
             stopBitTB.Text = StopEnumToString(mainForm.MyStopBits);
-            sensitivityTB.Text = mainForm.Sensitivy.ToString();
+         
         }
         private SymbolType checkForSymbol()
         {
@@ -206,11 +206,11 @@ namespace ComPortReader
                 mainForm.getCurve.Symbol.Type = checkForSymbol();
                 mainForm.getCurve.Symbol.Size = int.Parse(sizeCB.Text);
             }
-            if (int.TryParse(baudRateTB.Text, out baudRate) && int.TryParse(dataBitTB.Text, out dataBit) && int.TryParse(sensitivityTB.Text, out sensitivity))
+            if (int.TryParse(baudRateTB.Text, out baudRate) && int.TryParse(dataBitTB.Text, out dataBit))
             {
                 mainForm.MyBaudRate = baudRate;
                 mainForm.MyDataBits = dataBit;
-                mainForm.Sensitivy = sensitivity;
+       
             }
             mainForm.MyParity = (Parity)StringToParityEnum(parityTB.Text);
             mainForm.MyStopBits = StringToStopEnum(stopBitTB.Text);

@@ -19,6 +19,7 @@ namespace ComPortReader.Forms
 
             InitializeComponent();
             this.form = form;
+            
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -43,8 +44,33 @@ namespace ComPortReader.Forms
             }
 
         }
-    
-         
+
+        public static void ShowDialogueBox(MainProgram form)
+        {
+            switch (MessageBox.Show("Чтение показаний закончились. Вы хотите еще один эксперимент перед формированием отчета?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                case DialogResult.Yes:
+
+                    form.ReadingInput = null;
+              
+                    form.ReadingInput = new FirstInput(form);
+                    form.ReadingInput.Show();
+                    form.ReadingInput.Focus();
+                    form.ReadingInput.BringToFront();
+                    form.SelectionCurveEnd = null;
+                    form.SelectionCurveBegin = null;
+
+
+                    break;
+
+                case DialogResult.No:
+
+                    var report = new MakeAWordDocumentForm(form.readingInOneSession, form.GetPath);
+                    report.Show();
+
+                    break;
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -72,6 +98,7 @@ namespace ComPortReader.Forms
                     this.Hide();
                     if (typeCB.Text == "Плоская") bDimTB.ReadOnly = true;
                     else { bDimTB.ReadOnly = false; }
+                    GraphProcessing.resetGraph(form);
                 }
                 else
                 {
@@ -171,25 +198,11 @@ namespace ComPortReader.Forms
                     catch (Exception ex) { MessageBox.Show(ex.ToString()); }
                     this.Close();
                     this.Dispose();
-                    switch (MessageBox.Show("Чтение показаний закончились. Вы хотите еще один эксперимент перед формированием отчета?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                    {
-                        case DialogResult.Yes:
-                            form.ReadingInput = null;
-                            GraphProcessing.resetGraph(form);
-                            form.ReadingInput = new FirstInput(form);
-                            form.ReadingInput.Show();
-                            form.ReadingInput.Focus();
-                            form.ReadingInput.BringToFront();
-                            form.SelectionCurveEnd = null;
-                            form.SelectionCurveBegin = null;
-                           
-                            break;
+                    FirstInput tempForm = this;
+                    ShowDialogueBox(form);
+              
 
-                        case DialogResult.No:
-                            var report = new MakeAWordDocumentForm(form.readingInOneSession, form.GetPath);
-                            report.Show();
-                            break;
-                    }
+
                 }
             }
           

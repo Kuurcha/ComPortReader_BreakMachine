@@ -647,47 +647,48 @@ namespace ComPortReader
         {
             get { return chooseMode; }
             set { chooseMode = value; }
-        } 
+        }
+        internal ChooseStressFlow readingStressFlowForm;
         private void planeGraph_KeyDown(object sender, KeyEventArgs e)
         {
-            if (chooseMode && e.KeyCode == Keys.Enter)
-            {
-                if (!((selectionCurveBegin == null) && (selectionCurveEnd == null)))
-                {
-                    yieldPoints = new PointPair[2];
-                    string coord = "";
-                    if (selectionCurveBegin != null)
-                    {
-                        coord += ("Точка 1 с координатами (" + selectionCurveBegin.Points[0].X + " , " + selectionCurveBegin.Points[0].Y + " )");
-                        yieldPoints[0] = selectionCurveBegin.Points[0];
+            //if (chooseMode && e.KeyCode == Keys.Enter)
+            //{
+            //    if (!((selectionCurveBegin == null) && (selectionCurveEnd == null)))
+            //    {
+            //        yieldPoints = new PointPair[2];
+            //        string coord = "";
+            //        if (selectionCurveBegin != null)
+            //        {
+            //            coord += ("Точка 1 с координатами (" + selectionCurveBegin.Points[0].X + " , " + selectionCurveBegin.Points[0].Y + " )");
+            //            yieldPoints[0] = selectionCurveBegin.Points[0];
 
-                    }
-                    if (selectionCurveEnd != null)
-                    {
-                        coord += ("Точка 2 с координатами (" + selectionCurveEnd.Points[0].X + " , " + selectionCurveEnd.Points[0].Y + " )");
-                        yieldPoints[1] = selectionCurveEnd.Points[0];
-                    }
-                    switch (MessageBox.Show("Вы выбрали " + coord + ". Вас устраивает выбор?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                    {
-                        case DialogResult.Yes:
-                            chooseMode = false;
-                            readingInput.Visible = true;
-                            readingInput.Show();
-                            break;
-                        case DialogResult.No:
-                            break;
-                    }
-                }
-                else MessageBox.Show("Выберите хотя бы одну точку и нажмите Enter");
+            //        }
+            //        if (selectionCurveEnd != null)
+            //        {
+            //            coord += ("Точка 2 с координатами (" + selectionCurveEnd.Points[0].X + " , " + selectionCurveEnd.Points[0].Y + " )");
+            //            yieldPoints[1] = selectionCurveEnd.Points[0];
+            //        }
+            //        switch (MessageBox.Show("Вы выбрали " + coord + ". Вас устраивает выбор?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            //        {
+            //            case DialogResult.Yes:
+            //                chooseMode = false;
+            //                readingStressFlowForm.Visible = true;
+            //                readingStressFlowForm.Show();
+            //                break;
+            //            case DialogResult.No:
+            //                break;
+            //        }
+            //    }
+            //    else MessageBox.Show("Выберите хотя бы одну точку и нажмите Enter");
 
 
 
-            }
-        }
+            //}
+    }
 
         private void planeGraph_Load_1(object sender, EventArgs e)
         {
-            f
+            
         }
 
         private void planeGraph_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

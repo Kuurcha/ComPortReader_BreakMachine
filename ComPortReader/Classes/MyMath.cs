@@ -118,6 +118,31 @@ namespace ComPortReader.Classes
                 return new PointPair(x, y);
             }
         }
+        public static PointPair parallelLineSigma(double offSetCoef, MainProgram form, LineItem LineCurve, LineItem originalCurve, double distance, string name)
+        {
+            double k1 = form.kCoef;
+            double b1 = (-offSetCoef * distance + form.bCoef);
+            LineItem curve3 = new LineItem(name);
+            form.buttons.Add(GraphProcessing.CreateCurve(ref curve3, form.CurvesDropDownButton, form.ZGCInstance, name, Color.Purple, 1, SymbolType.Default, Color.Purple));
+            for (int i = 0; i < 1.5 * LineCurve[LineCurve.Points.Count - 1].X; i++)
+                if ((k1 * i + b1) > 0)
+                    curve3.AddPoint(new PointPair(i, k1 * i + b1));
+            curve3.Tag = 1;
+            bool intersects = false;
+            int index1 = 1;
+            PointPair temp = null;
+            while (index1 < originalCurve.Points.Count - 2 && !intersects)
+            {
+                PointPair point1 = originalCurve[index1 - 1];
+                PointPair point2 = originalCurve[index1];
+                temp = lineLineIntersection(point1, point2, k1, b1);
+                if (temp.X >= point1.X && temp.X <= point2.X)
+                    if (temp.Y >= point1.Y && temp.Y <= point2.Y)
+                        intersects = true;
+                index1++;
+            }
+            return temp;
+        }
         public static void zeroTwoSigma1(LineItem originalCurve, PointPair p2, LineItem LineCurve, LineItem curved2, MainProgram form)
         {
             LineItem curve1 = null;
@@ -146,15 +171,11 @@ namespace ComPortReader.Classes
             }
 
         }
-            public static void zeroTwoSigma(LineItem originalCurve, PointPair p2, LineItem LineCurve, LineItem curved2, MainProgram form)
-        {
+            public static PointPair Sigma(LineItem originalCurve, PointPair p2, LineItem LineCurve, LineItem curved2, MainProgram form, bool zeroTwo, string name)
+            {
 
             int max = 0;
             for (int i = 0; i < originalCurve.Points.Count; i++) if (originalCurve.Points[i].X > max) max = (int)originalCurve.Points[i].X;
-
-
-
-
             int index  = originalCurve.Points.Count - 4;
             double[] xData = GraphProcessing.CurveToArray(LineCurve, true);
             double[] yData = GraphProcessing.CurveToArray(LineCurve, false);
@@ -201,30 +222,12 @@ namespace ComPortReader.Classes
 
             // -kx + y = b
             double distance = Math.Abs(form.IntersectionPointEnd - form.IntersectionPointBegin);
-            double k1 = form.kCoef;
-            double b1 = (-0.02 * distance + form.bCoef);
-      
-            LineItem curve3 = new LineItem("Сигма 0.2");
-            form.buttons.Add(GraphProcessing.CreateCurve(ref curve3, form.CurvesDropDownButton, form.ZGCInstance, "Сигма 0.2", Color.Purple, 1, SymbolType.Default, Color.Purple));
-            for (int i = 0; i < 1.5*LineCurve[LineCurve.Points.Count-1].X; i++)
-                if ((k1 * i + b1) > 0)
-                    curve3.AddPoint(new PointPair(i, k1 * i + b1));
-            curve3.Tag = 1;
-            bool intersects = false;
-            int index1 = 1;
-            PointPair temp = null;
-            while (index1 < originalCurve.Points.Count - 2 && !intersects)
-            {
-                PointPair point1 = originalCurve[index1 - 1];
-                PointPair point2 = originalCurve[index1];
-               temp = lineLineIntersection(point1,point2, k1,b1);
-                if (temp.X >= point1.X && temp.X <= point2.X)
-                    if (temp.Y >= point1.Y && temp.Y <= point2.Y)
-                        intersects = true;
-                index1++;
-            }
-            MessageBox.Show("Line intersects at " + temp.X + " , " + temp.Y);
+            PointPair temp = new PointPair(0, 0);
+            if (zeroTwo) temp = parallelLineSigma(0.02, form, LineCurve, originalCurve, distance, name);
+            else temp = parallelLineSigma(0.05, form,  LineCurve, originalCurve, distance, name);
+            
             GraphProcessing.UpdateGraph(form.ZGCInstance);
+            return temp;
         }
         // -219, 408
         public static void paralellLine ( double offSetX, double offSetY, ref LineItem curve)

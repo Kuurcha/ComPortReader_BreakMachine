@@ -59,6 +59,10 @@ namespace ComPortReader.Forms
                     case DialogResult.Yes:
                         GraphProcessing.RemoveSelection(form);
                         closeForm();
+                        form.readingStressFlowForm = new ChooseStressFlow(form);
+                        form.readingStressFlowForm.Show();
+                        form.readingStressFlowForm.Focus();
+                        form.readingStressFlowForm.BringToFront();
                         break;
                     case DialogResult.No:
 
@@ -68,6 +72,11 @@ namespace ComPortReader.Forms
             {
                 GraphProcessing.RemoveSelection(form);
                 closeForm();
+                GraphProcessing.RemoveSelection(form);
+                form.readingStressFlowForm = new ChooseStressFlow(form);
+                form.readingStressFlowForm.Show();
+                form.readingStressFlowForm.Focus();
+                form.readingStressFlowForm.BringToFront();
             }
             
         
@@ -75,9 +84,7 @@ namespace ComPortReader.Forms
         
         const string MNK_NAME = "Линейный участок МНК";
         const string REG_NAME = "Линейный участок через две точки";
-        const string PARALELL1_NAME = "Параллель 1";
-        const string PARALELL2_NAME = "Параллель 2";
-        const string SIGMANZEROTWO = "Сигма 0.2";
+      
         bool isUsed = false;
         LineItem aproximateLinearCurve = null;
         private void accept_Click(object sender, EventArgs e)
@@ -86,10 +93,7 @@ namespace ComPortReader.Forms
             GraphProcessing.RemoveLine(MNK_NAME, form);
             GraphProcessing.RemoveLine(MNK_NAME, form);
             GraphProcessing.RemoveLine(REG_NAME, form);
-            GraphProcessing.RemoveLine(PARALELL1_NAME, form);
-            GraphProcessing.RemoveLine(PARALELL2_NAME, form);
-            GraphProcessing.RemoveLine(SIGMANZEROTWO, form);
-            GraphProcessing.RemoveLine(SIGMANZEROTWO, form);
+
             GraphProcessing.UpdateGraph(form.ZGCInstance);
             if (form.SelectionCurveBegin != null && form.SelectionCurveEnd != null)
                 {
@@ -130,7 +134,8 @@ namespace ComPortReader.Forms
                         form.bCoef = data[1];
                         form.ZGCInstance.Refresh();
                         GraphProcessing.UpdateGraph(form.ZGCInstance);
-                        MyMath.zeroTwoSigma(form.getCurve, new PointPair (form.SelectionCurveEnd.Points[0]), aproximateLinearCurve, form.secondDerivativeCurve, form);
+                       
+                        form.AproximateLinearCurve = aproximateLinearCurve;
 
 
                     }
@@ -201,8 +206,7 @@ namespace ComPortReader.Forms
 
         private void CustomLine_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Task.Delay(500);
-            MessageBox.Show("Выберите одну или две точки где находится предел текучести и нажмите Enter как будет готово");
+           
 
         }
 
