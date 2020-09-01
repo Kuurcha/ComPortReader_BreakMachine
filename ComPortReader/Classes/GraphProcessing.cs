@@ -282,19 +282,17 @@ namespace ComPortReader
             mainForm.SelectionCurveBegin = null;
             mainForm.SelectionCurveEnd = null;
             mainForm.ChooseMode = false;
-            mainForm.ReadingInput = null;
-            mainForm.startingRecordMenuB.DropDownItems[0].Enabled = false;
-            mainForm.startingRecordMenuB.DropDownItems[1].Enabled = false;
+            
             List<Form> openForms = new List<Form>();
 
-            foreach (Form f in Application.OpenForms)
-                openForms.Add(f);
+            //foreach (Form f in Application.OpenForms)
+            //    openForms.Add(f);
 
-            foreach (Form f in openForms)
-            {
-                if (f != mainForm)
-                    f.Close();
-            }
+            //foreach (Form f in openForms)
+            //{
+            //    if (f != mainForm)
+            //        f.Close();
+            //}
             // Установим масштаб по умолчанию для оси X
             mainForm.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
             mainForm.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;

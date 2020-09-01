@@ -91,6 +91,7 @@ namespace ComPortReader.Forms
 
         private void autoBtn_Click(object sender, EventArgs e)
         {
+            
             stressFlowPoint1 = null;
             stressFlowPoint2 = null;
             clear();

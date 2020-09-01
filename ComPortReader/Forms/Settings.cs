@@ -175,11 +175,17 @@ namespace ComPortReader
             if (double.TryParse(coefficientTB.Text, out coefficient) && coefficient > 0 && coefficient < 100000)
             {
                 mainForm.Coefficent = coefficient;
-                mainForm.ZGCInstance.GraphPane.XAxis.Scale.Min *= coefficient;
-                mainForm.ZGCInstance.GraphPane.XAxis.Scale.Max *= coefficient;
                 mainForm.ZGCInstance.GraphPane.YAxis.Scale.Min *= coefficient;
                 mainForm.ZGCInstance.GraphPane.YAxis.Scale.Max *= coefficient;
-
+                CurveList temp = mainForm.ZGCInstance.GraphPane.CurveList;
+                foreach (CurveItem b in temp)
+                {
+                    int length = b.Points.Count;
+                    for (int i = 0; i < length; i++)
+                    {
+                        b[i].Y *= coefficient;
+                    }
+                }
             }
             else
             {

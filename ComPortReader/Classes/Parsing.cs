@@ -182,7 +182,7 @@ namespace ComPortReader
                     }
                 }
                 int xValue; int yValue;
-                if (sOutput != null && int.TryParse(sOutput[0], out xValue) && int.TryParse(sOutput[1], out yValue)) { output = new TwoCordLinkedList.Node(xValue * coefficient, yValue * coefficient); }
+                if (sOutput != null && int.TryParse(sOutput[0], out xValue) && int.TryParse(sOutput[1], out yValue)) { output = new TwoCordLinkedList.Node(xValue, yValue * coefficient); }
 
             }
             return output;

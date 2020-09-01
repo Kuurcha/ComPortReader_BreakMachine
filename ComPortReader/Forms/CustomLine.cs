@@ -38,6 +38,8 @@ namespace ComPortReader.Forms
             switch (MessageBox.Show("Вы точно хотите выйти?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
                 case DialogResult.Yes:
+                    form.startBuilding.Visible = true;
+                    form.stopBuilding.Visible = false;
                     break;
                 case DialogResult.No:
                     cancelEventArgs.Cancel = true;
@@ -53,21 +55,7 @@ namespace ComPortReader.Forms
         }
         private void decline_Click(object sender, EventArgs e)
         {
-            if (!isUsed)
-                switch (MessageBox.Show("Вы точно хотите выйти? Вы не построили линию вручную", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                {
-                    case DialogResult.Yes:
-                        GraphProcessing.RemoveSelection(form);
-                        closeForm();
-                        form.readingStressFlowForm = new ChooseStressFlow(form);
-                        form.readingStressFlowForm.Show();
-                        form.readingStressFlowForm.Focus();
-                        form.readingStressFlowForm.BringToFront();
-                        break;
-                    case DialogResult.No:
-
-                        break;
-                }
+            if (!isUsed) MessageBox.Show("Вы не построили линию", "Внимание");
             else
             {
                 GraphProcessing.RemoveSelection(form);
@@ -78,8 +66,6 @@ namespace ComPortReader.Forms
                 form.readingStressFlowForm.Focus();
                 form.readingStressFlowForm.BringToFront();
             }
-            
-        
         }
         
         const string MNK_NAME = "Линейный участок МНК";

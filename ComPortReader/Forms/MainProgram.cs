@@ -384,16 +384,17 @@ namespace ComPortReader
         {
 
             
-            if (!port.IsOpen & readingInput==null)
+            if (port!= null && !port.IsOpen & readingInput==null)
             {
                 try
                 {
                     if (readingInOneSession == null) readingInOneSession = new List<ExperimentReading>();
                     port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
-                    stopBuilding.Enabled = true;
+                    stopBuilding.Enabled = true; 
                     readingInput = new FirstInput(this);
                     readingInput.Show();
-                    startBuilding.Enabled = false;
+   
+
                 }
                 catch (Exception ex)
                 {
@@ -404,14 +405,14 @@ namespace ComPortReader
                     }
                 }
             }
-            else { ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!"); }         
+            else { if (port != null) { ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!"); } }         
             GraphProcessing.UpdateGraph(planeGraph);
         }
 
         private void stopBuilding_Click(object sender, EventArgs e)
         {
             if (readingInput != null) readingInput = null;
-            startBuilding.Enabled = true;
+            startingRecordMenuB.DropDownItems[0].Enabled = true;
             port.Close(); isCoefficentEnabled = true; settingsForm.SetGetCoefficentTBEnabled = isCoefficentEnabled; stopBuilding.Enabled = false;
             planeGraph.Refresh();
         }

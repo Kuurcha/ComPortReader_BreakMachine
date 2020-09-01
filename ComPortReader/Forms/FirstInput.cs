@@ -32,6 +32,7 @@ namespace ComPortReader.Forms
                 secondInputSizeLabel.Text = "Ширина";
                 firstInputSizeLabel.Text = "Длина";
                 bDimTB.ReadOnly = false;
+                bDimTB.Text = "";
                
             }
             if (typeCB.SelectedItem.ToString() == "Цилиндрическая")
@@ -85,17 +86,18 @@ namespace ComPortReader.Forms
                     form.originalLength = originalLength;
                     form.metalMarking = markingTB.Text;
                     form.type = typeCB.Text;
-                 
+                    form.startBuilding.Enabled = true;
+                    form.stopBuilding.Enabled = false;
                     aDimTB.ReadOnly = true;
                     bDimTB.ReadOnly = true;
                     startLength.ReadOnly = true;
                     typeCB.Enabled = false;
                     markingTB.ReadOnly = true;
+                    
                     this.Visible = false;
                     endLengthTB.ReadOnly = false;
                     maxForceTB.ReadOnly = false;
                     form.ZGCInstance.GraphPane.Title.Text = markingTB.Text;
-                    this.Hide();
                     if (typeCB.Text == "Плоская") bDimTB.ReadOnly = true;
                     else { bDimTB.ReadOnly = false; }
                     GraphProcessing.resetGraph(form);
@@ -250,8 +252,14 @@ namespace ComPortReader.Forms
             {
                 form.ReadingInput = null;    
                 this.Dispose();
-                form.startBuilding.Enabled = true;
+                form.startingRecordMenuB.DropDownItems[1].Enabled = true;
+                form.startingRecordMenuB.DropDownItems[0].Enabled = false;
                 form.stopBuilding.Enabled = false;
+            }
+            else
+            {
+                form.startBuilding.Visible = true;
+                form.stopBuilding.Visible = false;
             }
 
         }

@@ -83,7 +83,6 @@
             this.startingRecordMenuB.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startBuilding,
             this.stopBuilding});
-            this.startingRecordMenuB.Enabled = false;
             this.startingRecordMenuB.Image = ((System.Drawing.Image)(resources.GetObject("startingRecordMenuB.Image")));
             this.startingRecordMenuB.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.startingRecordMenuB.Name = "startingRecordMenuB";
@@ -94,14 +93,15 @@
             // startBuilding
             // 
             this.startBuilding.Name = "startBuilding";
-            this.startBuilding.Size = new System.Drawing.Size(116, 22);
+            this.startBuilding.Size = new System.Drawing.Size(180, 22);
             this.startBuilding.Text = "Начало";
             this.startBuilding.Click += new System.EventHandler(this.startBuilding_Click);
             // 
             // stopBuilding
             // 
+            this.stopBuilding.Enabled = false;
             this.stopBuilding.Name = "stopBuilding";
-            this.stopBuilding.Size = new System.Drawing.Size(116, 22);
+            this.stopBuilding.Size = new System.Drawing.Size(180, 22);
             this.stopBuilding.Text = "Стоп";
             this.stopBuilding.Click += new System.EventHandler(this.stopBuilding_Click);
             // 
@@ -227,8 +227,8 @@
         private System.Windows.Forms.ToolStripDropDownButton curvesDropDownBtn;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         internal System.Windows.Forms.ToolStripDropDownButton startingRecordMenuB;
-        internal System.Windows.Forms.ToolStripMenuItem startBuilding;
         internal System.Windows.Forms.ToolStripMenuItem stopBuilding;
+        internal System.Windows.Forms.ToolStripMenuItem startBuilding;
     }
 }
 
