@@ -356,18 +356,19 @@ namespace ComPortReader
         /// <param name="e"></param>
         private void SetupCOMport_Click(object sender, EventArgs e)
         {
-            if (comPort != null)
-            {
+            comPort = comPortStatusB.Text;
+            form.openComPort();
+            //if (comPort != null)
+            //{
 
-              form.openComPort();
+            //  form.openComPort();
                
              
-            }
-            else
-            {
-                comPort = comPortStatusB.Text;
-                form.openComPort();
-            }
+            //}
+            //else
+            //{
+              
+            //}
         }
         private void portList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -390,7 +391,8 @@ namespace ComPortReader
                 {
                     if (readingInOneSession == null) readingInOneSession = new List<ExperimentReading>();
                     port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
-                    stopBuilding.Enabled = true; 
+                    stopBuilding.Enabled = true;
+                    startBuilding.Enabled = false;
                     readingInput = new FirstInput(this);
                     readingInput.Show();
    

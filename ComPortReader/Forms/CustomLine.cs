@@ -38,8 +38,8 @@ namespace ComPortReader.Forms
             switch (MessageBox.Show("Вы точно хотите выйти?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
                 case DialogResult.Yes:
-                    form.startBuilding.Visible = true;
-                    form.stopBuilding.Visible = false;
+                    form.startBuilding.Enabled = true;
+                    form.stopBuilding.Enabled = false;
                     break;
                 case DialogResult.No:
                     cancelEventArgs.Cancel = true;

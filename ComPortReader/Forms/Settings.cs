@@ -260,7 +260,19 @@ namespace ComPortReader
         {
                 GraphProcessing.resetGraph(mainForm);
                 mainForm.readingInOneSession = null;
-                if (mainForm.Port.IsOpen) mainForm.Port.Close();
+                mainForm.startBuilding.Enabled = true;
+                mainForm.stopBuilding.Enabled = false;
+            List<Form> openForms = new List<Form>();
+
+            foreach (Form f in Application.OpenForms)
+                openForms.Add(f);
+
+            foreach (Form f in openForms)
+            {
+                if (f.Name != mainForm.Name && f.Name != this.Name)
+                    f.Close();
+            }
+            if (mainForm.Port != null && mainForm.Port.IsOpen) mainForm.Port.Close();
 
         }
 

@@ -86,8 +86,6 @@ namespace ComPortReader.Forms
                     form.originalLength = originalLength;
                     form.metalMarking = markingTB.Text;
                     form.type = typeCB.Text;
-                    form.startBuilding.Enabled = true;
-                    form.stopBuilding.Enabled = false;
                     aDimTB.ReadOnly = true;
                     bDimTB.ReadOnly = true;
                     startLength.ReadOnly = true;
@@ -254,12 +252,8 @@ namespace ComPortReader.Forms
                 this.Dispose();
                 form.startingRecordMenuB.DropDownItems[1].Enabled = true;
                 form.startingRecordMenuB.DropDownItems[0].Enabled = false;
-                form.stopBuilding.Enabled = false;
-            }
-            else
-            {
-                form.startBuilding.Visible = true;
-                form.stopBuilding.Visible = false;
+                form.startBuilding.Enabled = true;
+                form.stopBuilding.Enabled= false;
             }
 
         }
