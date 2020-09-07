@@ -95,17 +95,29 @@ namespace ComPortReader.Forms
             stressFlowPoint1 = null;
             stressFlowPoint2 = null;
             clear();
-            if (zeroFiveCB.Checked) stressFlowPoint1 = MyMath.Sigma(form.getCurve, new PointPair(form.getLineCurve[form.getLineCurve.Points.Count-1]), form.AproximateLinearCurve, form.secondDerivativeCurve, form, false, SIGMANZEROFIVE);
-            else stressFlowPoint1 = MyMath.Sigma(form.getCurve, new PointPair(form.getLineCurve[form.getLineCurve.Points.Count-1]), form.AproximateLinearCurve, form.secondDerivativeCurve, form, true, SIGMANZEROTWO);
-            msgLbl.Text = defaultMsg + Environment.NewLine + "Предел текучести автоматически найден на {" + stressFlowPoint1.X + "," + stressFlowPoint1.Y + " }";
+            if (zeroFiveCB.Checked) stressFlowPoint1 = MyMath.Sigma(form.getCurve, new PointPair(form.AproximateLinearCurve[form.AproximateLinearCurve.Points.Count - 1]), form.AproximateLinearCurve, form.secondDerivativeCurve, form, false, SIGMANZEROFIVE);
+            else stressFlowPoint1 = MyMath.Sigma(form.getCurve, new PointPair(form.AproximateLinearCurve[form.AproximateLinearCurve.Points.Count-1]), form.AproximateLinearCurve, form.secondDerivativeCurve, form, true, SIGMANZEROTWO);
+            msgLbl.Text = defaultMsg + Environment.NewLine + "Предел текучести автоматически найден на {" + Math.Round(stressFlowPoint1.X,2) + " " + Math.Round(stressFlowPoint1.Y,2) + " }";
         }
 
         private void ChooseStressFlow_Load(object sender, EventArgs e)
         {
             
             msgLbl.Text = defaultMsg;
+            base.Closing += OnClosing;
         }
-
+        private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            switch (MessageBox.Show("Вы точно хотите выйти?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                case DialogResult.Yes:
+                    GraphProcessing.OnClosingMethod(form);
+                    break;
+                case DialogResult.No:
+                    cancelEventArgs.Cancel = true;
+                    break;
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             if (stressFlowPoint1!=null &&  stressFlowPoint2 != null)
@@ -130,9 +142,10 @@ namespace ComPortReader.Forms
             form.ReadingInput.BringToFront();
             if (stressFlowPoint1!=null || stressFlowPoint2 !=null)
             {
+                base.Closing -= OnClosing;
                 this.Close();
             }
-           
+            form.ReadingInput.PrepareNextForm();
         }
     }
 }

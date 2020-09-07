@@ -174,8 +174,8 @@ namespace ComPortReader.Classes
             public static PointPair Sigma(LineItem originalCurve, PointPair p2, LineItem LineCurve, LineItem curved2, MainProgram form, bool zeroTwo, string name)
             {
 
-            int max = 0;
-            for (int i = 0; i < originalCurve.Points.Count; i++) if (originalCurve.Points[i].X > max) max = (int)originalCurve.Points[i].X;
+            
+            
             int index  = originalCurve.Points.Count - 4;
             double[] xData = GraphProcessing.CurveToArray(LineCurve, true);
             double[] yData = GraphProcessing.CurveToArray(LineCurve, false);
@@ -193,8 +193,9 @@ namespace ComPortReader.Classes
             double b = ds.YIntercept;
             LineItem curve = null;
             form.buttons.Add(GraphProcessing.CreateCurve(ref curve, form.CurvesDropDownButton, form.ZGCInstance, "Параллель 1", Color.DarkCyan, 1, SymbolType.Default, Color.DarkCyan));
-           
-            for (int i = 0; i < max; i++)
+
+            int curveLength = originalCurve.Points.Count;
+            for (int i = 0; i < 1.1*originalCurve.Points[curveLength-5].X;  i++)
                 if ((k * i + b) > 0)
                     curve.AddPoint(new PointPair(i, k * i + b));
             // y = kx + b x = (y-b)/k; kx = b = > x = k/b
