@@ -31,6 +31,13 @@ namespace ComPortReader.Forms
 
         private void CustomLine_Load(object sender, EventArgs e)
         {
+            double maxY = double.MinValue;
+            double maxX = double.MinValue;
+            for (int i = 0; i < form.ZGCInstance.GraphPane.CurveList[0].Points.Count; i++)
+            {
+                if (form.ZGCInstance.GraphPane.CurveList[0].Points[i].Y > maxY) maxY = form.ZGCInstance.GraphPane.CurveList[0].Points[i].Y;
+                if (form.ZGCInstance.GraphPane.CurveList[0].Points[i].X > maxX) maxX = form.ZGCInstance.GraphPane.CurveList[0].Points[i].X;
+            }
             base.Closing += OnClosing;
         }
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
