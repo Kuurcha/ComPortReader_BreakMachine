@@ -46,6 +46,13 @@ namespace ComPortReader
              
             }
         }
+
+        static internal void OnClosingMethod(MainProgram form)
+        {       
+            form.startBuilding.Enabled = true;
+            form.stopBuilding.Enabled = false;
+            form.showWindow.Enabled = true;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -61,6 +68,12 @@ namespace ComPortReader
             return array;
         }
       
+        static internal void ChangeVisibility(MainProgram form, bool defaultState)
+        {
+            form.startingRecordMenuB.Visible = defaultState;
+            form.showWindow.Visible = !defaultState;
+               
+        }
 
         /// <summary>
         /// Algorythm for the jumps in graph to be less sudden. Moving average or something. Arithmetic sum of `period` previous numbers.

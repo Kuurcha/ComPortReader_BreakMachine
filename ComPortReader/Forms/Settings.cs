@@ -272,8 +272,9 @@ namespace ComPortReader
                 if (f.Name != mainForm.Name && f.Name != this.Name)
                     f.Close();
             }
-            if (mainForm.Port != null && mainForm.Port.IsOpen) mainForm.Port.Close();
-
+            try { mainForm.Port.Close(); }
+            catch (Exception ex) { }
+            mainForm.showWindow.Enabled = false;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

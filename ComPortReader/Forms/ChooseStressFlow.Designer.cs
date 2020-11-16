@@ -102,15 +102,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 133);
+            this.ClientSize = new System.Drawing.Size(325, 133);
             this.Controls.Add(this.accept);
             this.Controls.Add(this.msgLbl);
             this.Controls.Add(this.autoBtn);
             this.Controls.Add(this.manualBtn);
             this.Controls.Add(this.zeroFiveCB);
             this.Controls.Add(this.zeroTwoCB);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ChooseStressFlow";
-            this.Text = "ChooseStressFlow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.ChooseStressFlow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

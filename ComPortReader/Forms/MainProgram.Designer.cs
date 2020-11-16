@@ -40,10 +40,10 @@
             this.curvesDropDownBtn = new System.Windows.Forms.ToolStripDropDownButton();
             this.coord = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.planeGraph = new ZedGraph.ZedGraphControl();
             this.textBox2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.showWindow = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,13 +52,13 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resetB,
+            this.showWindow,
             this.startingRecordMenuB,
             this.comPortStatusB,
             this.setCOMB,
             this.curvesDropDownBtn,
             this.coord,
-            this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1159, 31);
@@ -147,16 +147,6 @@
             this.toolStripButton1.Text = "Печать";
             this.toolStripButton1.Click += new System.EventHandler(this.PrintButton_Click);
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(28, 28);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
-            // 
             // planeGraph
             // 
             this.planeGraph.AutoSize = true;
@@ -192,6 +182,17 @@
             this.textBox2.Size = new System.Drawing.Size(0, 13);
             this.textBox2.TabIndex = 36;
             // 
+            // showWindow
+            // 
+            this.showWindow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.showWindow.Enabled = false;
+            this.showWindow.Image = ((System.Drawing.Image)(resources.GetObject("showWindow.Image")));
+            this.showWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.showWindow.Name = "showWindow";
+            this.showWindow.Size = new System.Drawing.Size(105, 28);
+            this.showWindow.Text = "Показать данные";
+            this.showWindow.Click += new System.EventHandler(this.toolStripButton2_Click_1);
+            // 
             // MainProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,10 +226,10 @@
         private System.Windows.Forms.ToolStripLabel coord;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripDropDownButton curvesDropDownBtn;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
         internal System.Windows.Forms.ToolStripDropDownButton startingRecordMenuB;
         internal System.Windows.Forms.ToolStripMenuItem stopBuilding;
         internal System.Windows.Forms.ToolStripMenuItem startBuilding;
+        internal System.Windows.Forms.ToolStripButton showWindow;
     }
 }
 

@@ -370,6 +370,10 @@ namespace ComPortReader
               
             //}
         }
+        public void ChangeButtonState()
+        {
+            
+        }
         private void portList_SelectedIndexChanged(object sender, EventArgs e)
         {
             comPort = comPortStatusB.Text;
@@ -380,7 +384,7 @@ namespace ComPortReader
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        
+      
         private void startBuilding_Click(object sender, EventArgs e)
         {
 
@@ -390,13 +394,14 @@ namespace ComPortReader
                 try
                 {
                     if (readingInOneSession == null) readingInOneSession = new List<ExperimentReading>();
+                    showWindow.Enabled = true;
                     port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
                     stopBuilding.Enabled = true;
                     startBuilding.Enabled = false;
                     readingInput = new FirstInput(this);
                     readingInput.Show();
-   
 
+                    
                 }
                 catch (Exception ex)
                 {
@@ -409,6 +414,7 @@ namespace ComPortReader
             }
             else { if (port != null) { ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!"); } }         
             GraphProcessing.UpdateGraph(planeGraph);
+
         }
 
         private void stopBuilding_Click(object sender, EventArgs e)
@@ -417,6 +423,7 @@ namespace ComPortReader
             startingRecordMenuB.DropDownItems[0].Enabled = true;
             port.Close(); isCoefficentEnabled = true; settingsForm.SetGetCoefficentTBEnabled = isCoefficentEnabled; stopBuilding.Enabled = false;
             planeGraph.Refresh();
+            form.showWindow.Enabled = false;
         }
 
 
@@ -923,6 +930,7 @@ namespace ComPortReader
                 }
             }
                 GraphProcessing.UpdateGraph(planeGraph);
+           
             return false;
         }
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -963,11 +971,21 @@ namespace ComPortReader
         {
             
         }
-
+        bool viewIsPressed = false;
+        public bool ViewIsPressed
+        {
+            get { return viewIsPressed; }
+            set { viewIsPressed = value; }
+        }
         private void toolStripButton2_Click_1(object sender, EventArgs e)
         {
-            var form = new DerivateForm(this);
-            form.Show();
+     
+            viewIsPressed = true;
+            form.ReadingInput.Show();
+            form.ReadingInput.Focus();
+            form.ReadingInput.BringToFront();
+            form.ReadingInput.StartPosition = FormStartPosition.CenterScreen;
+            
         }
 
         private void planeGraph_KeyPress(object sender, KeyPressEventArgs e)

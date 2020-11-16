@@ -45,8 +45,7 @@ namespace ComPortReader.Forms
             switch (MessageBox.Show("Вы точно хотите выйти?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
             {
                 case DialogResult.Yes:
-                    form.startBuilding.Enabled = true;
-                    form.stopBuilding.Enabled = false;
+                    GraphProcessing.OnClosingMethod(form);
                     break;
                 case DialogResult.No:
                     cancelEventArgs.Cancel = true;
