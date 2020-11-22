@@ -21,27 +21,23 @@ namespace ComPortReader.Forms
             InitializeComponent();
             GraphProcessing.CreateGraph(firstDerivative,"Первая производная", "X", "Y'", 50, 5);
             GraphProcessing.CreateGraph(secondDerivative, "Вторая производная", "X", "Y''",50, 5);
-            firstDerivative.Tag = 5;
-            secondDerivative.Tag = 5;
             LineItem curve = null;
             form.buttons.Add(GraphProcessing.CreateCurve(ref curve, form.CurvesDropDownButton, firstDerivative, "Первая производная", Color.Red, 6, SymbolType.Circle, Color.Red));
-            curve.Tag = 5;
             GraphProcessing.DerivativeGraph(form.getCurve, ref curve);
             LineItem curve2 = null;
             form.buttons.Add(GraphProcessing.CreateCurve(ref curve2, form.CurvesDropDownButton, secondDerivative, "Вторая производная", Color.Blue, 6, SymbolType.Circle, Color.Blue));
             GraphProcessing.SecondDerivativeGraph(curve, ref curve2);
-            curve2.Tag = 5;
+
 
             LineItem movingAverage = null;
             form.buttons.Add(GraphProcessing.CreateCurve(ref movingAverage, form.CurvesDropDownButton, firstDerivative, "Первая производная 2", Color.Cyan, 6, SymbolType.Circle, Color.Red));
             GraphProcessing.DerivativeGraph(form.processedCurve, ref movingAverage);
-            movingAverage.Tag = 5;
             LineItem movingAverageTemp = new LineItem("temp");
            
             LineItem movingAverage2 = null;
            
             form.buttons.Add(GraphProcessing.CreateCurve(ref movingAverage2, form.CurvesDropDownButton, secondDerivative, "Вторая производная 2", Color.Cyan, 6, SymbolType.Circle, Color.Red));
-            movingAverage2.Tag = 5;
+
             GraphProcessing.DerivativeGraph(form.processedCurve2, ref movingAverageTemp);
             GraphProcessing.SecondDerivativeGraph(movingAverageTemp, ref movingAverage2);
             GraphProcessing.UpdateGraph(firstDerivative);

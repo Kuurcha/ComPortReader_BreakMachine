@@ -27,10 +27,7 @@ namespace ComPortReader
     public partial class MainProgram : Form
     {
 
-        internal double bCoef;
-        internal double kCoef;
-        internal double IntersectionPointBegin; //Первая точка пересечения паралелльной прямой линейному участку предела текучести
-        internal double IntersectionPointEnd; //Вторая точка пересечения паралелльной прямой линейному участку предела текучести
+
 
         internal string metalMarking;
         internal string type;
@@ -268,24 +265,20 @@ namespace ComPortReader
         {
             if (curve == null)
             {
-                buttons.Add(GraphProcessing.CreateCurve(ref curve, curvesDropDownBtn, planeGraph, "Основной График", Color.Red, 2, SymbolType.Circle, Color.Red));
-                ZGCInstance.GraphPane.YAxis.Title.Text = "F, условных единиц";
-                ZGCInstance.GraphPane.XAxis.Title.Text = "N, оборотов";
-                curve.Tag = 3;
+                buttons.Add(GraphProcessing.CreateCurve(ref curve, curvesDropDownBtn, planeGraph, "Основной График", Color.Red, 4, SymbolType.Circle, Color.Red));
+                curve.Tag = 1;
             }
           // Логика за этим? Зачем таймер.
             drawGraphMethod print = new drawGraphMethod(GraphProcessing.AddInRealTime); //Инициализация переменных для ком-порта
             // Show all the incoming data in the port's buffer
             string comPortData = ((SerialPort)sender).ReadExisting().ToString();//Чтение данных из текущего ком порта.
-            comPortData = comPortData.Replace("0\r#0", " "); //Удаление символов перехода строки
+            comPortData = comPortData.Replace("\r \n \0N", " "); //Удаление символов перехода строки
             comPortData = comPortData.Replace("\t", " ");
             int lengthOfOneReading = Parsing.GetLengthOfOneReading(comPortData);
-            counterTimer = 0;
-            saveTimerTick = 0;
+
             while (lengthOfOneReading > 0 && comPortData.Length > lengthOfOneReading) //Перебираем все пары усилий и поворотов в полученной строке
             {
                 if (everySecond == null) СreateTimer();
-                
                 atLeastOnePointPassed = true;
                 lengthOfOneReading = Parsing.GetLengthOfOneReading(comPortData);
                 string tempStr = comPortData.Substring(0, lengthOfOneReading); //Если в полученной строке несколько показаний, отделяем одно
@@ -338,7 +331,6 @@ namespace ComPortReader
                 {
                     port = new SerialPort(MyComPort, MyBaudRate, MyParity, MyDataBits, MyStopBits);
                     startingRecordMenuB.Enabled = true;
-                    startingRecordMenuB.DropDownItems[0].Enabled = true;
                 }
             }
             catch (Exception Ex) { MessageBox.Show("Не удалось установить порт. Проверьте настройки COM-порта"); }
@@ -356,23 +348,13 @@ namespace ComPortReader
         /// <param name="e"></param>
         private void SetupCOMport_Click(object sender, EventArgs e)
         {
-            comPort = comPortStatusB.Text;
-            form.openComPort();
-            //if (comPort != null)
-            //{
+            if (comPort != null)
+            {
 
-            //  form.openComPort();
+              form.openComPort();
                
              
-            //}
-            //else
-            //{
-              
-            //}
-        }
-        public void ChangeButtonState()
-        {
-            
+            }
         }
         private void portList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -384,23 +366,22 @@ namespace ComPortReader
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-      
+        
         private void startBuilding_Click(object sender, EventArgs e)
         {
 
-            
-            if (port!= null && !port.IsOpen & readingInput==null)
+            if (!port.IsOpen & readingInput==null)
             {
                 try
                 {
-                    if (readingInOneSession == null) readingInOneSession = new List<ExperimentReading>();
-                    showWindow.Enabled = true;
+                    readingInOneSession = new List<ExperimentReading>();
                     port.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
                     stopBuilding.Enabled = true;
-                    startBuilding.Enabled = false;
+                    isCoefficentEnabled = false;
+                    settingsForm.SetGetCoefficentTBEnabled = false;
                     readingInput = new FirstInput(this);
                     readingInput.Show();
-
+                    startBuilding.Enabled = false;
                     
                 }
                 catch (Exception ex)
@@ -412,18 +393,17 @@ namespace ComPortReader
                     }
                 }
             }
-            else { if (port != null) { ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!"); } }         
+            else { ErrorMessage form = new ErrorMessage("Невозможно открыть порт, так как порт уже открыт!"); }
+            
             GraphProcessing.UpdateGraph(planeGraph);
-
         }
 
         private void stopBuilding_Click(object sender, EventArgs e)
         {
             if (readingInput != null) readingInput = null;
-            startingRecordMenuB.DropDownItems[0].Enabled = true;
+            startBuilding.Enabled = true;
             port.Close(); isCoefficentEnabled = true; settingsForm.SetGetCoefficentTBEnabled = isCoefficentEnabled; stopBuilding.Enabled = false;
             planeGraph.Refresh();
-            form.showWindow.Enabled = false;
         }
 
 
@@ -559,8 +539,6 @@ namespace ComPortReader
             {
                 settingsForm.SetGetCoefficentTBEnabled = isCoefficentEnabled;
                 settingsForm.Show();
-                settingsForm.Focus();
-                settingsForm.BringToFront();
             }
 
 
@@ -599,8 +577,8 @@ namespace ComPortReader
         {
             PointPairList pointList = new PointPairList();
             curve = planeGraph.GraphPane.AddCurve(name, pointList, Color.Blue);
-            curve.Symbol.Size = 10;
-            curve.Symbol.Type = SymbolType.XCross;
+            curve.Symbol.Size = curve.Symbol.Size * 2f;
+            curve.Symbol.Type = SymbolType.Square;
             curve.Symbol.Fill = curve.Symbol.Fill;
         }
 
@@ -657,48 +635,47 @@ namespace ComPortReader
         {
             get { return chooseMode; }
             set { chooseMode = value; }
-        }
-        internal ChooseStressFlow readingStressFlowForm;
+        } 
         private void planeGraph_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (chooseMode && e.KeyCode == Keys.Enter)
-            //{
-            //    if (!((selectionCurveBegin == null) && (selectionCurveEnd == null)))
-            //    {
-            //        yieldPoints = new PointPair[2];
-            //        string coord = "";
-            //        if (selectionCurveBegin != null)
-            //        {
-            //            coord += ("Точка 1 с координатами (" + selectionCurveBegin.Points[0].X + " , " + selectionCurveBegin.Points[0].Y + " )");
-            //            yieldPoints[0] = selectionCurveBegin.Points[0];
+            if (chooseMode && e.KeyCode == Keys.Enter)
+            {
+                if (!((selectionCurveBegin == null) && (selectionCurveEnd == null)))
+                {
+                    yieldPoints = new PointPair[2];
+                    string coord = "";
+                    if (selectionCurveBegin != null)
+                    {
+                        coord += ("Точка 1 с координатами (" + selectionCurveBegin.Points[0].X + " , " + selectionCurveBegin.Points[0].Y + " )");
+                        yieldPoints[0] = selectionCurveBegin.Points[0];
 
-            //        }
-            //        if (selectionCurveEnd != null)
-            //        {
-            //            coord += ("Точка 2 с координатами (" + selectionCurveEnd.Points[0].X + " , " + selectionCurveEnd.Points[0].Y + " )");
-            //            yieldPoints[1] = selectionCurveEnd.Points[0];
-            //        }
-            //        switch (MessageBox.Show("Вы выбрали " + coord + ". Вас устраивает выбор?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-            //        {
-            //            case DialogResult.Yes:
-            //                chooseMode = false;
-            //                readingStressFlowForm.Visible = true;
-            //                readingStressFlowForm.Show();
-            //                break;
-            //            case DialogResult.No:
-            //                break;
-            //        }
-            //    }
-            //    else MessageBox.Show("Выберите хотя бы одну точку и нажмите Enter");
+                    }
+                    if (selectionCurveEnd != null)
+                    {
+                        coord += ("Точка 2 с координатами (" + selectionCurveEnd.Points[0].X + " , " + selectionCurveEnd.Points[0].Y + " )");
+                        yieldPoints[1] = selectionCurveEnd.Points[0];
+                    }
+                    switch (MessageBox.Show("Вы выбрали " + coord + ". Вас устраивает выбор?", "Внимание", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        case DialogResult.Yes:
+                            chooseMode = false;
+                            readingInput.Visible = true;
+                            readingInput.Show();
+                            break;
+                        case DialogResult.No:
+                            break;
+                    }
+                }
+                else MessageBox.Show("Выберите хотя бы одну точку и нажмите Enter");
 
 
 
-            //}
-    }
+            }
+        }
 
         private void planeGraph_Load_1(object sender, EventArgs e)
         {
-            
+
         }
 
         private void planeGraph_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -774,52 +751,45 @@ namespace ComPortReader
                 }
                 linearPart = GraphProcessing.CreateCurve(ref lineCurve, curvesDropDownBtn, planeGraph, "Линейный участок", Color.Blue, 8, SymbolType.Circle, Color.Blue);
                 buttons.Add(linearPart);
-                lineCurve.Label.IsVisible = false;
                 LineItem firstDerivativeCurve = new LineItem("d1");
-                firstDerivativeCurve.Tag = 5;
+                
                 LineItem firstMovingAverageCurve = new LineItem("mad1");
-                firstMovingAverageCurve.Tag = 5;
+
                 processedCurve = new LineItem("movingAverage1");
-               
-                processedCurve.Tag = 5;
                 processedCurve2 = new LineItem("movingAverage2");
-                processedCurve2.Tag = 5;
                 double[] data = GraphProcessing.CurveToArray(curve, false);
-   
+                double[] movingAverage = GraphProcessing.MovingAverage(data, sensitivy);
+                for (int i = 0; i < movingAverage.Length - 1; i++)
+                {
+                   
+                    processedCurve.AddPoint(curve.Points[i].X, movingAverage[i]);
+                }
                 double[] movingAverage1 = GraphProcessing.MovingAverage(data, sensitivy);
                 for (int i = 0; i < movingAverage1.Length - 1; i++)
                 {
                     processedCurve2.AddPoint(curve.Points[i].X, movingAverage1[i]);
                 }
-                linearPart.curve.IsVisible = false;
-                processedCurve = processedCurve2.Clone();
+
+
 
                 GraphProcessing.DerivativeGraph(curve, ref firstDerivativeCurve);
-
                 GraphProcessing.SecondDerivativeGraph(firstDerivativeCurve, ref secondDerivativeCurve);
                 GraphProcessing.DerivativeGraph(processedCurve, ref firstMovingAverageCurve);
                 LineItem tempCurve = new LineItem("temp");
-                tempCurve.Tag = 5;
                 LineItem secondMovingAverageCurve = new LineItem("sMAC");
-                secondMovingAverageCurve.Tag = 5;
                 GraphProcessing.DerivativeGraph(processedCurve2, ref tempCurve);
                 GraphProcessing.DerivativeGraph(tempCurve, ref secondMovingAverageCurve);
                 int[] bounds = GraphProcessing.CalculatePointsForLinear(curve, secondMovingAverageCurve, firstMovingAverageCurve);
                 for (int i = bounds[0]; i < bounds[1]; i++) lineCurve.AddPoint(curve[i]);
-                
-                aproximateLinearCurve = null;  
+                lineCurve.Tag = 4;
+                aproximateLinearCurve = null;
                 int begin = (int) bounds[0];
                 int end = (int) bounds[1];
-                buttons.Add(GraphProcessing.CreateCurve(ref aproximateLinearCurve, curvesDropDownBtn, planeGraph, "Линейный участок МНК", Color.Green, 2, SymbolType.Circle, Color.Green));
-                //(int) curve.Points[begin].X (int) curve.Points[end].X
+
+
                 // y= y1+(x-x1) (y2 - y1) / (x2-x1) ; y = k*(x-x1) + y1 = kx - (kx1 + y1)
-                MyMath.leastSquaresBuild((int)curve.Points[begin].X, (int)curve.Points[end].X, lineCurve, ref aproximateLinearCurve, this);
-                aproximateLinearCurve.Tag = 2;
+                MyMath.leastSquaresBuild(begin, end, lineCurve, ref aproximateLinearCurve, this);
                 form.AproximateLinearCurve = aproximateLinearCurve;
-                aproximateLinearCurve.IsVisible = false;
-                aproximateLinearCurve.Label.IsVisible = false;
-                lineCurve.Tag = 5;
-                planeGraph.Refresh();
                 GraphProcessing.UpdateGraph(planeGraph);
             }
             else
@@ -854,17 +824,18 @@ namespace ComPortReader
 
         private bool planeGraph_DoubleClickEvent(ZedGraphControl sender, MouseEventArgs e)
         {
-           
             object nearestObject;
             int index;
             this.planeGraph.GraphPane.FindNearestObject(new PointF(e.X, e.Y), this.CreateGraphics(), out nearestObject, out index);
             if (nearestObject != null && nearestObject.GetType() == typeof(LineItem))
             {
+                
                 LineItem nearestLineItemObject = (LineItem)nearestObject;
                 PointPair clickedPoint = nearestLineItemObject.Points[index];
                 int i = 0;
                 bool pointBelongToCurve = false;
                 PointPairList temp = (PointPairList) curve.Points;
+             
                 if (temp.Contains(clickedPoint))
                 {
                         if (selectionCurveBegin == null)
@@ -872,7 +843,6 @@ namespace ComPortReader
                             setCurve("Точка 1", ref selectionCurveBegin);
                             selectionCurveBegin.AddPoint(clickedPoint);
                             selectionCurveBegin.Label.IsVisible = false;
-                            selectionCurveBegin.Tag = 0;
 
                         }
                         else if (selectionCurveEnd == null)
@@ -880,18 +850,16 @@ namespace ComPortReader
                             setCurve("Точка 2", ref selectionCurveEnd);
                             selectionCurveEnd.AddPoint(clickedPoint);
                             selectionCurveEnd.Label.IsVisible = false;
-                            selectionCurveEnd.Tag = 0;
                         }
                         else
                         {
                             string curveName = ComputeClosestPoint(clickedPoint.X, clickedPoint.Y);
                             int pos = planeGraph.GraphPane.CurveList.IndexOf(curveName);
-                            if (pos >= 0) planeGraph.GraphPane.CurveList.RemoveAt(pos);
+                            if (pos > 0) planeGraph.GraphPane.CurveList.RemoveAt(pos);
                             LineItem curve = null;
                             setCurve(curveName, ref curve);
                             curve.AddPoint(clickedPoint);
                             curve.Label.IsVisible = false;
-                            curve.Tag = 0;
                             if (curveName == "Точка 1") selectionCurveBegin = curve;
                             else if (curveName == "Точка 2") selectionCurveEnd = curve;
                         }
@@ -930,7 +898,6 @@ namespace ComPortReader
                 }
             }
                 GraphProcessing.UpdateGraph(planeGraph);
-           
             return false;
         }
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -971,26 +938,11 @@ namespace ComPortReader
         {
             
         }
-        bool viewIsPressed = false;
-        public bool ViewIsPressed
-        {
-            get { return viewIsPressed; }
-            set { viewIsPressed = value; }
-        }
+
         private void toolStripButton2_Click_1(object sender, EventArgs e)
         {
-     
-            viewIsPressed = true;
-            form.ReadingInput.Show();
-            form.ReadingInput.Focus();
-            form.ReadingInput.BringToFront();
-            form.ReadingInput.StartPosition = FormStartPosition.CenterScreen;
-            
-        }
-
-        private void planeGraph_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
+            var form = new DerivateForm(this);
+            form.Show();
         }
     }
 }

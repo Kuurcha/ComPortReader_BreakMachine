@@ -78,10 +78,10 @@
             // 
             // startLength
             // 
-            this.startLength.Location = new System.Drawing.Point(47, 76);
+            this.startLength.Location = new System.Drawing.Point(45, 76);
             this.startLength.MaxLength = 10;
             this.startLength.Name = "startLength";
-            this.startLength.Size = new System.Drawing.Size(86, 20);
+            this.startLength.Size = new System.Drawing.Size(121, 20);
             this.startLength.TabIndex = 5;
             this.startLength.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.startLength_KeyPress);
             // 
@@ -115,7 +115,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 60);
+            this.label2.Location = new System.Drawing.Point(24, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(182, 13);
             this.label2.TabIndex = 7;
@@ -133,11 +133,11 @@
             // 
             // endLengthTB
             // 
-            this.endLengthTB.Location = new System.Drawing.Point(393, 76);
+            this.endLengthTB.Location = new System.Drawing.Point(382, 76);
             this.endLengthTB.MaxLength = 10;
             this.endLengthTB.Name = "endLengthTB";
             this.endLengthTB.ReadOnly = true;
-            this.endLengthTB.Size = new System.Drawing.Size(100, 20);
+            this.endLengthTB.Size = new System.Drawing.Size(122, 20);
             this.endLengthTB.TabIndex = 6;
             this.endLengthTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.endLengthTB_KeyDown);
             this.endLengthTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.endLengthTB_KeyPress);

@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem1 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem2 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem3 = new ImageComboBox.ImageComboBoxItem();
-            ImageComboBox.ImageComboBoxItem imageComboBoxItem4 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem5 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem6 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem7 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem8 = new ImageComboBox.ImageComboBoxItem();
             this.xAxisRangeLabel = new System.Windows.Forms.Label();
             this.xAxisNameLabel = new System.Windows.Forms.Label();
             this.graphNameLabel = new System.Windows.Forms.Label();
@@ -66,10 +66,12 @@
             this.parityTB = new System.Windows.Forms.ComboBox();
             this.dataBitTB = new System.Windows.Forms.TextBox();
             this.stopBitTB = new System.Windows.Forms.ComboBox();
+            this.sensitivityTB = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.afterSelectEventHandlerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -229,7 +231,7 @@
             // applyChanges
             // 
             this.applyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.applyChanges.Location = new System.Drawing.Point(291, 244);
+            this.applyChanges.Location = new System.Drawing.Point(305, 245);
             this.applyChanges.Margin = new System.Windows.Forms.Padding(2);
             this.applyChanges.Name = "applyChanges";
             this.applyChanges.Size = new System.Drawing.Size(133, 23);
@@ -241,7 +243,7 @@
             // drawGraphB
             // 
             this.drawGraphB.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.drawGraphB.Location = new System.Drawing.Point(11, 245);
+            this.drawGraphB.Location = new System.Drawing.Point(17, 245);
             this.drawGraphB.Margin = new System.Windows.Forms.Padding(2);
             this.drawGraphB.Name = "drawGraphB";
             this.drawGraphB.Size = new System.Drawing.Size(88, 23);
@@ -297,35 +299,35 @@
             this.symbolCB.ImageList = this.ListForCombo;
             this.symbolCB.Indent = 0;
             this.symbolCB.ItemHeight = 15;
-            imageComboBoxItem1.Font = null;
-            imageComboBoxItem1.Image = "1";
-            imageComboBoxItem1.ImageIndex = 1;
-            imageComboBoxItem1.IndentLevel = 0;
-            imageComboBoxItem1.Item = null;
-            imageComboBoxItem1.Text = "Звезда";
-            imageComboBoxItem2.Font = null;
-            imageComboBoxItem2.Image = "3";
-            imageComboBoxItem2.ImageIndex = 3;
-            imageComboBoxItem2.IndentLevel = 0;
-            imageComboBoxItem2.Item = null;
-            imageComboBoxItem2.Text = "Палка";
-            imageComboBoxItem3.Font = null;
-            imageComboBoxItem3.Image = "0";
-            imageComboBoxItem3.ImageIndex = 0;
-            imageComboBoxItem3.IndentLevel = 0;
-            imageComboBoxItem3.Item = null;
-            imageComboBoxItem3.Text = "Круг";
-            imageComboBoxItem4.Font = null;
-            imageComboBoxItem4.Image = "2";
-            imageComboBoxItem4.ImageIndex = 2;
-            imageComboBoxItem4.IndentLevel = 0;
-            imageComboBoxItem4.Item = null;
-            imageComboBoxItem4.Text = "Линия";
+            imageComboBoxItem5.Font = null;
+            imageComboBoxItem5.Image = "1";
+            imageComboBoxItem5.ImageIndex = 1;
+            imageComboBoxItem5.IndentLevel = 0;
+            imageComboBoxItem5.Item = null;
+            imageComboBoxItem5.Text = "Звезда";
+            imageComboBoxItem6.Font = null;
+            imageComboBoxItem6.Image = "3";
+            imageComboBoxItem6.ImageIndex = 3;
+            imageComboBoxItem6.IndentLevel = 0;
+            imageComboBoxItem6.Item = null;
+            imageComboBoxItem6.Text = "Палка";
+            imageComboBoxItem7.Font = null;
+            imageComboBoxItem7.Image = "0";
+            imageComboBoxItem7.ImageIndex = 0;
+            imageComboBoxItem7.IndentLevel = 0;
+            imageComboBoxItem7.Item = null;
+            imageComboBoxItem7.Text = "Круг";
+            imageComboBoxItem8.Font = null;
+            imageComboBoxItem8.Image = "2";
+            imageComboBoxItem8.ImageIndex = 2;
+            imageComboBoxItem8.IndentLevel = 0;
+            imageComboBoxItem8.Item = null;
+            imageComboBoxItem8.Text = "Линия";
             this.symbolCB.Items.AddRange(new ImageComboBox.ImageComboBoxItem[] {
-            imageComboBoxItem1,
-            imageComboBoxItem2,
-            imageComboBoxItem3,
-            imageComboBoxItem4});
+            imageComboBoxItem5,
+            imageComboBoxItem6,
+            imageComboBoxItem7,
+            imageComboBoxItem8});
             this.symbolCB.Location = new System.Drawing.Point(365, 19);
             this.symbolCB.Margin = new System.Windows.Forms.Padding(2);
             this.symbolCB.Name = "symbolCB";
@@ -430,6 +432,17 @@
             this.toolTip1.SetToolTip(this.stopBitTB, "Стоп бит (Stop Bit)");
             this.stopBitTB.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
+            // sensitivityTB
+            // 
+            this.sensitivityTB.Location = new System.Drawing.Point(346, 108);
+            this.sensitivityTB.Margin = new System.Windows.Forms.Padding(2);
+            this.sensitivityTB.MaxLength = 3;
+            this.sensitivityTB.Name = "sensitivityTB";
+            this.sensitivityTB.Size = new System.Drawing.Size(51, 20);
+            this.sensitivityTB.TabIndex = 68;
+            this.toolTip1.SetToolTip(this.sensitivityTB, "Чувствительность сглаживания графика для определения предела текучести");
+            this.sensitivityTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sensitivityTB_KeyPress);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -466,11 +479,22 @@
             this.label6.TabIndex = 66;
             this.label6.Text = "Cтоп бит";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(323, 94);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(101, 13);
+            this.label7.TabIndex = 67;
+            this.label7.Text = "Чувствительность";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(442, 279);
+            this.Controls.Add(this.sensitivityTB);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.stopBitTB);
             this.Controls.Add(this.label5);
@@ -554,5 +578,7 @@
         private System.Windows.Forms.TextBox dataBitTB;
         private System.Windows.Forms.ComboBox stopBitTB;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox sensitivityTB;
     }
 }
