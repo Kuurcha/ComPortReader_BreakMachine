@@ -30,10 +30,24 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem1 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem2 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem3 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem4 = new ImageComboBox.ImageComboBoxItem();
             ImageComboBox.ImageComboBoxItem imageComboBoxItem5 = new ImageComboBox.ImageComboBoxItem();
             ImageComboBox.ImageComboBoxItem imageComboBoxItem6 = new ImageComboBox.ImageComboBoxItem();
             ImageComboBox.ImageComboBoxItem imageComboBoxItem7 = new ImageComboBox.ImageComboBoxItem();
             ImageComboBox.ImageComboBoxItem imageComboBoxItem8 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem9 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem10 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem11 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem12 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem13 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem14 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem15 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem16 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem17 = new ImageComboBox.ImageComboBoxItem();
+            ImageComboBox.ImageComboBoxItem imageComboBoxItem18 = new ImageComboBox.ImageComboBoxItem();
             this.xAxisRangeLabel = new System.Windows.Forms.Label();
             this.xAxisNameLabel = new System.Windows.Forms.Label();
             this.graphNameLabel = new System.Windows.Forms.Label();
@@ -62,16 +76,14 @@
             this.sizeCB = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.baudRateTB = new System.Windows.Forms.TextBox();
             this.parityTB = new System.Windows.Forms.ComboBox();
             this.dataBitTB = new System.Windows.Forms.TextBox();
             this.stopBitTB = new System.Windows.Forms.ComboBox();
-            this.sensitivityTB = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.baudRateTB = new ImageComboBox.ImageComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.afterSelectEventHandlerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -231,7 +243,7 @@
             // applyChanges
             // 
             this.applyChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.applyChanges.Location = new System.Drawing.Point(305, 245);
+            this.applyChanges.Location = new System.Drawing.Point(291, 244);
             this.applyChanges.Margin = new System.Windows.Forms.Padding(2);
             this.applyChanges.Name = "applyChanges";
             this.applyChanges.Size = new System.Drawing.Size(133, 23);
@@ -243,7 +255,7 @@
             // drawGraphB
             // 
             this.drawGraphB.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.drawGraphB.Location = new System.Drawing.Point(17, 245);
+            this.drawGraphB.Location = new System.Drawing.Point(11, 245);
             this.drawGraphB.Margin = new System.Windows.Forms.Padding(2);
             this.drawGraphB.Name = "drawGraphB";
             this.drawGraphB.Size = new System.Drawing.Size(88, 23);
@@ -299,35 +311,35 @@
             this.symbolCB.ImageList = this.ListForCombo;
             this.symbolCB.Indent = 0;
             this.symbolCB.ItemHeight = 15;
-            imageComboBoxItem5.Font = null;
-            imageComboBoxItem5.Image = "1";
-            imageComboBoxItem5.ImageIndex = 1;
-            imageComboBoxItem5.IndentLevel = 0;
-            imageComboBoxItem5.Item = null;
-            imageComboBoxItem5.Text = "Звезда";
-            imageComboBoxItem6.Font = null;
-            imageComboBoxItem6.Image = "3";
-            imageComboBoxItem6.ImageIndex = 3;
-            imageComboBoxItem6.IndentLevel = 0;
-            imageComboBoxItem6.Item = null;
-            imageComboBoxItem6.Text = "Палка";
-            imageComboBoxItem7.Font = null;
-            imageComboBoxItem7.Image = "0";
-            imageComboBoxItem7.ImageIndex = 0;
-            imageComboBoxItem7.IndentLevel = 0;
-            imageComboBoxItem7.Item = null;
-            imageComboBoxItem7.Text = "Круг";
-            imageComboBoxItem8.Font = null;
-            imageComboBoxItem8.Image = "2";
-            imageComboBoxItem8.ImageIndex = 2;
-            imageComboBoxItem8.IndentLevel = 0;
-            imageComboBoxItem8.Item = null;
-            imageComboBoxItem8.Text = "Линия";
+            imageComboBoxItem1.Font = null;
+            imageComboBoxItem1.Image = "1";
+            imageComboBoxItem1.ImageIndex = 1;
+            imageComboBoxItem1.IndentLevel = 0;
+            imageComboBoxItem1.Item = null;
+            imageComboBoxItem1.Text = "Звезда";
+            imageComboBoxItem2.Font = null;
+            imageComboBoxItem2.Image = "3";
+            imageComboBoxItem2.ImageIndex = 3;
+            imageComboBoxItem2.IndentLevel = 0;
+            imageComboBoxItem2.Item = null;
+            imageComboBoxItem2.Text = "Палка";
+            imageComboBoxItem3.Font = null;
+            imageComboBoxItem3.Image = "0";
+            imageComboBoxItem3.ImageIndex = 0;
+            imageComboBoxItem3.IndentLevel = 0;
+            imageComboBoxItem3.Item = null;
+            imageComboBoxItem3.Text = "Круг";
+            imageComboBoxItem4.Font = null;
+            imageComboBoxItem4.Image = "2";
+            imageComboBoxItem4.ImageIndex = 2;
+            imageComboBoxItem4.IndentLevel = 0;
+            imageComboBoxItem4.Item = null;
+            imageComboBoxItem4.Text = "Линия";
             this.symbolCB.Items.AddRange(new ImageComboBox.ImageComboBoxItem[] {
-            imageComboBoxItem5,
-            imageComboBoxItem6,
-            imageComboBoxItem7,
-            imageComboBoxItem8});
+            imageComboBoxItem1,
+            imageComboBoxItem2,
+            imageComboBoxItem3,
+            imageComboBoxItem4});
             this.symbolCB.Location = new System.Drawing.Point(365, 19);
             this.symbolCB.Margin = new System.Windows.Forms.Padding(2);
             this.symbolCB.Name = "symbolCB";
@@ -377,16 +389,6 @@
             this.label1.TabIndex = 58;
             this.label1.Text = "Настройки COM-порта";
             // 
-            // baudRateTB
-            // 
-            this.baudRateTB.Location = new System.Drawing.Point(63, 220);
-            this.baudRateTB.Name = "baudRateTB";
-            this.baudRateTB.Size = new System.Drawing.Size(77, 20);
-            this.baudRateTB.TabIndex = 59;
-            this.toolTip1.SetToolTip(this.baudRateTB, "Скорость передачи (Baud Rate)");
-            this.baudRateTB.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.baudRateTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.baudRateTB_KeyPress);
-            // 
             // parityTB
             // 
             this.parityTB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -432,17 +434,6 @@
             this.toolTip1.SetToolTip(this.stopBitTB, "Стоп бит (Stop Bit)");
             this.stopBitTB.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
-            // sensitivityTB
-            // 
-            this.sensitivityTB.Location = new System.Drawing.Point(346, 108);
-            this.sensitivityTB.Margin = new System.Windows.Forms.Padding(2);
-            this.sensitivityTB.MaxLength = 3;
-            this.sensitivityTB.Name = "sensitivityTB";
-            this.sensitivityTB.Size = new System.Drawing.Size(51, 20);
-            this.sensitivityTB.TabIndex = 68;
-            this.toolTip1.SetToolTip(this.sensitivityTB, "Чувствительность сглаживания графика для определения предела текучести");
-            this.sensitivityTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sensitivityTB_KeyPress);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -479,22 +470,124 @@
             this.label6.TabIndex = 66;
             this.label6.Text = "Cтоп бит";
             // 
-            // label7
+            // baudRateTB
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(323, 94);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(101, 13);
-            this.label7.TabIndex = 67;
-            this.label7.Text = "Чувствительность";
+            this.baudRateTB.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.baudRateTB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.baudRateTB.ImageList = this.ListForCombo;
+            this.baudRateTB.Indent = 0;
+            this.baudRateTB.ItemHeight = 15;
+            imageComboBoxItem5.Font = null;
+            imageComboBoxItem5.Image = "(none)";
+            imageComboBoxItem5.ImageIndex = -1;
+            imageComboBoxItem5.IndentLevel = 0;
+            imageComboBoxItem5.Item = null;
+            imageComboBoxItem5.Text = "600";
+            imageComboBoxItem6.Font = null;
+            imageComboBoxItem6.Image = "(none)";
+            imageComboBoxItem6.ImageIndex = -1;
+            imageComboBoxItem6.IndentLevel = 0;
+            imageComboBoxItem6.Item = null;
+            imageComboBoxItem6.Text = "1200";
+            imageComboBoxItem7.Font = null;
+            imageComboBoxItem7.Image = "(none)";
+            imageComboBoxItem7.ImageIndex = -1;
+            imageComboBoxItem7.IndentLevel = 0;
+            imageComboBoxItem7.Item = null;
+            imageComboBoxItem7.Text = "2400";
+            imageComboBoxItem8.Font = null;
+            imageComboBoxItem8.Image = "(none)";
+            imageComboBoxItem8.ImageIndex = -1;
+            imageComboBoxItem8.IndentLevel = 0;
+            imageComboBoxItem8.Item = null;
+            imageComboBoxItem8.Text = "4800";
+            imageComboBoxItem9.Font = null;
+            imageComboBoxItem9.Image = "(none)";
+            imageComboBoxItem9.ImageIndex = -1;
+            imageComboBoxItem9.IndentLevel = 0;
+            imageComboBoxItem9.Item = null;
+            imageComboBoxItem9.Text = "9600";
+            imageComboBoxItem10.Font = null;
+            imageComboBoxItem10.Image = "(none)";
+            imageComboBoxItem10.ImageIndex = -1;
+            imageComboBoxItem10.IndentLevel = 0;
+            imageComboBoxItem10.Item = null;
+            imageComboBoxItem10.Text = "14400";
+            imageComboBoxItem11.Font = null;
+            imageComboBoxItem11.Image = "(none)";
+            imageComboBoxItem11.ImageIndex = -1;
+            imageComboBoxItem11.IndentLevel = 0;
+            imageComboBoxItem11.Item = null;
+            imageComboBoxItem11.Text = "19200";
+            imageComboBoxItem12.Font = null;
+            imageComboBoxItem12.Image = "(none)";
+            imageComboBoxItem12.ImageIndex = -1;
+            imageComboBoxItem12.IndentLevel = 0;
+            imageComboBoxItem12.Item = null;
+            imageComboBoxItem12.Text = "28800";
+            imageComboBoxItem13.Font = null;
+            imageComboBoxItem13.Image = "(none)";
+            imageComboBoxItem13.ImageIndex = -1;
+            imageComboBoxItem13.IndentLevel = 0;
+            imageComboBoxItem13.Item = null;
+            imageComboBoxItem13.Text = "38400";
+            imageComboBoxItem14.Font = null;
+            imageComboBoxItem14.Image = "(none)";
+            imageComboBoxItem14.ImageIndex = -1;
+            imageComboBoxItem14.IndentLevel = 0;
+            imageComboBoxItem14.Item = null;
+            imageComboBoxItem14.Text = "56000";
+            imageComboBoxItem15.Font = null;
+            imageComboBoxItem15.Image = "(none)";
+            imageComboBoxItem15.ImageIndex = -1;
+            imageComboBoxItem15.IndentLevel = 0;
+            imageComboBoxItem15.Item = null;
+            imageComboBoxItem15.Text = "57600";
+            imageComboBoxItem16.Font = null;
+            imageComboBoxItem16.Image = "(none)";
+            imageComboBoxItem16.ImageIndex = -1;
+            imageComboBoxItem16.IndentLevel = 0;
+            imageComboBoxItem16.Item = null;
+            imageComboBoxItem16.Text = "115200";
+            imageComboBoxItem17.Font = null;
+            imageComboBoxItem17.Image = "(none)";
+            imageComboBoxItem17.ImageIndex = -1;
+            imageComboBoxItem17.IndentLevel = 0;
+            imageComboBoxItem17.Item = null;
+            imageComboBoxItem17.Text = "128000";
+            imageComboBoxItem18.Font = null;
+            imageComboBoxItem18.Image = "(none)";
+            imageComboBoxItem18.ImageIndex = -1;
+            imageComboBoxItem18.IndentLevel = 0;
+            imageComboBoxItem18.Item = null;
+            imageComboBoxItem18.Text = "256000";
+            this.baudRateTB.Items.AddRange(new ImageComboBox.ImageComboBoxItem[] {
+            imageComboBoxItem5,
+            imageComboBoxItem6,
+            imageComboBoxItem7,
+            imageComboBoxItem8,
+            imageComboBoxItem9,
+            imageComboBoxItem10,
+            imageComboBoxItem11,
+            imageComboBoxItem12,
+            imageComboBoxItem13,
+            imageComboBoxItem14,
+            imageComboBoxItem15,
+            imageComboBoxItem16,
+            imageComboBoxItem17,
+            imageComboBoxItem18});
+            this.baudRateTB.Location = new System.Drawing.Point(46, 219);
+            this.baudRateTB.Margin = new System.Windows.Forms.Padding(2);
+            this.baudRateTB.Name = "baudRateTB";
+            this.baudRateTB.Size = new System.Drawing.Size(105, 21);
+            this.baudRateTB.TabIndex = 67;
             // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(442, 279);
-            this.Controls.Add(this.sensitivityTB);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.baudRateTB);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.stopBitTB);
             this.Controls.Add(this.label5);
@@ -502,7 +595,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.parityTB);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.baudRateTB);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.sizeCB);
             this.Controls.Add(this.label2);
@@ -570,7 +662,6 @@
         private System.Windows.Forms.ComboBox sizeCB;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.TextBox baudRateTB;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox parityTB;
         private System.Windows.Forms.Label label4;
@@ -578,7 +669,6 @@
         private System.Windows.Forms.TextBox dataBitTB;
         private System.Windows.Forms.ComboBox stopBitTB;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox sensitivityTB;
+        private ImageComboBox.ImageComboBox baudRateTB;
     }
 }

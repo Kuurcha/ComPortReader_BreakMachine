@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
 using ZedGraph;
+using ComPortReader.Classes;
 
 namespace ComPortReader
 {
@@ -50,7 +51,7 @@ namespace ComPortReader
             parityTB.Text = ParityEnumToString((int)mainForm.MyParity);
             dataBitTB.Text = mainForm.MyDataBits.ToString();
             stopBitTB.Text = StopEnumToString(mainForm.MyStopBits);
-            sensitivityTB.Text = mainForm.sensitivy.ToString();
+         
         }
         private SymbolType checkForSymbol()
         {
@@ -174,11 +175,17 @@ namespace ComPortReader
             if (double.TryParse(coefficientTB.Text, out coefficient) && coefficient > 0 && coefficient < 100000)
             {
                 mainForm.Coefficent = coefficient;
-                mainForm.ZGCInstance.GraphPane.XAxis.Scale.Min *= coefficient;
-                mainForm.ZGCInstance.GraphPane.XAxis.Scale.Max *= coefficient;
                 mainForm.ZGCInstance.GraphPane.YAxis.Scale.Min *= coefficient;
                 mainForm.ZGCInstance.GraphPane.YAxis.Scale.Max *= coefficient;
-
+                CurveList temp = mainForm.ZGCInstance.GraphPane.CurveList;
+                foreach (CurveItem b in temp)
+                {
+                    int length = b.Points.Count;
+                    for (int i = 0; i < length; i++)
+                    {
+                        b[i].Y *= coefficient;
+                    }
+                }
             }
             else
             {
@@ -205,11 +212,11 @@ namespace ComPortReader
                 mainForm.getCurve.Symbol.Type = checkForSymbol();
                 mainForm.getCurve.Symbol.Size = int.Parse(sizeCB.Text);
             }
-            if (int.TryParse(baudRateTB.Text, out baudRate) && int.TryParse(dataBitTB.Text, out dataBit) && int.TryParse(sensitivityTB.Text, out sensitivity))
+            if (int.TryParse(baudRateTB.Text, out baudRate) && int.TryParse(dataBitTB.Text, out dataBit))
             {
                 mainForm.MyBaudRate = baudRate;
                 mainForm.MyDataBits = dataBit;
-                mainForm.Sensitivy = sensitivity;
+       
             }
             mainForm.MyParity = (Parity)StringToParityEnum(parityTB.Text);
             mainForm.MyStopBits = StringToStopEnum(stopBitTB.Text);
@@ -225,6 +232,7 @@ namespace ComPortReader
             // Установим масштаб по умолчанию для оси Y
             mainForm.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
             mainForm.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
+            FileOperations.SetVariables(mainForm);
         }
 
         private void graphNameLabelTB_TextChanged(object sender, EventArgs e)
@@ -251,7 +259,27 @@ namespace ComPortReader
        
         private void button1_Click(object sender, EventArgs e)
         {
-            GraphProcessing.resetGraph(mainForm);
+                GraphProcessing.resetGraph(mainForm);
+                mainForm.readingInOneSession = null;
+                mainForm.startBuilding.Enabled = true;
+                mainForm.stopBuilding.Enabled = false;
+            List<Form> openForms = new List<Form>();
+
+            foreach (Form f in Application.OpenForms)
+                openForms.Add(f);
+
+            foreach (Form f in openForms)
+            {
+                if (f.Name != mainForm.Name && f.Name != this.Name)
+                    f.Close();
+            }
+            try { mainForm.Port.Close(); }
+            catch (Exception ex) { }
+            mainForm.showWindow.Enabled = false;
+            mainForm.Port = null;
+            mainForm.ReadingInput = null;
+
+
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

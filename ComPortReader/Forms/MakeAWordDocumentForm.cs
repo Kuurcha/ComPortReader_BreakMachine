@@ -185,16 +185,16 @@ namespace ComPortReader.Forms
                 infoData.Rows[0].Cells[2].InsertParagraph("Марка стали", false, bold);
                 infoData.Rows[0].Cells[3].InsertParagraph("Сортамент, мм", false, bold);
 
-                for (int i = 1; i < informationData.Rows.Count - 1; i++)
+                for (int i = 0; i < informationData.Rows.Count - 1; i++)
                 {
                     if (informationData.Rows[i].Cells[0].Value == null || informationData.Rows[i].Cells[1].Value == null || informationData.Rows[i].Cells[2].Value == null || informationData.Rows[i].Cells[3].Value == null)
                         MessageBox.Show("Проверьте что все значения в ячейках заполнены. (кроме последней строки) Для того чтоб заполнить ячейку после ввода нажмите Enter");
                     else
                     {
-                        infoData.Rows[i].Cells[0].InsertParagraph(informationData.Rows[i].Cells[0].Value.ToString(), false, defaultText);
-                        infoData.Rows[i].Cells[1].InsertParagraph(informationData.Rows[i].Cells[1].Value.ToString(), false, defaultText).Alignment = Xceed.Document.NET.Alignment.center;
-                        infoData.Rows[i].Cells[2].InsertParagraph(informationData.Rows[i].Cells[2].Value.ToString(), false, defaultText).Alignment = Xceed.Document.NET.Alignment.center;
-                        infoData.Rows[i].Cells[3].InsertParagraph(informationData.Rows[i].Cells[3].Value.ToString(), false, defaultText).Alignment = Xceed.Document.NET.Alignment.center;
+                        infoData.Rows[i].Cells[0].InsertParagraph(informationData.Rows[i+1].Cells[0].Value.ToString(), false, defaultText);
+                        infoData.Rows[i].Cells[1].InsertParagraph(informationData.Rows[i+1].Cells[1].Value.ToString(), false, defaultText).Alignment = Xceed.Document.NET.Alignment.center;
+                        infoData.Rows[i].Cells[2].InsertParagraph(informationData.Rows[i+1].Cells[2].Value.ToString(), false, defaultText).Alignment = Xceed.Document.NET.Alignment.center;
+                        infoData.Rows[i].Cells[3].InsertParagraph(informationData.Rows[i+1].Cells[3].Value.ToString(), false, defaultText).Alignment = Xceed.Document.NET.Alignment.center;
                     }
 
                 }
@@ -344,7 +344,7 @@ namespace ComPortReader.Forms
 
                 try
                 {
-                    System.Diagnostics.Process.Start(@"C:\Test\NewDocument.docx");
+                    System.Diagnostics.Process.Start(fileName);
                 }
                 catch (Exception ex1)
                 { MessageBox.Show(ex1.ToString()); }

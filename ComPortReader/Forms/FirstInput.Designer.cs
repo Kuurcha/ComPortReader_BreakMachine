@@ -41,8 +41,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.markingTB = new System.Windows.Forms.TextBox();
             this.marking = new System.Windows.Forms.Label();
-            this.maxForceTB = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // typeCB
@@ -78,10 +76,10 @@
             // 
             // startLength
             // 
-            this.startLength.Location = new System.Drawing.Point(45, 76);
+            this.startLength.Location = new System.Drawing.Point(47, 76);
             this.startLength.MaxLength = 10;
             this.startLength.Name = "startLength";
-            this.startLength.Size = new System.Drawing.Size(121, 20);
+            this.startLength.Size = new System.Drawing.Size(86, 20);
             this.startLength.TabIndex = 5;
             this.startLength.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.startLength_KeyPress);
             // 
@@ -115,7 +113,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 60);
+            this.label2.Location = new System.Drawing.Point(9, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(182, 13);
             this.label2.TabIndex = 7;
@@ -123,7 +121,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(183, 160);
+            this.button1.Location = new System.Drawing.Point(179, 106);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(170, 23);
             this.button1.TabIndex = 7;
@@ -133,11 +131,11 @@
             // 
             // endLengthTB
             // 
-            this.endLengthTB.Location = new System.Drawing.Point(382, 76);
+            this.endLengthTB.Location = new System.Drawing.Point(393, 76);
             this.endLengthTB.MaxLength = 10;
             this.endLengthTB.Name = "endLengthTB";
             this.endLengthTB.ReadOnly = true;
-            this.endLengthTB.Size = new System.Drawing.Size(122, 20);
+            this.endLengthTB.Size = new System.Drawing.Size(100, 20);
             this.endLengthTB.TabIndex = 6;
             this.endLengthTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.endLengthTB_KeyDown);
             this.endLengthTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.endLengthTB_KeyPress);
@@ -168,32 +166,11 @@
             this.marking.TabIndex = 12;
             this.marking.Text = "Марка образца";
             // 
-            // maxForceTB
-            // 
-            this.maxForceTB.Location = new System.Drawing.Point(183, 134);
-            this.maxForceTB.MaxLength = 10;
-            this.maxForceTB.Name = "maxForceTB";
-            this.maxForceTB.ReadOnly = true;
-            this.maxForceTB.Size = new System.Drawing.Size(170, 20);
-            this.maxForceTB.TabIndex = 13;
-            this.maxForceTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.maxForce_KeyPress);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(155, 118);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(245, 13);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Максимальная сила в Н указанная на машине";
-            // 
             // FirstInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 186);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.maxForceTB);
+            this.ClientSize = new System.Drawing.Size(541, 138);
             this.Controls.Add(this.marking);
             this.Controls.Add(this.markingTB);
             this.Controls.Add(this.label3);
@@ -232,7 +209,5 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox markingTB;
         private System.Windows.Forms.Label marking;
-        private System.Windows.Forms.TextBox maxForceTB;
-        private System.Windows.Forms.Label label4;
     }
 }
