@@ -174,7 +174,7 @@ namespace ComPortReader
                     if (s.Length != 0 && s[0] == 'N')
                     {
                         char pivot = s[i];
-                        if (pivot == 'F') {  counter++; }
+                        if (pivot == 'P') {  counter++; }
                         if (Char.IsNumber(pivot))
                         {
                             sOutput[counter] += pivot;
@@ -182,7 +182,7 @@ namespace ComPortReader
                     }
                 }
                 int xValue; int yValue;
-                if (sOutput != null && int.TryParse(sOutput[0], out xValue) && int.TryParse(sOutput[1], out yValue)) { output = new TwoCordLinkedList.Node(xValue * coefficient, yValue * coefficient); }
+                if (sOutput != null && int.TryParse(sOutput[0], out xValue) && int.TryParse(sOutput[1], out yValue)) { output = new TwoCordLinkedList.Node(xValue, yValue * coefficient); }
 
             }
             return output;

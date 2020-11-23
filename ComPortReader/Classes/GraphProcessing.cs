@@ -10,17 +10,31 @@ using System.Windows.Forms;
 using ComPortReader.Classes;
 using System.Xml.Schema;
 using System.IO.Ports;
+using System.Data;
+
 namespace ComPortReader
 {
     class GraphProcessing
     {
-       
-       /// <summary>
-       /// Addss a point to a LineItem curve with coordinates x and y, used for the delegate.
-       /// </summary>
-       /// <param name="curve">Curve to add point to</param>
-       /// <param name="x">x point coordinate</param>
-       /// <param name="y">y point coordinate</param>
+
+        public static void calculateSize(ZedGraphControl ZGCInstance)
+        {
+            double maxY = double.MinValue;
+            double maxX = double.MinValue;
+            maxY = ZGCInstance.GraphPane.YAxis.Scale.Max;
+            maxX = ZGCInstance.GraphPane.XAxis.Scale.Max;
+            ZGCInstance.GraphPane.YAxis.Scale.MinorStep = Math.Abs(maxY / 10);
+            ZGCInstance.GraphPane.YAxis.Scale.MajorStep = Math.Abs(maxY / 5);
+            ZGCInstance.GraphPane.XAxis.Scale.MinorStep = Math.Abs(maxX / 10);
+            ZGCInstance.GraphPane.XAxis.Scale.MajorStep = Math.Abs(maxX / 5);
+            GraphProcessing.UpdateGraph(ZGCInstance);
+        }
+        /// <summary>
+        /// Addss a point to a LineItem curve with coordinates x and y, used for the delegate.
+        /// </summary>
+        /// <param name="curve">Curve to add point to</param>
+        /// <param name="x">x point coordinate</param>
+        /// <param name="y">y point coordinate</param>
         static internal void AddInRealTime(LineItem curve, double x, double y)
         {
             if (curve !=null) curve.AddPoint(x, y);
@@ -34,8 +48,24 @@ namespace ComPortReader
             zgc.Refresh();
             zgc.Invalidate();
             zgc.AxisChange();
+            zgc.GraphPane.CurveList.Sort(new CurveItemTagComparer());
+        }
+        class CurveItemTagComparer : IComparer<CurveItem>
+        {
+            public int Compare(CurveItem x, CurveItem y)
+            {
+                return ((int)x.Tag).CompareTo((int)y.Tag);
+             
+            }
         }
 
+        static internal void OnClosingMethod(MainProgram form)
+        {       
+            form.startBuilding.Enabled = true;
+            form.stopBuilding.Enabled = false;
+            form.showWindow.Enabled = true;
+            form.Port = null;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -47,10 +77,16 @@ namespace ComPortReader
             int length = curve.Points.Count;
             int a = ((isXAxis) ? 1 : 2);
             double[] array = new double[length];
-            for (int i = 0; i < length - 2; i++) { array[i] = (isXAxis ?  curve.Points[i].X : array[i] = curve.Points[i].Y); }
+            for (int i = 0; i < length; i++) { array[i] = (isXAxis ?  curve.Points[i].X : curve.Points[i].Y); }
             return array;
         }
       
+        static internal void ChangeVisibility(MainProgram form, bool defaultState)
+        {
+            form.startingRecordMenuB.Visible = defaultState;
+            form.showWindow.Visible = !defaultState;
+               
+        }
 
         /// <summary>
         /// Algorythm for the jumps in graph to be less sudden. Moving average or something. Arithmetic sum of `period` previous numbers.
@@ -242,6 +278,14 @@ namespace ComPortReader
             return (next - prev) / 2;
         }
 
+        public static void RemoveSelection(MainProgram form)
+        {
+            form.ZGCInstance.GraphPane.CurveList.Remove(form.SelectionCurveBegin);
+            form.ZGCInstance.GraphPane.CurveList.Remove(form.SelectionCurveEnd);
+            form.SelectionCurveBegin = null;
+            form.SelectionCurveEnd = null;
+            UpdateGraph(form.ZGCInstance);
+        }
         public static void resetGraph(MainProgram mainForm)
         {
             PointPairList list = new PointPairList();
@@ -263,7 +307,18 @@ namespace ComPortReader
             mainForm.counterTimer = 0;
             mainForm.SelectionCurveBegin = null;
             mainForm.SelectionCurveEnd = null;
+            mainForm.ChooseMode = false;
+            
+            List<Form> openForms = new List<Form>();
 
+            //foreach (Form f in Application.OpenForms)
+            //    openForms.Add(f);
+
+            //foreach (Form f in openForms)
+            //{
+            //    if (f != mainForm)
+            //        f.Close();
+            //}
             // Установим масштаб по умолчанию для оси X
             mainForm.ZGCInstance.GraphPane.XAxis.Scale.MinAuto = true;
             mainForm.ZGCInstance.GraphPane.XAxis.Scale.MaxAuto = true;
@@ -271,13 +326,23 @@ namespace ComPortReader
             // Установим масштаб по умолчанию для оси Y
             mainForm.ZGCInstance.GraphPane.YAxis.Scale.MinAuto = true;
             mainForm.ZGCInstance.GraphPane.YAxis.Scale.MaxAuto = true;
-                mainForm.Port.Close();
-                mainForm.Port.DataReceived -= new SerialDataReceivedEventHandler(mainForm.port_DataReceived);
-                mainForm.openComPort();
-                mainForm.Port.DataReceived += new SerialDataReceivedEventHandler(mainForm.port_DataReceived);
-                mainForm.Port.Open();
+             
+
        
         }
+        public static void RemoveLine(string name, MainProgram form)
+        {
+            int pos = form.ZGCInstance.GraphPane.CurveList.IndexOf(name);
+            if (pos >= 0) form.ZGCInstance.GraphPane.CurveList.RemoveAt(pos);
+                DynamicToolStripButton tempBtn = null;
+                for (int i = 0; i < form.buttons.Count; i++)
+                {    
+                        string test = form.buttons[i].curve.Label.Text;
+                        if (test == name) { tempBtn = form.buttons[i]; form.CurvesDropDownButton.DropDownItems.Remove(tempBtn.button); form.buttons.RemoveAt(i); }
+                }
+          
+        }
+        
         internal static int[] CalculatePointsForLinear(LineItem originalCurve, LineItem secondDerivativeCurve, LineItem firstMovingAverageCurve)
         {
             // bound[0] - startPoint
@@ -292,7 +357,7 @@ namespace ComPortReader
             while( startPoint < secondDerivativeCurve.Points.Count -1 && flag)
             {
                 double temp = Math.Abs(secondDerivativeCurve.Points[startPoint].Y);
-                if (temp < average/1.2) counterFlag++;
+                if (temp < 1.5*average) counterFlag++;
                 else counterFlag = 0;
                 if (counterFlag == 5) flag = false;
 
@@ -415,11 +480,9 @@ namespace ComPortReader
            
             for (int i = 1; i < length - 2; i++)
             {
-                
                 double bottom = 2*(curve.Points[i + 1].X - curve.Points[i].X);
                 double top = (curve.Points[i + 1].Y - curve.Points[i-1].Y);
                 printCurve.AddPoint(curve.Points[i + 1].X, top/bottom);
-
             }
         }
         internal static void SecondDerivativeGraph(LineItem curve, ref LineItem printCurve)
@@ -499,5 +562,6 @@ namespace ComPortReader
             return pirson;
         }
 
+       
     }
 }
